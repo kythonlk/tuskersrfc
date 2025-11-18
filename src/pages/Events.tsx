@@ -47,6 +47,17 @@ export default function Events() {
       <section className="bg-gradient-to-br from-[#1a1f4e] to-[#2a2f5e] text-white py-20">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">
+            Fixtures & Results
+          </h1>
+          <div className="w-24 h-1 bg-[#f5a623] mx-auto mb-8"></div>
+          <p className="text-xl text-center text-gray-300 max-w-3xl mx-auto">
+            Stay updated with our match schedule and latest results
+          </p>
+        </div>
+      </section>
+      <section className="bg-gradient-to-br from-[#1a1f4e] to-[#2a2f5e] text-white py-20">
+        <div className="container mx-auto px-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">
             Events & Activities
           </h1>
           <div className="w-24 h-1 bg-[#f5a623] mx-auto mb-8"></div>
@@ -68,11 +79,10 @@ export default function Events() {
               {events.map((event) => (
                 <div
                   key={event.id}
-                  className={`bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all transform hover:-translate-y-2 ${
-                    isUpcoming(event.event_date)
-                      ? 'border-t-4 border-[#f5a623]'
-                      : 'opacity-75'
-                  }`}
+                  className={`bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all transform hover:-translate-y-2 ${isUpcoming(event.event_date)
+                    ? 'border-t-4 border-[#f5a623]'
+                    : 'opacity-75'
+                    }`}
                 >
                   {event.image_url && (
                     <img
@@ -84,11 +94,10 @@ export default function Events() {
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-4">
                       <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          isUpcoming(event.event_date)
-                            ? 'bg-[#f5a623]/20 text-[#1a1f4e]'
-                            : 'bg-gray-100 text-gray-600'
-                        }`}
+                        className={`px-3 py-1 rounded-full text-xs font-semibold ${isUpcoming(event.event_date)
+                          ? 'bg-[#f5a623]/20 text-[#1a1f4e]'
+                          : 'bg-gray-100 text-gray-600'
+                          }`}
                       >
                         {isUpcoming(event.event_date) ? 'Upcoming' : 'Past Event'}
                       </span>

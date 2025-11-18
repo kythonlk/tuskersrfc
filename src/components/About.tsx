@@ -4,8 +4,9 @@ import arshad from '../images/arshad-2025.webp';
 import dayan from '../images/dayan-2024.webp';
 import { Trophy } from 'lucide-react';
 import logoFull from '../images/logo-full.webp';
+import { Link } from 'react-router-dom';
 
-export default function About() {
+export default function About({ upcomingFixtures }: any) {
   const leadership = [
     {
       name: 'Dayan Diddeniya',
@@ -156,8 +157,6 @@ export default function About() {
       </section>
       <section className="bg-[#0f1229] py-20 border-t border-white/10">
         <div className="container mx-auto px-4">
-
-          {/* Heading */}
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-2">
               Latest Match Results
@@ -167,48 +166,9 @@ export default function About() {
               Breaking down our recent clashes across all divisions
             </p>
           </div>
-
-          {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
 
-            {[
-              {
-                id: 1,
-                teamA: "Tuskers",
-                teamB: "Hurricanes",
-                logoA: logoFull,
-                logoB: "https://rugby.dubaihurricanes.com/wp-content/uploads/2025/06/hurricanes-logo.svg",
-                score: "34–21",
-                summary: "Senior Men — A powerful final quarter sealed the win.",
-              },
-              {
-                id: 2,
-                teamA: "Tuskers",
-                teamB: "Sharks",
-                logoA: logoFull,
-                logoB: "https://rugby.dubaihurricanes.com/wp-content/uploads/2023/09/Dubai-Sharks-Logo-128x122.png",
-                score: "12–3",
-                summary: "Touch Rugby — Strong defence held through in the final minutes.",
-              },
-              {
-                id: 3,
-                teamA: "Tuskers",
-                teamB: "Falcons",
-                logoA: logoFull,
-                logoB: "https://rugby.dubaihurricanes.com/wp-content/uploads/2024/01/Dubai-Exiles-Logo-128x128.jpg",
-                score: "27–10",
-                summary: "Senior Men — Controlled the breakdown superbly.",
-              },
-              {
-                id: 4,
-                teamA: "Tuskers",
-                teamB: "Abu Dhabi Harlequins",
-                logoA: logoFull,
-                logoB: "https://rugby.dubaihurricanes.com/wp-content/uploads/2024/01/Abu-Dhabi-Quins-Logo-128x128.jpg",
-                score: "12–20",
-                summary: "Women’s Team — Great opening, momentum shifted late.",
-              },
-            ].map((match) => (
+            {upcomingFixtures.map((match: any) => (
               <div
                 key={match.id}
                 className="p-8 border border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 shadow-xl"
@@ -216,34 +176,36 @@ export default function About() {
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex flex-col items-center gap-3">
                     <img
-                      src={match.logoA}
+                      src={match.home_team_logo}
                       alt={match.teamA}
                       className="w-24 h-24 object-contain"
                     />
                     <span className="text-xl text-white font-semibold tracking-wide uppercase">
-                      {match.teamA}
+                      {match.home_team}
                     </span>
                   </div>
 
                   <span className="text-4xl font-extrabold text-[#f5a623]">
-                    {match.score}
+                    {match.home_score} - {match.away_score}
                   </span>
 
                   <div className="flex flex-col items-center gap-3">
                     <img
-                      src={match.logoB}
+                      src={match.away_team_logo}
                       alt={match.teamB}
                       className="w-24 h-24 object-contain"
                     />
                     <span className="text-xl text-white font-semibold tracking-wide uppercase">
-                      {match.teamB}
+                      {match.away_team}
                     </span>
                   </div>
                 </div>
 
-                <button className="w-full py-3 border border-[#f5a623] text-[#f5a623] font-semibold tracking-wide uppercase hover:bg-[#f5a623] hover:text-[#0f1229] transition-all duration-300">
-                  Match Details
-                </button>
+                <Link to={`/match/${match.id}`}>
+                  <button className="w-full py-3 border border-[#f5a623] text-[#f5a623] font-semibold tracking-wide uppercase hover:bg-[#f5a623] hover:text-[#0f1229] transition-all duration-300">
+                    Match Details
+                  </button>
+                </Link>
               </div>
             ))}
 

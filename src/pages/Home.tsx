@@ -20,7 +20,7 @@ export default function Home() {
       const { data: fixturesData } = await supabase
         .from('fixtures')
         .select('*')
-        .eq('status', 'upcoming')
+        .eq('status', 'completed')
         .order('match_date', { ascending: true })
         .limit(4);
 
@@ -48,7 +48,7 @@ export default function Home() {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:p-6">
             {latestNews.map((item) => (
-              <div key={item.id} className="flex flex-col gap-4">
+              <Link to={`/news/${item.id}`} key={item.id} className="flex flex-col gap-4">
                 <div className="relative w-full h-60 overflow-hidden group">
                   {item.image_url && (
                     <img
@@ -64,12 +64,12 @@ export default function Home() {
                 <h4 className="font-semibold text-base sm:text-xl leading-tight hover:underline">
                   {item.title}
                 </h4>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
-      <About />
+      <About upcomingFixtures={upcomingFixtures} />
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

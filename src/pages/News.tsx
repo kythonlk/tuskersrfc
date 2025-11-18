@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Calendar, User } from 'lucide-react';
 import { supabase, type News as NewsType } from '../lib/supabase';
+import { Link } from 'react-router-dom';
 
 export default function News() {
   const [news, setNews] = useState<NewsType[]>([]);
@@ -86,10 +87,10 @@ export default function News() {
                       <p className="text-gray-700 leading-relaxed mb-4">
                         {article.excerpt}
                       </p>
-                      <button className="text-[#1a1f4e] font-semibold hover:text-[#f5a623] transition-colors inline-flex items-center gap-2">
+                      <Link to={`/news/${article.id}`} className="text-[#1a1f4e] font-semibold hover:text-[#f5a623] transition-colors inline-flex items-center gap-2">
                         Read Full Article
                         <span>→</span>
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </article>

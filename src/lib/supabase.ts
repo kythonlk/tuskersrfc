@@ -14,7 +14,7 @@ export type News = {
   title: string;
   content: string;
   excerpt: string;
-  image_url: string | null;
+  image_url: string;
   author: string;
   published_date: string;
   created_at: string;
@@ -39,6 +39,8 @@ export type Fixture = {
   competition: string;
   home_score: number | null;
   away_score: number | null;
+  home_team_logo: string;
+  away_team_logo: string;
   status: 'upcoming' | 'completed' | 'cancelled';
   created_at: string;
 };

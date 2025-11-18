@@ -15,6 +15,8 @@ import Contact from './pages/Contact';
 import Policies from './pages/Policies';
 import MembershipRegister from './pages/MembershipReg';
 import WhatsAppChat from './components/whatsapp';
+import SingleMatch from './pages/SingleMatch';
+import SingleNews from './pages/SingleNews';
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
             <Route path="/sponsorship" element={<Sponsorship />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/policies" element={<Policies />} />
+            <Route path="/match/:id" element={<SingleMatch />} />
+            <Route path="/news/:id" element={<SingleNews />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </main>
