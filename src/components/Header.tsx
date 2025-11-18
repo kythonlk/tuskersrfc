@@ -82,11 +82,11 @@ export default function Header() {
                   <Link
                     to={item.page ? `/${item.page}` : '#'}
                     className={`relative px-5 py-2 text-base font-medium tracking-wide transition-all duration-300 group
-                ${currentPage === item.page ? 'text-[#f5a623]' : 'text-white/90 hover:text-white'}
+                ${currentPage === `/${item.page}` ? 'text-[#f5a623]' : 'text-white/90 hover:text-white'}
               `}
                   >
                     <span className="relative z-10">{item.label}</span>
-                    {currentPage === item.page && (
+                    {(currentPage === `/${item.page}` || (currentPage === '/' && item.label === 'Home')) && (
                       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#f5a623] to-transparent" />
                     )}
                     <div className="absolute inset-0 bg-white/5 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300" />
@@ -115,7 +115,7 @@ export default function Header() {
                       setMobileMenuOpen(false);
                     }}
                     className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all
-                ${currentPage === item.page
+                ${currentPage === `/${item.page}`
                         ? 'text-[#f5a623] bg-[#f5a623]/10'
                         : 'text-white/90 hover:text-white hover:bg-white/5'
                       }
