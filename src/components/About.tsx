@@ -185,9 +185,6 @@ export default function About({ upcomingFixtures }: any) {
                     </span>
                   </div>
 
-                  <span className="text-4xl font-extrabold text-[#f5a623]">
-                    {match.home_score} - {match.away_score}
-                  </span>
 
                   <div className="flex flex-col items-center gap-3">
                     <img
@@ -200,8 +197,10 @@ export default function About({ upcomingFixtures }: any) {
                     </span>
                   </div>
                 </div>
-
-                <Link to={`/match/${match.id}`}>
+                <Link to={`/match/${match.id}`} className='flex flex-col gap-3'>
+                  <span className="text-4xl font-extrabold text-center w-full text-[#f5a623]">
+                    {match.home_score} - {match.away_score}
+                  </span>
                   <button className="w-full py-3 border border-[#f5a623] text-[#f5a623] font-semibold tracking-wide uppercase hover:bg-[#f5a623] hover:text-[#0f1229] transition-all duration-300">
                     Match Details
                   </button>

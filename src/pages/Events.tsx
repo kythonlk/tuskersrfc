@@ -47,17 +47,6 @@ export default function Events() {
       <section className="bg-gradient-to-br from-[#1a1f4e] to-[#2a2f5e] text-white py-20">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">
-            Fixtures & Results
-          </h1>
-          <div className="w-24 h-1 bg-[#f5a623] mx-auto mb-8"></div>
-          <p className="text-xl text-center text-gray-300 max-w-3xl mx-auto">
-            Stay updated with our match schedule and latest results
-          </p>
-        </div>
-      </section>
-      <section className="bg-gradient-to-br from-[#1a1f4e] to-[#2a2f5e] text-white py-20">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">
             Events & Activities
           </h1>
           <div className="w-24 h-1 bg-[#f5a623] mx-auto mb-8"></div>

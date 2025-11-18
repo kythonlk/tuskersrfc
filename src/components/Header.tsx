@@ -107,7 +107,7 @@ export default function Header() {
         {mobileMenuOpen && (
           <div className="xl:hidden absolute top-full left-0 right-0 bg-black/80 backdrop-blur-2xl border-b border-white/10 shadow-2xl">
             <div className="max-w-[1600px] mx-auto px-4 sm:px-8 py-6">
-              <div className="space-y-1 mb-6">
+              <div className="space-y-1 mb-6 flex flex-col">
                 {navItems.map((item) => (
                   <Link
                     to={item.page ? `/${item.page}` : '#'}

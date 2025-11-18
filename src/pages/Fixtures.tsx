@@ -118,12 +118,15 @@ export default function Fixtures() {
                       </span>
                     </div>
 
-                    <span className="text-4xl font-extrabold text-[#f5a623]">
+                    <span className="hidden md:inline-block text-4xl font-extrabold text-[#f5a623]">
                       {fixture.status === 'completed' &&
                         fixture.home_score !== null &&
                         fixture.away_score !== null
                         ? `${fixture.home_score} - ${fixture.away_score}`
                         : 'VS'}
+                    </span>
+                    <span className="md:hidden text-4xl font-extrabold text-[#f5a623]">
+                      VS
                     </span>
 
                     <div className="flex flex-col items-center gap-3">
@@ -138,6 +141,11 @@ export default function Fixtures() {
                     </div>
                   </div>
 
+                  {fixture.status === 'completed' &&
+                    <span className="md:hidden text-4xl font-extrabold text-[#f5a623] flex items-center justify-center py-4">
+                      {fixture.home_score} - {fixture.away_score}
+                    </span>
+                  }
                   <div className="text-center text-white text-sm space-y-2 mb-8">
                     <div className="flex justify-center gap-2 text-[#f5a623]">
                       <Calendar className="w-4 h-4" />

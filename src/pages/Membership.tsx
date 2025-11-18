@@ -55,39 +55,41 @@ export default function Membership() {
         </div>
       </section>
 
-      <section className="py-20 bg-white">
-        <div className="mx-40 px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-7xl mx-auto">
+      <section className="py-12 bg-white">
+        <div className="px-4 md:mx-20 lg:mx-40">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 max-w-7xl mx-auto">
             {memberships.map((m, index) => (
               <Link
                 key={index}
                 to={`/membership-reg?type=${m.type}`}
-                className="border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden bg-white hover:-translate-y-2"
+                className="border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-300 bg-white hover:-translate-y-2"
               >
-                <div className="relative h-56 overflow-hidden">
+                <div className="relative h-48 sm:h-56 md:h-60 overflow-hidden">
                   <img
                     src={m.image}
                     alt={m.label}
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-all duration-500"
+                    className="w-full h-full object-cover transform transition-all duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute top-4 left-4 bg-[#f5a623] text-[#1a1f4e] text-sm px-4 py-1  font-semibold shadow-md">
+                  <div className="absolute top-3 left-3 bg-[#f5a623] text-[#1a1f4e] text-xs sm:text-sm px-3 py-1 font-semibold shadow-md">
                     {m.age}
                   </div>
                 </div>
-                <div className="p-8">
-                  <h3 className="text-3xl font-bold text-[#1a1f4e] mb-2">
+
+                <div className="p-6 sm:p-8">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-[#1a1f4e] mb-2">
                     {m.label}
                   </h3>
 
-                  <p className="text-[#f5a623] text-4xl font-extrabold mb-1">
+                  <p className="text-[#f5a623] text-3xl sm:text-4xl font-extrabold mb-1">
                     {m.price}
                   </p>
 
-                  <p className="text-gray-600 text-sm mb-4">{m.type}</p>
+                  <p className="text-gray-600 text-xs sm:text-sm mb-4">{m.type}</p>
 
-                  <h4 className="text-lg font-semibold text-[#1a1f4e] mb-3">
+                  <h4 className="text-base sm:text-lg font-semibold text-[#1a1f4e] mb-3">
                     Membership Benefits
                   </h4>
+
                   <ul className="space-y-2 mb-6">
                     {m.perks.map((perk, i) => (
                       <li key={i} className="flex items-start gap-2">
@@ -98,13 +100,15 @@ export default function Membership() {
                   </ul>
 
                   <div className="border-t pt-4">
-                    <p className="text-sm text-gray-500 mb-1 font-semibold">
+                    <p className="text-xs sm:text-sm text-gray-500 mb-1 font-semibold">
                       What we play
                     </p>
-                    <p className="text-[#1a1f4e] font-bold">{m.whatWePlay}</p>
+                    <p className="text-[#1a1f4e] font-bold text-sm sm:text-base">
+                      {m.whatWePlay}
+                    </p>
                   </div>
 
-                  <button className="mt-8 w-full bg-[#1a1f4e] hover:bg-[#2a2f5e] text-white py-3 font-semibold flex items-center justify-center gap-2 transition-all">
+                  <button className="mt-6 sm:mt-8 w-full bg-[#1a1f4e] hover:bg-[#2a2f5e] text-white py-3 font-semibold flex items-center justify-center gap-2 transition-all">
                     Sign Up <ArrowRight className="h-5 w-5" />
                   </button>
                 </div>

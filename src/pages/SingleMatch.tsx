@@ -63,7 +63,7 @@ function SingleMatch() {
               </span>
             </div>
 
-            <span className="text-5xl font-extrabold text-[#f5a623]">
+            <span className="hidden md:block text-5xl font-extrabold text-[#f5a623]">
               {match.status === "completed"
                 ? `${match.home_score} - ${match.away_score}`
                 : "VS"}
@@ -81,6 +81,11 @@ function SingleMatch() {
             </div>
           </div>
 
+          <span className="md:hidden text-4xl font-extrabold text-[#f5a623] flex items-center justify-center py-4">
+            {match.status === "completed"
+              ? `${match.home_score} - ${match.away_score}`
+              : "VS"}
+          </span>
           <div className="space-y-4 text-center text-[#f5a623] text-lg tracking-wide">
             <div className="flex justify-center gap-2">
               <Calendar className="w-5 h-5" />
