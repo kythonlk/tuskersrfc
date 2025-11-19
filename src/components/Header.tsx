@@ -48,7 +48,7 @@ export default function Header() {
             <Link to="/" className="flex-shrink-0 cursor-pointer group" >
               <img src={logo} alt="Dubai Tuskers RFC" className="h-16 w-auto transition-all duration-300 group-hover:scale-105" />
             </Link>
-            <div className="xl:flex hidden items-center gap-3 sm:gap-5 justify-center">
+            <div className="sm:flex hidden items-center gap-3 sm:gap-5 justify-center">
               <a href="mailto:info@dubaituskers.com" className="hidden sm:flex items-center gap-2 hover:text-gray-700 transition-colors cursor-pointer">
                 <Mail className="h-5 w-5" />
                 <span className="text-base font-semibold">INFO@DUBAITUSKERS.COM</span>
@@ -75,13 +75,13 @@ export default function Header() {
           </div>
         </div>
         <div className="hidden sm:flex sm:bg-black/80 sm:backdrop-blur-md border-b border-white/5">
-          <div className="mx-auto max-w-[1600px] px-4 sm:px-8">
+          <div className="mx-auto px-4 sm:px-8">
             <div className="flex items-center justify-center h-12">
-              <nav className="hidden xl:flex items-center gap-1">
+              <nav className="hidden sm:flex items-center gap-1">
                 {navItems.map((item) => (
                   <Link
                     to={item.page ? `/${item.page}` : '#'}
-                    className={`relative px-5 py-2 text-base font-medium tracking-wide transition-all duration-300 group
+                    className={`relative px-2 xl:px-5 py-2 text-sm md:text-base font-medium tracking-wide transition-all duration-300 group
                 ${currentPage === `/${item.page}` ? 'text-[#f5a623]' : 'text-white/90 hover:text-white'}
               `}
                   >
@@ -105,7 +105,7 @@ export default function Header() {
           </button>
         </div>
         {mobileMenuOpen && (
-          <div className="xl:hidden absolute top-full left-0 right-0 bg-black/80 backdrop-blur-2xl border-b border-white/10 shadow-2xl">
+          <div className="sm:hidden absolute top-full left-0 right-0 bg-black/80 backdrop-blur-2xl border-b border-white/10 shadow-2xl">
             <div className="max-w-[1600px] mx-auto px-4 sm:px-8 py-6">
               <div className="space-y-1 mb-6 flex flex-col">
                 {navItems.map((item) => (
