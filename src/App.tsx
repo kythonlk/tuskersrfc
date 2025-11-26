@@ -17,6 +17,7 @@ import MembershipRegister from './pages/MembershipReg';
 import WhatsAppChat from './components/whatsapp';
 import SingleMatch from './pages/SingleMatch';
 import SingleNews from './pages/SingleNews';
+import TeamPage from './pages/TeamPages';
 import { useLayoutEffect } from 'react';
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
@@ -41,6 +42,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/teams" element={<Teams />} />
+              <Route path="/teams/:type" element={<TeamPage />} />
               <Route path="/players" element={<Players />} />
               <Route path="/fixtures" element={<Fixtures />} />
               <Route path="/news" element={<News />} />

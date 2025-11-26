@@ -12,9 +12,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems: { label: string; page?: Page; children?: { label: string; page: Page }[] }[] = [
-    { label: 'Home', page: 'home' },
     { label: 'History', page: 'about' },
-    { label: 'Teams', page: 'teams' },
     { label: 'Players', page: 'players' },
     { label: 'Fixtures & Results', page: 'fixtures' },
     { label: 'Events', page: 'events' },
@@ -22,6 +20,7 @@ export default function Header() {
     { label: 'Gallery', page: 'gallery' },
     { label: 'Membership', page: 'membership' },
     { label: 'Sponsorship', page: 'sponsorship' },
+    { label: 'Policies', page: 'policies' },
     { label: 'Contact', page: 'contact' },
   ];
 

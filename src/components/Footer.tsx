@@ -4,12 +4,24 @@ import { supabase, type Sponsor } from '../lib/supabase';
 import logo from '../images/logo.webp';
 import lion from '../images/lion.webp';
 import diddeniya from '../images/diddeniya.webp';
-import spiderpluse from '../images/spiderplus.svg';
+import spiderpluse from '../images/spiderplus.webp';
 import thambapanni from '../images/thambapanni.webp';
 import kibsons from '../images/kibsons.webp';
+import SlipSafe from '../images/slipsafe.webp';
 
 export default function Footer() {
   const [sponsors, setSponsors] = useState<Sponsor[]>([]);
+  const [current, setCurrent] = useState(0);
+
+  // Mobile auto-rotate
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % sponsors.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [sponsors.length]);
+
 
   const sp = [
     { name: 'Lion', logo_url: lion, website_url: 'https://lionbeer.com/', },
@@ -17,6 +29,7 @@ export default function Footer() {
     { name: 'Spiderplus', logo_url: spiderpluse, website_url: 'https://spiderplus.com/' },
     { name: 'Thambapanni', logo_url: thambapanni, website_url: 'https://thambapanni.com/' },
     { name: 'Kibsons', logo_url: kibsons, website_url: 'https://kibsons.com/' },
+    { name: 'Slip Safe', logo_url: SlipSafe, website_url: 'https://slipsafe.com/' },
   ]
 
   useEffect(() => {
@@ -37,27 +50,50 @@ export default function Footer() {
   return (
     <footer className="bg-[#0f1235] text-white">
       {sponsors.length > 0 && (
-        <div className="border-b border-gray-800">
+        <div className="border-b border-gray-800 overflow-hidden">
           <div className="container mx-auto px-4 py-8">
             <h3 className="text-center text-3xl font-bold mb-6 text-[#f5a623]">
               OUR SPONSORS
             </h3>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6 items-center justify-items-center">
-              {sponsors.map((sponsor) => (
-                <a
-                  href={sponsor.website_url || '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-white hover:shadow-xl rounded-lg transition-shadow w-full h-40 flex items-center justify-center"
-                >
-                  <img
-                    src={sponsor.logo_url}
-                    alt={sponsor.name}
-                    className="w-full min-w-full h-auto max-h-40 object-cover bg-white rounded-lg px-4"
-                  />
-                </a>
-              ))}
+            <div className="relative overflow-hidden hidden md:block">
+              <div
+                className="flex gap-6 animate-scroll whitespace-nowrap"
+                style={{ animationDuration: `${sponsors.length * 1}s` }}
+              >
+                {sponsors.concat(sponsors).map((sponsor, i) => (
+                  <a
+                    key={i}
+                    href={sponsor.website_url || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white w-80 h-40 flex items-center justify-center shadow-sm hover:shadow-lg transition-all flex-shrink-0"
+                  >
+                    <img
+                      src={sponsor.logo_url}
+                      alt={sponsor.name}
+                      className="w-full h-full object-contain p-3"
+                    />
+                  </a>
+                ))}
+              </div>
             </div>
+
+            {/* MOBILE — Show one logo at a time */}
+            <div className="md:hidden flex justify-center items-center h-40">
+              <a
+                href={sponsors[current].website_url || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white w-64 h-40 flex items-center justify-center shadow-sm hover:shadow-lg transition-all"
+              >
+                <img
+                  src={sponsors[current].logo_url}
+                  alt={sponsors[current].name}
+                  className="w-full h-full object-contain p-3"
+                />
+              </a>
+            </div>
+
           </div>
         </div>
       )}

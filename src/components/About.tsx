@@ -1,12 +1,22 @@
 import dabare from '../images/dabare.webp';
 import jb from '../images/jb.webp';
-import arshad from '../images/arshad-2025.webp';
-import dayan from '../images/dayan-2024.webp';
-import { Trophy } from 'lucide-react';
+import arshad from '../images/jama-2025.webp';
+import dayan from '../images/dayan-2025.webp';
+import { Calendar, MapPin, Trophy } from 'lucide-react';
 import logoFull from '../images/logo-full.webp';
+import lg from '../images/logo-bg.webp';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 export default function About({ upcomingFixtures }: any) {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % upcomingFixtures.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [upcomingFixtures.length]);
   const leadership = [
     {
       name: 'Dayan Diddeniya',
@@ -33,7 +43,21 @@ export default function About({ upcomingFixtures }: any) {
       image: arshad
     },
   ];
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-GB', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+  };
 
+  const formatTime = (dateString: string) => {
+    return new Date(dateString).toLocaleTimeString('en-GB', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
   return (
     <div className="min-h-screen bg-gray-50">
       <section className="bg-white py-20">
@@ -166,50 +190,117 @@ export default function About({ upcomingFixtures }: any) {
               Breaking down our recent clashes across all divisions
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        </div>
+        <div className="overflow-hidden py-10">
+          <div className="hidden md:block overflow-hidden">
+            <div
+              className="flex gap-6 animate-fixture-scroll"
+              style={{ animationDuration: `${upcomingFixtures.length * 2}s` }}
+            >
+              {[...upcomingFixtures, ...upcomingFixtures].map((match: any, i) => (
+                <Link
+                  key={i}
+                  to={`/match/${match.id}`}
+                  className="min-w-[40%] bg-white/5 border border-white/30 p-8 shadow-xl hover:bg-white/10 transition-all"
+                >
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex flex-col items-center gap-3">
+                      <img src={lg} className="w-24 h-24 object-contain" />
+                      <span className="text-xl text-white font-semibold uppercase">
+                        {match.home_team}
+                      </span>
+                    </div>
 
-            {upcomingFixtures.map((match: any) => (
-              <div
-                key={match.id}
-                className="p-8 border border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 shadow-xl"
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex flex-col items-center gap-3">
-                    <img
-                      src={match.home_team_logo}
-                      alt={match.teamA}
-                      className="w-24 h-24 object-contain"
-                    />
-                    <span className="text-xl text-white font-semibold tracking-wide uppercase">
-                      {match.home_team}
-                    </span>
+                    <div className="flex flex-col items-center gap-3">
+                      <img src={match.away_team_logo} className="w-24 h-24 object-contain" />
+                      <span className="text-xl text-white font-semibold uppercase">
+                        {match.away_team}
+                      </span>
+                    </div>
                   </div>
 
-
-                  <div className="flex flex-col items-center gap-3">
-                    <img
-                      src={match.away_team_logo}
-                      alt={match.teamB}
-                      className="w-24 h-24 object-contain"
-                    />
-                    <span className="text-xl text-white font-semibold tracking-wide uppercase">
-                      {match.away_team}
-                    </span>
-                  </div>
-                </div>
-                <Link to={`/match/${match.id}`} className='flex flex-col gap-3'>
-                  <span className="text-4xl font-extrabold text-center w-full text-[#f5a623]">
+                  <span className="text-4xl font-extrabold text-center block text-[#f5a623]">
                     {match.home_score} - {match.away_score}
                   </span>
-                  <button className="w-full py-3 border border-[#f5a623] text-[#f5a623] font-semibold tracking-wide uppercase hover:bg-[#f5a623] hover:text-[#0f1229] transition-all duration-300">
+
+                  <div className="text-center text-white text-sm space-y-2 mb-8">
+                    <div className="flex justify-center gap-2 text-[#f5a623]">
+                      <Calendar className="w-4 h-4" />
+                      <span>
+                        {formatDate(match.match_date)} at {formatTime(match.match_date)}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-center gap-2 text-[#f5a623]">
+                      <MapPin className="w-4 h-4" />
+                      <span>{match.venue}</span>
+                    </div>
+
+                    <div className="font-semibold uppercase tracking-wide">
+                      {match.competition}
+                    </div>
+                  </div>
+
+                  <button className="w-full py-3 border border-[#f5a623] text-[#f5a623] font-semibold uppercase hover:bg-[#f5a623] hover:text-[#0f1229] transition-all">
                     Match Details
                   </button>
                 </Link>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
 
+          {/* MOBILE — One card at a time auto-rotating */}
+          <div className="md:hidden flex justify-center">
+            {upcomingFixtures.length > 0 && (
+              <Link
+                to={`/match/${upcomingFixtures[current].id}`}
+                className="w-[90%] bg-white/5 border border-white/30 p-8 shadow-xl transition-all"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex flex-col items-center gap-3">
+                    <img src={lg} className="w-20 h-20 object-contain" />
+                    <span className="text-white font-semibold uppercase">
+                      {upcomingFixtures[current].home_team}
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col items-center gap-3">
+                    <img
+                      src={upcomingFixtures[current].away_team_logo}
+                      className="w-20 h-20 object-contain"
+                    />
+                    <span className="text-white font-semibold uppercase">
+                      {upcomingFixtures[current].away_team}
+                    </span>
+                  </div>
+                </div>
+
+                <span className="text-3xl font-extrabold text-center block text-[#f5a623]">
+                  {upcomingFixtures[current].home_score} - {upcomingFixtures[current].away_score}
+                </span>
+
+                <div className="text-center text-white text-sm space-y-2 mt-4">
+                  <div className="flex justify-center gap-2 text-[#f5a623]">
+                    <Calendar className="w-4 h-4" />
+                    <span>
+                      {formatDate(upcomingFixtures[current].match_date)} at{" "}
+                      {formatTime(upcomingFixtures[current].match_date)}
+                    </span>
+                  </div>
+                  <div className="flex justify-center gap-2 text-[#f5a623]">
+                    <MapPin className="w-4 h-4" />
+                    <span>{upcomingFixtures[current].venue}</span>
+                  </div>
+                </div>
+
+                <button className="w-full mt-6 py-3 border border-[#f5a623] text-[#f5a623] font-semibold uppercase hover:bg-[#f5a623] hover:text-[#0f1229] transition-all">
+                  Match Details
+                </button>
+              </Link>
+            )}
           </div>
         </div>
+
       </section>
     </div>
   );

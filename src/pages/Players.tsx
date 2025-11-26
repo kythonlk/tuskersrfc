@@ -29,8 +29,8 @@ export default function Players() {
 
   const teams = [
     { value: 'all', label: 'All Players' },
-    { value: 'senior', label: 'Senior Team' },
-    { value: 'development', label: 'Development Squad' },
+    { value: 'senior', label: 'Dubai 7s Team' },
+    { value: 'development', label: 'Senior Mens Team' },
     { value: 'touch', label: 'Touch Rugby' },
   ];
 
@@ -56,11 +56,10 @@ export default function Players() {
                 <button
                   key={team.value}
                   onClick={() => setSelectedTeam(team.value)}
-                  className={`px-6 py-2 rounded-md font-semibold transition-all ${
-                    selectedTeam === team.value
-                      ? 'bg-[#1a1f4e] text-white'
-                      : 'text-gray-700 hover:bg-gray-100'
-                  }`}
+                  className={`px-6 py-2 rounded-md font-semibold transition-all ${selectedTeam === team.value
+                    ? 'bg-[#1a1f4e] text-white'
+                    : 'text-gray-700 hover:bg-gray-100'
+                    }`}
                 >
                   {team.label}
                 </button>
@@ -80,7 +79,7 @@ export default function Players() {
                   key={player.id}
                   className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all transform hover:-translate-y-2"
                 >
-                  <div className="bg-gradient-to-br from-[#1a1f4e] to-[#2a2f5e] p-6 text-center relative">
+                  <div className="bg-gradient-to-br from-[#1a1f4e] to-[#2a2f5e] p-4 text-center relative">
                     {player.jersey_number && (
                       <div className="absolute top-2 right-2 bg-[#f5a623] text-[#1a1f4e] w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg">
                         {player.jersey_number}
@@ -90,7 +89,7 @@ export default function Players() {
                       <img
                         src={player.photo_url}
                         alt={player.name}
-                        className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-[#f5a623]"
+                        className="w-48 h-64 mx-auto mb-4 object-cover border-4 border-[#f5a623]"
                       />
                     ) : (
                       <div className="w-24 h-24 rounded-full mx-auto mb-4 bg-[#f5a623] flex items-center justify-center">
@@ -106,7 +105,7 @@ export default function Players() {
                       {player.position}
                     </p>
                     {player.bio && (
-                      <p className="text-xs text-gray-600 line-clamp-3">
+                      <p className="text-xs text-gray-600 line-clamp-4">
                         {player.bio}
                       </p>
                     )}

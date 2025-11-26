@@ -125,7 +125,7 @@ export default function Sponsorship() {
         </div>
       </section>
 
-      <section className="py-16 bg-[#1a1f4e]">
+      {/* <section className="py-16 bg-[#1a1f4e]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -217,7 +217,7 @@ export default function Sponsorship() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="py-16 bg-gradient-to-br from-[#f5a623] to-[#ffc043]">
         <div className="container mx-auto px-4">

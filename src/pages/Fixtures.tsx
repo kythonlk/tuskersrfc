@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Calendar, MapPin } from 'lucide-react';
 import { supabase, type Fixture } from '../lib/supabase';
 import { Link } from 'react-router-dom';
+import lg from '../images/logo-bg.webp';
 
 export default function Fixtures() {
   const [fixtures, setFixtures] = useState<Fixture[]>([]);
@@ -104,30 +105,31 @@ export default function Fixtures() {
               {fixtures.map((fixture) => (
                 <div
                   key={fixture.id}
-                  className="p-10 border border-white/20 bg-[#1a1f4e] backdrop-blur-sm hover:bg-[#1a1f4e]/90 transition-all duration-300 shadow-2xl"
+                  className="p-4 md:p-10 border border-white/20 bg-[#1a1f4e] backdrop-blur-sm hover:bg-[#1a1f4e]/90 transition-all duration-300 shadow-2xl"
                 >
-                  <div className="flex items-center justify-between mb-8">
+                  <div className="flex flex-row md:grid md:grid-cols-3 gap-8 items-center justify-center mb-8">
                     <div className="flex flex-col items-center gap-3">
                       <img
-                        src={fixture.home_team_logo}
+                        src={lg}
                         alt={fixture.home_team}
                         className="w-24 h-24 object-contain"
                       />
-                      <span className="text-xl text-white font-semibold tracking-wide uppercase">
+                      <span className="text-base md:text-xl text-white font-semibold tracking-wide uppercase">
                         {fixture.home_team}
                       </span>
                     </div>
 
-                    <span className="hidden md:inline-block text-4xl font-extrabold text-[#f5a623]">
+                    <span className="hidden md:inline-block text-4xl font-extrabold text-[#f5a623] text-center">
                       {fixture.status === 'completed' &&
                         fixture.home_score !== null &&
                         fixture.away_score !== null
                         ? `${fixture.home_score} - ${fixture.away_score}`
                         : 'VS'}
+                      <span className="md:hidden text-4xl font-extrabold text-[#f5a623]">
+                        VS
+                      </span>
                     </span>
-                    <span className="md:hidden text-4xl font-extrabold text-[#f5a623]">
-                      VS
-                    </span>
+
 
                     <div className="flex flex-col items-center gap-3">
                       <img
@@ -135,7 +137,7 @@ export default function Fixtures() {
                         alt={fixture.away_team}
                         className="w-24 h-24 object-contain"
                       />
-                      <span className="text-xl text-white font-semibold tracking-wide uppercase">
+                      <span className="text-base md:text-xl text-white font-semibold tracking-wide uppercase">
                         {fixture.away_team}
                       </span>
                     </div>

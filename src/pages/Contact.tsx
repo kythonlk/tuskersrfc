@@ -101,7 +101,6 @@ export default function Contact() {
                       <h3 className="text-xl font-bold text-[#1a1f4e] mb-2">
                         Location
                       </h3>
-                      <p className="text-gray-700">Dubai Sports City</p>
                       <p className="text-gray-700">Dubai, UAE</p>
                       <p className="text-sm text-gray-500 mt-1">
                         Training and match venue
@@ -229,11 +228,10 @@ export default function Contact() {
             <h2 className="text-3xl font-bold mb-4">Visit Us</h2>
             <div className="w-24 h-1 bg-[#f5a623] mx-auto mb-6"></div>
             <p className="text-lg text-gray-300 mb-6">
-              Come watch a match or join us for a training session at Dubai Sports
-              City. We train Tuesday, Thursday evenings and Saturday mornings.
+              Come watch a match or join us for a training session at Dubai. We train Tuesday, Thursday evenings and Saturday mornings.
             </p>
             <a
-              href="https://www.google.com/maps/search/Dubai+Sports+City"
+              href="https://www.google.com/maps/search/Dubai"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#f5a623] text-[#1a1f4e] px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#ffc043] transition-colors shadow-lg"

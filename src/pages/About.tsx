@@ -1,24 +1,31 @@
+import t2023 from '../images/2023.webp';
+import t2024 from '../images/2024.webp';
+import t2025 from '../images/jama-2025.webp';
+import tb2023 from '../images/2023t.jpg';
+import tb2024 from '../images/2024t.jpg';
+import tb20242 from '../images/2024t2.jpg';
+
 export default function TuskersHistory() {
   const leaders = [
     {
       year: '2023',
       captain: 'Dayan Diddeniya',
       viceCaptain: 'Arshad Jamaldeen',
-      image: 'https://dubaituskers.com/wp-content/uploads/2025/07/Dayan.jpg',
+      image: t2023,
       captainRole: 'Dubai 7s Captain 2023'
     },
     {
       year: '2024',
       captain: 'Dayan Diddeniya',
       viceCaptain: 'Arshad Jamaldeen',
-      image: 'https://dubaituskers.com/wp-content/uploads/2025/07/480299088_488836810929866_7874549146232405954_n.jpg',
+      image: t2024,
       captainRole: 'Dubai 7s Captain 2024'
     },
     {
       year: '2025',
       captain: 'Arshad Jamaldeen',
-      viceCaptain: 'Chamara Dabare',
-      image: 'https://dubaituskers.com/wp-content/uploads/2025/07/480279844_488837037596510_9216937660547252955_n.jpg',
+      viceCaptain: 'Dulara Danusha',
+      image: t2025,
       captainRole: 'Dubai 7s Captain 2025'
     }
   ];
@@ -120,7 +127,7 @@ export default function TuskersHistory() {
               </p>
 
               <img
-                src="https://dubaituskers.com/wp-content/uploads/2025/07/472144759_459387773874770_8019538801187061671_n-1024x655.jpg"
+                src={tb2023}
                 className="w-full object-cover border-2 shadow-lg"
                 style={{ borderColor: '#f5a623' }}
               />
@@ -151,13 +158,13 @@ export default function TuskersHistory() {
               </p>
 
               <img
-                src="https://dubaituskers.com/wp-content/uploads/2025/07/4-1024x439.jpg"
+                src={tb2024}
                 className="w-full object-cover border-2 shadow-lg"
                 style={{ borderColor: '#f5a623' }}
               />
 
               <img
-                src="https://dubaituskers.com/wp-content/uploads/2025/07/CC-1024x375.jpg"
+                src={tb20242}
                 className="w-full object-cover border-2 shadow-lg"
                 style={{ borderColor: '#f5a623' }}
               />
@@ -200,7 +207,7 @@ export default function TuskersHistory() {
                   style={{ borderColor: '#f5a623' }}
                 >
                   <p className="font-bold text-xl mb-2" style={{ color: '#f5a623' }}>Vice Captain</p>
-                  <p className="text-white text-2xl font-semibold">Chamara Dabare</p>
+                  <p className="text-white text-2xl font-semibold">Dulara Danusha</p>
                 </div>
               </div>
             </div>
