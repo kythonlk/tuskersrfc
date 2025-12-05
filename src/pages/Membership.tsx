@@ -1,6 +1,7 @@
 import { CheckCircle2, Users, Trophy, Heart, Calendar, ArrowRight } from 'lucide-react';
 import a from '../images/15s.webp';
 import b from '../images/touch.webp';
+import c from '../images/women.webp';
 import { Link } from 'react-router-dom';
 
 export default function Membership() {
@@ -21,6 +22,23 @@ export default function Membership() {
         "All playing kit, organized coaching, insurance included",
       ],
       whatWePlay: "UAE Division & Emirates Dubai 7s",
+    },
+    {
+      label: "Womens’s Rugby",
+      age: "18 YEARS AND UP",
+      price: "AED 1,250",
+      image: c,
+      type: "women",
+      perks: [
+        "One-year club membership",
+        "Weekly training and fitness sessions led by experienced coaches",
+        "Free entry to the Dubai 7s tournament",
+        "20% discount on all Dubai Tuskers merchandise",
+        "15% discount on Dubai Tuskers events",
+        "Free family entry to all Dubai Tuskers social gatherings",
+        "All playing kit, organized coaching, insurance included",
+      ],
+      whatWePlay: "UAE Divisions & Emirates Dubai 7s",
     },
     {
       label: "Social Touch Rugby",
@@ -57,7 +75,7 @@ export default function Membership() {
 
       <section className="py-12 bg-white">
         <div className="px-4 md:mx-20 lg:mx-40">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 ms:mx-20">
             {memberships.map((m, index) => (
               <Link
                 key={index}
@@ -83,8 +101,6 @@ export default function Membership() {
                   <p className="text-[#f5a623] text-3xl sm:text-4xl font-extrabold mb-1">
                     {m.price}
                   </p>
-
-                  <p className="text-gray-600 text-xs sm:text-sm mb-4">{m.type}</p>
 
                   <h4 className="text-base sm:text-lg font-semibold text-[#1a1f4e] mb-3">
                     Membership Benefits

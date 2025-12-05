@@ -1,4 +1,5 @@
 import { FileText, Shield, Users, AlertCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Policies() {
   const policies = [
@@ -125,9 +126,13 @@ export default function Policies() {
                 <p className="text-gray-600 mb-4">
                   Complete this form to apply for membership
                 </p>
-                <button className="text-[#1a1f4e] font-semibold hover:text-[#f5a623] transition-colors">
-                  Download PDF →
-                </button>
+                <Link
+                  to="/membership"
+                >
+                  <button className="text-[#1a1f4e] font-semibold hover:text-[#f5a623] transition-colors">
+                    Register →
+                  </button>
+                </Link>
               </div>
 
               <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200 hover:border-[#f5a623] transition-colors">
@@ -186,11 +191,19 @@ export default function Policies() {
                 UAE data protection regulations. Your information is used solely
                 for club administration, communication, and member services.
               </p>
-              <p className="text-gray-700 leading-relaxed">
+              <p className="text-gray-700 leading-relaxed mb-6">
                 We will never share your personal information with third parties
                 without your explicit consent, except where required by law or for
                 essential club operations (such as insurance).
               </p>
+              <a
+                href="https://uaerugby.ae/resources/regulations/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#1a1f4e] font-semibold hover:text-[#1a1f4e]/80 text-2xl transition-colors mt-4 bg-[#f5a623]/90 p-2 "
+              >
+                Read UAE Rugby FEDERATION official Policies and Regulations
+              </a>
             </div>
           </div>
         </div>

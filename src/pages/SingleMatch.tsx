@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Calendar, MapPin, Trophy } from "lucide-react";
 import { supabase, type Fixture } from "../lib/supabase";
+import lg from '../images/logo-bg.webp';
 
 function SingleMatch() {
   const { id } = useParams();
@@ -52,13 +53,13 @@ function SingleMatch() {
           </h1>
 
           <div className="flex items-center justify-between mb-12">
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center justify-center gap-4">
               <img
-                src={match.home_team_logo}
+                src={lg}
                 alt={match.home_team}
                 className="w-28 h-28 object-contain"
               />
-              <span className="text-xl tracking-wide uppercase font-semibold">
+              <span className="text-xl text-center uppercase font-semibold">
                 {match.home_team}
               </span>
             </div>
@@ -75,7 +76,7 @@ function SingleMatch() {
                 alt={match.away_team}
                 className="w-28 h-28 object-contain"
               />
-              <span className="text-xl tracking-wide uppercase font-semibold">
+              <span className="text-xl text-center uppercase font-semibold">
                 {match.away_team}
               </span>
             </div>

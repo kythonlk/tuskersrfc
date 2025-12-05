@@ -22,7 +22,7 @@ export default function Home() {
         .select('*')
         .eq('status', 'completed')
         .order('match_date', { ascending: true })
-        .limit(4);
+        .limit(6);
 
       if (newsData) setLatestNews(newsData);
       if (fixturesData) setUpcomingFixtures(fixturesData);

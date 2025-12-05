@@ -106,7 +106,9 @@ export default function MembershipRegister() {
     <div className="min-h-screen bg-gray-50 py-16">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center mb-6 text-[#1a1f4e]">
-          {membershipType === 'men' ? 'Player Registration - Men’s Rugby' : 'Touch Rugby Registration'}
+          {membershipType === 'men' && 'Player Registration - Men’s Rugby'}
+          {membershipType === 'touch' && 'Touch Rugby Registration'}
+          {membershipType === 'women' && 'Player Registration - Womens’s Rugby'}
         </h1>
         <div className="w-24 h-1 bg-[#f5a623] mx-auto mb-8"></div>
 
@@ -129,8 +131,6 @@ export default function MembershipRegister() {
                 <p className="text-red-700">{error}</p>
               </div>
             )}
-
-            {/* Personal Info */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block font-semibold text-gray-700 mb-1">First Name *</label>

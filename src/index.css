@@ -3,30 +3,43 @@
 @tailwind utilities;
 
 
-@keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
+@keyframes scrollLoop {
+  from {
+    transform: translateX(0);
+  }
 
-    100% {
-        transform: translateX(-50%);
-    }
+  to {
+    transform: translateX(calc(-1 * var(--loop-width)));
+  }
 }
 
-.animate-scroll {
-    animation: scroll linear infinite;
-}
 
-@keyframes fixture-scroll {
-    0% {
-        transform: translateX(0);
-    }
+/* @keyframes fixtureScroll { */
+/*   from { */
+/*     transform: translateX(0); */
+/*   } */
+/**/
+/*   to { */
+/*     transform: translateX(calc(-1 * var(--fixture-width))); */
+/*   } */
+/* } */
 
-    100% {
-        transform: translateX(-50%);
-    }
+/* index.css or global.css */
+@keyframes fixtureScroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .animate-fixture-scroll {
-    animation: fixture-scroll linear infinite;
+  animation: fixtureScroll 30s linear infinite;
+}
+
+/* Pause animation on hover for better UX */
+.animate-fixture-scroll:hover {
+  animation-play-state: paused;
 }

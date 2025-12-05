@@ -1,6 +1,7 @@
 import t2023 from '../images/2023.webp';
 import t2024 from '../images/2024.webp';
 import t2025 from '../images/jama-2025.webp';
+import ta2025 from '../images/dayan-2025.webp';
 import tb2023 from '../images/2023t.jpg';
 import tb2024 from '../images/2024t.jpg';
 import tb20242 from '../images/2024t2.jpg';
@@ -48,11 +49,11 @@ export default function TuskersHistory() {
       {/* STORY BLOCK */}
       <div className="py-16 px-6 md:px-16 lg:px-24 bg-white">
         <div
-          className="rounded-3xl p-8 md:p-12 shadow-xl border-2"
+          className="rounded-3xl p-4 md:p-10 shadow-xl border-2"
           style={{ backgroundColor: '#2a2f5e', borderColor: '#f5a623' }}
         >
           <h2
-            className="text-3xl md:text-4xl font-bold mb-8 flex items-center gap-3"
+            className="text-3xl md:text-4xl font-bold flex items-center gap-3"
             style={{ color: '#f5a623' }}
           >
             The Story of Dubai Tuskers
@@ -73,9 +74,9 @@ export default function TuskersHistory() {
             </div>
 
             <div className="flex justify-center">
-              <div className="relative w-56 h-72 md:w-64 md:h-72">
+              <div className="relative w-56 h-72 md:w-64 md:h-80">
                 <img
-                  src="https://dubaituskers.com/wp-content/uploads/2025/07/Dayan.jpg"
+                  src={ta2025}
                   alt="Dayan"
                   className="w-full h-full object-cover rounded-2xl border-4"
                   style={{ borderColor: '#f5a623' }}
@@ -94,7 +95,7 @@ export default function TuskersHistory() {
       </div>
 
       <div
-        className="py-16 px-0 md:px-16 lg:px-24 bg-[#1a1f4e]"
+        className="py-10 px-2 md:px-16 lg:px-24 bg-[#1a1f4e]"
       >
         <div className="space-y-16">
 
@@ -186,7 +187,7 @@ export default function TuskersHistory() {
             </div>
 
             <div
-              className="rounded-3xl p-6 md:p-8 border-2 space-y-6"
+              className="p-6 md:p-8 border-2 space-y-6"
               style={{ backgroundColor: '#2a2f5e', borderColor: '#f5a623' }}
             >
               <p className="text-white text-lg">
@@ -210,6 +211,12 @@ export default function TuskersHistory() {
                   <p className="text-white text-2xl font-semibold">Dulara Danusha</p>
                 </div>
               </div>
+
+              <img
+                src={"https://qasvqrglwupcdqosogac.supabase.co/storage/v1/object/public/posts/2025-banner.webp"}
+                className="w-full object-cover border-2 shadow-lg"
+                style={{ borderColor: '#f5a623' }}
+              />
             </div>
           </div>
 
@@ -226,7 +233,7 @@ export default function TuskersHistory() {
           <div className="h-1 w-32 mx-auto mt-6" style={{ backgroundColor: '#f5a623' }} />
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
+        <div className="grid md:grid-cols-3 gap-12 mb-8 mx-10">
           {leaders.map((leader, idx) => (
             <div key={idx} className="rounded-2xl overflow-hidden border-2"
               style={{ backgroundColor: '#2a2f5e', borderColor: '#f5a623' }}
@@ -234,7 +241,7 @@ export default function TuskersHistory() {
               <img
                 src={leader.image}
                 alt={leader.captain}
-                className="w-full h-[26em] md:h-[40em] object-cover"
+                className="w-full h-[24em] md:h-[40em] object-cover"
               />
               <div className="p-6 space-y-2">
                 <div

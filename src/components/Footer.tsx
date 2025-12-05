@@ -1,5 +1,5 @@
 import { Facebook, Instagram, Linkedin, Youtube, Mail, Phone, MapPin } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { supabase, type Sponsor } from '../lib/supabase';
 import logo from '../images/logo.webp';
 import lion from '../images/lion.webp';
@@ -13,14 +13,29 @@ export default function Footer() {
   const [sponsors, setSponsors] = useState<Sponsor[]>([]);
   const [current, setCurrent] = useState(0);
 
-  // Mobile auto-rotate
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % sponsors.length);
     }, 3000);
-
     return () => clearInterval(interval);
   }, [sponsors.length]);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      setWidth(contentRef.current.scrollWidth);
+    }
+  }, [sponsors]);
+
+  useEffect(() => {
+    if (containerRef.current && width) {
+      containerRef.current.style.setProperty('--loop-width', `${width + 5}px`);
+    }
+  }, [width]);
 
 
   const sp = [
@@ -57,28 +72,32 @@ export default function Footer() {
             </h3>
             <div className="relative overflow-hidden hidden md:block">
               <div
-                className="flex gap-6 animate-scroll whitespace-nowrap"
-                style={{ animationDuration: `${sponsors.length * 1}s` }}
+                ref={containerRef}
+                className="flex gap-6"
+                style={{
+                  width: width ? width * 2 : 'auto',
+                  animation: width ? `scrollLoop ${width / 50}s linear infinite` : '',
+                }}
               >
-                {sponsors.concat(sponsors).map((sponsor, i) => (
-                  <a
-                    key={i}
-                    href={sponsor.website_url || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-white w-80 h-40 flex items-center justify-center shadow-sm hover:shadow-lg transition-all flex-shrink-0"
-                  >
-                    <img
-                      src={sponsor.logo_url}
-                      alt={sponsor.name}
-                      className="w-full h-full object-contain p-3"
-                    />
-                  </a>
-                ))}
+                <div ref={contentRef} className="flex gap-6">
+                  {sponsors.map((s, i) => (
+                    <a key={i} className="bg-white w-80 h-40 flex items-center justify-center flex-shrink-0">
+                      <img src={s.logo_url} className="w-full h-full object-contain p-3" />
+                    </a>
+                  ))}
+                </div>
+
+                <div style={{ width: '1.5rem' }} />
+                <div className="flex gap-6">
+                  {sponsors.map((s, i) => (
+                    <a key={`clone-${i}`} className="bg-white w-80 h-40 flex items-center justify-center flex-shrink-0">
+                      <img src={s.logo_url} className="w-full h-full object-contain p-3" />
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* MOBILE — Show one logo at a time */}
             <div className="md:hidden flex justify-center items-center h-40">
               <a
                 href={sponsors[current].website_url || "#"}
@@ -173,7 +192,7 @@ export default function Footer() {
 
             <div className="flex items-center gap-3 mt-6">
               <a
-                href="https://www.facebook.com/dubaituskers"
+                href="https://www.facebook.com/dubaituskersrfc"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#1a1f4e] p-2 rounded-full hover:bg-[#f5a623] transition-colors"
@@ -182,7 +201,7 @@ export default function Footer() {
                 <Facebook className="h-5 w-5" />
               </a>
               <a
-                href="https://www.instagram.com/dubaituskers"
+                href="https://www.instagram.com/dubaituskersrfc"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#1a1f4e] p-2 rounded-full hover:bg-[#f5a623] transition-colors"
@@ -191,7 +210,7 @@ export default function Footer() {
                 <Instagram className="h-5 w-5" />
               </a>
               <a
-                href="https://www.linkedin.com/company/dubaituskers"
+                href="https://www.linkedin.com/company/dubaituskersrfc"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#1a1f4e] p-2 rounded-full hover:bg-[#f5a623] transition-colors"
@@ -200,7 +219,7 @@ export default function Footer() {
                 <Linkedin className="h-5 w-5" />
               </a>
               <a
-                href="https://www.youtube.com/dubaituskers"
+                href="https://www.youtube.com/@DubaiTuskers/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#1a1f4e] p-2 rounded-full hover:bg-[#f5a623] transition-colors"

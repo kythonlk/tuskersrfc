@@ -43,29 +43,27 @@ function SingleNews() {
 
   return (
     <section className="bg-[#0f1229] min-h-screen text-white py-20">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="mx-2 md:mx-20 px-4">
 
         <div className="bg-white text-black shadow-2xl border border-black/10 p-0 rounded-none">
 
           <img
             src={news.image_url}
             alt={news.title}
-            className="w-full h-[40em] object-cover rounded-none"
+            className="w-full h-[18em] sm:h-[44em] object-cover rounded-none"
           />
 
-          <div className="p-10 rounded-none">
+          <div className="p-2 sm:p-8 rounded-none">
 
-            <h1 className="text-4xl font-bold tracking-wide mb-6 text-[#0f1229]">
+            <h1 className="text-2xl sm:text-4xl font-bold tracking-wide mb-4 text-[#0f1229]">
               {news.title}
             </h1>
 
-            <p className="text-gray-600 text-sm mb-10 tracking-wide">
+            <p className="text-gray-600 text-sm mb-6 tracking-wide">
               Published: {new Date(news.created_at).toLocaleDateString()}
             </p>
 
-            <div className="text-lg leading-relaxed tracking-wide whitespace-pre-line">
-              {news.content}
-            </div>
+            <div className="text-lg leading-relaxed tracking-wide" dangerouslySetInnerHTML={{ __html: news.content }} />
           </div>
         </div>
       </div>
