@@ -164,7 +164,7 @@ export default function Sponsorship() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
-              Sponsorship Tiers
+              Sponsorship Opportunities for 2026
             </h2>
             <div className="w-24 h-1 bg-[#f5a623] mx-auto"></div>
           </div>
