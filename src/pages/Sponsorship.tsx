@@ -113,13 +113,40 @@ export default function Sponsorship() {
     <div className="min-h-screen bg-gray-50">
       <section className="bg-gradient-to-br from-[#1a1f4e] to-[#2a2f5e] text-white py-20">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">
-            Sponsorship Opportunities
+          <h1 className="text-4xl md:text-5xl font-bold text-center my-6">
+            Sponsorship Opportunities for 2026
           </h1>
-          <div className="w-24 h-1 bg-[#f5a623] mx-auto mb-8"></div>
-          <p className="text-xl text-center text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-center text-gray-300 max-w-3xl mx-auto mt-4">
             Partner with Dubai Tuskers RFC and be part of our growing success story
           </p>
+        </div>
+        <div className="container mx-auto px-4 py-6">
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {tiers.map((tier, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all transform hover:-translate-y-2"
+              >
+                <div
+                  className={`bg-gradient-to-r ${tier.color} p-6 text-white text-center`}
+                >
+                  <h3 className="text-2xl font-bold">{tier.name}</h3>
+                  <p className="text-lg">{tier.price}</p>
+                </div>
+                <div className="p-6">
+                  <ul className="space-y-3">
+                    {tier.benefits.map((benefit, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="text-[#f5a623] mt-1">&bull;</span>
+                        <span className="text-sm text-gray-700">{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -156,42 +183,6 @@ export default function Sponsorship() {
                 );
               })}
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 bg-[#1a1f4e]">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-4">
-              Sponsorship Opportunities for 2026
-            </h2>
-            <div className="w-24 h-1 bg-[#f5a623] mx-auto"></div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            {tiers.map((tier, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all transform hover:-translate-y-2"
-              >
-                <div
-                  className={`bg-gradient-to-r ${tier.color} p-6 text-white text-center`}
-                >
-                  <h3 className="text-2xl font-bold">{tier.name}</h3>
-                </div>
-                <div className="p-6">
-                  <ul className="space-y-3">
-                    {tier.benefits.map((benefit, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="text-[#f5a623] mt-1">&bull;</span>
-                        <span className="text-sm text-gray-700">{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
