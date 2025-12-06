@@ -27,48 +27,83 @@ export default function Sponsorship() {
 
   const tiers = [
     {
-      name: 'Platinum Partner',
+      name: 'Club Platinum Plus Sponsor',
+      price: 'AED 100,000.00',
+      color: 'from-slate-700 to-slate-900', // Premium dark slate for top tier
+      benefits: [
+        '⭐ Prime logo placement – Center Front of Home & Away Jerseys',
+        'Premium logo on all apparel (Warm-up, T-shirts, Event kits)',
+        'Top-tier visibility on banners, press backdrops & tent',
+        'Feature placement on website & priority social media',
+        '10 Complimentary passes (Inc. Emirates Dubai Rugby 7s)',
+        'Annual corporate rugby session for company staff',
+        'Presentation opportunity at major club events',
+        'Sponsorship plaque & Framed Jersey',
+      ],
+    },
+    {
+      name: 'Club Platinum Sponsor',
+      price: 'AED 75,000.00',
       color: 'from-gray-400 to-gray-600',
       benefits: [
-        'Primary logo placement on match and training kits',
-        'Prominent branding at all events and matches',
-        'Exclusive naming rights opportunities',
-        'Featured sponsor on website and social media',
-        'VIP hospitality packages for all home matches',
-        'Direct marketing access to club database',
-        'Board representation and strategic input',
+        '⭐ Logo placement – Upper Back of Home & Away Jerseys',
+        'Logo on warm-up kits, T-shirts & branding zones',
+        'Featured on website sponsor listing & social media',
+        'Mentions on match-day photography',
+        '7 Complimentary passes to all major events',
+        'Annual corporate rugby session',
+        'Recognition plaque & Framed Jersey',
       ],
     },
     {
-      name: 'Gold Sponsor',
+      name: 'Club Gold Sponsor',
+      price: 'AED 50,000.00',
       color: 'from-yellow-400 to-yellow-600',
       benefits: [
-        'Logo on match kits',
-        'Banner display at home matches',
-        'Website homepage featuring',
-        'Social media promotion',
-        'Match day hospitality (4 guests)',
-        'Quarterly newsletter features',
+        '⭐ Logo placement – Lower Back of Playing Jerseys',
+        'Logo on warm-up kits and community apparel',
+        'Social media representation & Website acknowledgment',
+        'Tagged in official photos/videos',
+        '5 Complimentary passes to major tournaments',
+        'Invitation to exclusive networking gatherings',
+        'Recognition plaque & Framed Jersey',
       ],
     },
     {
-      name: 'Silver Sponsor',
+      name: 'Club Silver Sponsor',
+      price: 'AED 25,000.00',
       color: 'from-gray-300 to-gray-500',
       benefits: [
-        'Logo on training kits',
-        'Website sponsor page listing',
-        'Social media mentions',
-        'Match day tickets (2 guests)',
-        'Email marketing inclusion',
+        '⭐ Logo placement – On Playing Jersey Sleeves',
+        'Logo on warm-up kits and community apparel',
+        'Mention on club website & Match-day gallery tags',
+        '3 Complimentary passes to major tournaments',
+        'Invitation to exclusive networking gatherings',
+        'Recognition plaque & Framed Jersey',
       ],
     },
     {
-      name: 'Bronze Supporter',
+      name: 'Club Bronze Sponsor',
+      price: 'AED 15,000.00',
       color: 'from-orange-400 to-orange-600',
       benefits: [
-        'Logo on website',
-        'Social media acknowledgment',
-        'Newsletter mentions',
+        '⭐ Logo placement – Shoulder of Playing Jerseys',
+        'Logo on warm-up kits and community apparel',
+        'Mention on social media sponsor post',
+        'Inclusion in sponsor listing on website',
+        '2 Complimentary passes',
+        'Invitation to exclusive networking gatherings',
+        'Recognition plaque & Framed Jersey',
+      ],
+    },
+    {
+      name: 'Other Sponsors',
+      price: 'Below AED 10,000.00',
+      color: 'from-blue-400 to-blue-600',
+      benefits: [
+        '⭐ Logo Placement – Collar Area of Playing Jerseys',
+        'Branding in selected digital activities',
+        'Participation at club-organized public events',
         'Community appreciation',
       ],
     },
@@ -125,7 +160,7 @@ export default function Sponsorship() {
         </div>
       </section>
 
-      {/* <section className="py-16 bg-[#1a1f4e]">
+      <section className="py-16 bg-[#1a1f4e]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -149,7 +184,7 @@ export default function Sponsorship() {
                   <ul className="space-y-3">
                     {tier.benefits.map((benefit, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="text-[#f5a623] mt-1">✓</span>
+                        <span className="text-[#f5a623] mt-1">&bull;</span>
                         <span className="text-sm text-gray-700">{benefit}</span>
                       </li>
                     ))}
@@ -217,7 +252,7 @@ export default function Sponsorship() {
             </div>
           </div>
         </div>
-      </section> */}
+      </section>
 
       <section className="py-16 bg-gradient-to-br from-[#f5a623] to-[#ffc043]">
         <div className="container mx-auto px-4">

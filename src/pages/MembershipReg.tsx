@@ -7,19 +7,28 @@ export default function MembershipRegister() {
   const [searchParams] = useSearchParams();
   const membershipType = searchParams.get('type') || 'men';
 
+  const fileToBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve((reader.result as string).split(',')[1]); // remove "data:...base64,"
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
     email: '',
-    confirm_email: '',
+    membership_type: membershipType,
+    emergency_contact: '',
+    emergency_phone: '',
     phone: '',
     whatsapp: '',
-    street_address: '',
-    city: '',
     dob: '',
     playing_position: '',
     secondary_position: '',
     other_position: '',
+    address: '',
     height: '',
     weight: '',
     emirates_id: '',
@@ -27,14 +36,17 @@ export default function MembershipRegister() {
     passport_number: '',
     nationality: '',
     passport_photo: null as File | null,
-    data_protection: 'no',
+  });
+
+  const [formbData, setFormbData] = useState({
+    street_address: '',
+    city: '',
   });
 
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
-  // Handle form field changes
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -46,24 +58,33 @@ export default function MembershipRegister() {
     }
   };
 
+  const handlebChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target as HTMLInputElement;
+    setFormbData({ ...formbData, [name]: value });
+  };
+
   // Submit form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     setError('');
+    console.log(formData);
 
     try {
-      // For simplicity, uploading files as base64
+
       const formToSubmit: any = { ...formData, membership_type: membershipType };
 
       if (formData.emirates_id_file) {
-        const fileData = await formData.emirates_id_file.arrayBuffer();
-        formToSubmit.emirates_id_file = Buffer.from(fileData).toString('base64');
+        formToSubmit.emirates_id_file = await fileToBase64(formData.emirates_id_file);
       }
+
       if (formData.passport_photo) {
-        const fileData = await formData.passport_photo.arrayBuffer();
-        formToSubmit.passport_photo = Buffer.from(fileData).toString('base64');
+        formToSubmit.passport_photo = await fileToBase64(formData.passport_photo);
       }
+      const address = `${formbData.street_address}, ${formbData.city}`;
+      formToSubmit.address = address;
 
       const { error: submitError } = await supabase
         .from('memberships')
@@ -71,28 +92,36 @@ export default function MembershipRegister() {
 
       if (submitError) throw submitError;
 
+      await supabase.functions.invoke("rapid-handler", {
+        body: formToSubmit
+      });
+
       setSubmitted(true);
       setFormData({
         first_name: '',
         last_name: '',
+        membership_type: membershipType,
+        emergency_contact: '',
+        emergency_phone: '',
         email: '',
-        confirm_email: '',
         phone: '',
         whatsapp: '',
-        street_address: '',
-        city: '',
         dob: '',
         playing_position: '',
         secondary_position: '',
         other_position: '',
+        address: '',
         height: '',
         weight: '',
         emirates_id: '',
         emirates_id_file: null,
         passport_number: '',
         nationality: '',
-        passport_photo: null,
-        data_protection: 'no',
+        passport_photo: null
+      });
+      setFormbData({
+        street_address: '',
+        city: '',
       });
     } catch (err) {
       console.error(err);
@@ -168,17 +197,6 @@ export default function MembershipRegister() {
                   className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
                 />
               </div>
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Confirm Email *</label>
-                <input
-                  type="email"
-                  name="confirm_email"
-                  value={formData.confirm_email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
-                />
-              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -214,8 +232,8 @@ export default function MembershipRegister() {
                 <input
                   type="text"
                   name="street_address"
-                  value={formData.street_address}
-                  onChange={handleChange}
+                  value={formbData.street_address}
+                  onChange={handlebChange}
                   className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
                 />
               </div>
@@ -224,14 +242,13 @@ export default function MembershipRegister() {
                 <input
                   type="text"
                   name="city"
-                  value={formData.city}
-                  onChange={handleChange}
+                  value={formbData.city}
+                  onChange={handlebChange}
                   className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
                 />
               </div>
             </div>
 
-            {/* DOB and Positions */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block font-semibold text-gray-700 mb-1">Date of Birth *</label>
@@ -379,8 +396,6 @@ export default function MembershipRegister() {
                     type="radio"
                     name="data_protection"
                     value="yes"
-                    checked={formData.data_protection === 'yes'}
-                    onChange={handleChange}
                     required
                     className="mr-2"
                   />
@@ -391,8 +406,6 @@ export default function MembershipRegister() {
                     type="radio"
                     name="data_protection"
                     value="no"
-                    checked={formData.data_protection === 'no'}
-                    onChange={handleChange}
                     required
                     className="mr-2"
                   />

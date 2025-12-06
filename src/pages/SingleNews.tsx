@@ -43,6 +43,9 @@ function SingleNews() {
 
   return (
     <section className="bg-[#0f1229] min-h-screen text-white py-20">
+      <head>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+      </head>
       <div className="mx-2 md:mx-20 px-4">
 
         <div className="bg-white text-black shadow-2xl border border-black/10 p-0 rounded-none">

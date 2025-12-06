@@ -50,7 +50,7 @@ export default function Policies() {
       points: [
         'Annual membership fees as published',
         'Commitment to training attendance (playing members)',
-        'Adherence to club policies and code of conduct',
+        'Adherence to UAE laws and rugby regulations. More infor www.uaerugby.ae',
         'Payment of match fees where applicable',
         'Notice period for membership cancellation',
         'Refund policy as per membership agreement',
@@ -121,23 +121,6 @@ export default function Policies() {
               <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200 hover:border-[#f5a623] transition-colors">
                 <FileText className="h-10 w-10 text-[#f5a623] mb-4" />
                 <h3 className="text-xl font-bold text-[#1a1f4e] mb-2">
-                  Membership Application Form
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  Complete this form to apply for membership
-                </p>
-                <Link
-                  to="/membership"
-                >
-                  <button className="text-[#1a1f4e] font-semibold hover:text-[#f5a623] transition-colors">
-                    Register →
-                  </button>
-                </Link>
-              </div>
-
-              <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200 hover:border-[#f5a623] transition-colors">
-                <FileText className="h-10 w-10 text-[#f5a623] mb-4" />
-                <h3 className="text-xl font-bold text-[#1a1f4e] mb-2">
                   Medical Clearance Form
                 </h3>
                 <p className="text-gray-600 mb-4">
@@ -148,18 +131,6 @@ export default function Policies() {
                 </button>
               </div>
 
-              <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200 hover:border-[#f5a623] transition-colors">
-                <FileText className="h-10 w-10 text-[#f5a623] mb-4" />
-                <h3 className="text-xl font-bold text-[#1a1f4e] mb-2">
-                  Club Constitution
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  Official club constitution and bylaws
-                </p>
-                <button className="text-[#1a1f4e] font-semibold hover:text-[#f5a623] transition-colors">
-                  Download PDF →
-                </button>
-              </div>
 
               <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200 hover:border-[#f5a623] transition-colors">
                 <FileText className="h-10 w-10 text-[#f5a623] mb-4" />

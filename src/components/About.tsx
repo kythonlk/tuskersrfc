@@ -6,7 +6,7 @@ import { Calendar, MapPin, Trophy } from 'lucide-react';
 import logoFull from '../images/logo-full.webp';
 import lg from '../images/logo-bg.webp';
 import { Link } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString('en-GB', {
