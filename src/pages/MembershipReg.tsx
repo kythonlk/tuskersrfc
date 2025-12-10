@@ -91,10 +91,13 @@ export default function MembershipRegister() {
         .insert([formToSubmit]);
 
       if (submitError) throw submitError;
+      console.log(formToSubmit);
 
-      await supabase.functions.invoke("rapid-handler", {
+      const { error: rapidError } = await supabase.functions.invoke("rapid-handler", {
         body: formToSubmit
       });
+
+      if (rapidError) throw rapidError;
 
       setSubmitted(true);
       setFormData({

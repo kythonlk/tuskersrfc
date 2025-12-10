@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import a from '../images/b1.webp';
-import b from '../images/b2.webp';
+// import b from '../images/b2.webp';
 import c from '../images/15s.webp';
 import f from '../images/10s.webp';
 import g from '../images/7s.webp';
@@ -11,21 +11,21 @@ import { Link } from "react-router-dom";
 export default function HeroWithMembership() {
   const slides = [
     {
-      img: a,
+      img: h,
       title: "Join the Tuskers Rugby Family",
       subtitle: "Senior Men • Senior Women • Touch Rugby",
       cta: "Become a Member",
       link: "/membership",
     },
     {
-      img: b,
+      img: a,
       title: "Gulf Mens Social Plate Champions",
       subtitle: "2024 Dubai 7s Tournament",
       cta: "Learn More",
       link: "/about",
     },
     {
-      img: h,
+      img: "https://qasvqrglwupcdqosogac.supabase.co/storage/v1/object/public/posts/2025-banner.png",
       title: "Gulf Mens Open Bowl Runner Up",
       subtitle: "2025 Dubai 7s Tournament",
       cta: "Learn More",

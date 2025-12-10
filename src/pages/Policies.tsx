@@ -126,9 +126,14 @@ export default function Policies() {
                 <p className="text-gray-600 mb-4">
                   Required for all playing members
                 </p>
-                <button className="text-[#1a1f4e] font-semibold hover:text-[#f5a623] transition-colors">
-                  Download PDF →
-                </button>
+                <Link
+                  to="/medical-clearance"
+                  className="text-[#1a1f4e] font-semibold hover:text-[#f5a623] transition-colors"
+                >
+                  <button className="text-[#1a1f4e] font-semibold hover:text-[#f5a623] transition-colors">
+                    Go to Form →
+                  </button>
+                </Link>
               </div>
 
 
