@@ -74,6 +74,9 @@ export default function EventSingle() {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
+      <head>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+      </head>
       {/* Hero Header */}
       <div className="relative h-[50vh] min-h-[400px] bg-gray-900 overflow-hidden">
         {event.image_url ? (
