@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import EventSingle from './pages/EventSingle';
 import Home from './pages/Home';
 import About from './pages/About';
 import Teams from './pages/Teams';
@@ -20,6 +21,7 @@ import SingleNews from './pages/SingleNews';
 import MedicalClearance from './pages/Medical';
 import TeamPage from './pages/TeamPages';
 import { useLayoutEffect } from 'react';
+import EventForm from './pages/EventForm';
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
@@ -42,6 +44,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/event/:id" element={<EventSingle />} />
+              <Route path="/event/:id/register" element={<EventForm />} />
               <Route path="/teams" element={<Teams />} />
               <Route path="/medical-clearance" element={<MedicalClearance />} />
               <Route path="/teams/:type" element={<TeamPage />} />
