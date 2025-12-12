@@ -89,8 +89,8 @@ export default function Events() {
                     )}
                     <div className="absolute top-4 right-4">
                       <span className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm ${isUpcoming(event.event_date)
-                          ? 'bg-[#f5a623] text-white'
-                          : 'bg-gray-600 text-white'
+                        ? 'bg-[#f5a623] text-white'
+                        : 'bg-gray-600 text-white'
                         }`}>
                         {isUpcoming(event.event_date) ? 'Upcoming' : 'Past'}
                       </span>
@@ -122,7 +122,7 @@ export default function Events() {
                         <MapPin className="w-4 h-4 text-[#f5a623]" />
                         <span className="truncate max-w-[120px]">{event.location}</span>
                       </div>
-                      <Link to={`/event/${event.id}`} className="text-[#1a1f4e] font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                      <Link to={`/event/${event.slug}`} className="text-[#1a1f4e] font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                         View Details <ArrowRight className="w-4 h-4" />
                       </Link>
                     </div>

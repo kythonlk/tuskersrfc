@@ -23,6 +23,7 @@ export type News = {
 export type Event = {
   id: string;
   title: string;
+  slug: string;
   description: string;
   short_description?: string;
   event_date: string;

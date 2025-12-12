@@ -17,7 +17,7 @@ export default function EventSingle() {
       const { data } = await supabase
         .from('events')
         .select('*')
-        .eq('id', id)
+        .eq('slug', id)
         .single();
 
       if (data) {
@@ -128,7 +128,7 @@ export default function EventSingle() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 -mt-20 relative z-30">
+      <div className="container mx-auto px-4  relative z-30">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2">
@@ -172,7 +172,7 @@ export default function EventSingle() {
                 </div>
 
                 <Link
-                  to={`/event/${event.id}/register`}
+                  to={`/event/${event.slug}/register`}
                   className="block w-full bg-[#f5a623] text-[#1a1f4e] text-center font-bold text-lg py-4 rounded-xl hover:bg-[#e09c1a] hover:-translate-y-1 transition-all shadow-lg hover:shadow-xl"
                 >
                   Register Now

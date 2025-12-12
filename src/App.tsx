@@ -23,6 +23,16 @@ import TeamPage from './pages/TeamPages';
 import { useLayoutEffect } from 'react';
 import EventForm from './pages/EventForm';
 
+// Admin Pages
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminLayout from './pages/admin/AdminLayout';
+import Dashboard from './pages/admin/Dashboard';
+import MembersList from './pages/admin/MembersList';
+import EventsList from './pages/admin/EventsList';
+import EventEditor from './pages/admin/EventEditor';
+import MemberEditor from './pages/admin/MemberEditor';
+import AdminRoute from './components/AdminRoute';
+
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
 
@@ -61,6 +71,20 @@ function App() {
               <Route path="/policies" element={<Policies />} />
               <Route path="/match/:id" element={<SingleMatch />} />
               <Route path="/news/:id" element={<SingleNews />} />
+              {/* Admin Routes */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin" element={<AdminRoute />}>
+                <Route element={<AdminLayout />}>
+                  <Route index element={<Navigate to="/admin/dashboard" replace />} />
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="members" element={<MembersList />} />
+                  <Route path="members/:id" element={<MemberEditor />} />
+                  <Route path="events" element={<EventsList />} />
+                  <Route path="events/new" element={<EventEditor />} />
+                  <Route path="events/:id" element={<EventEditor />} />
+                </Route>
+              </Route>
+
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </main>

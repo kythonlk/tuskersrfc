@@ -35,7 +35,7 @@ function DynamicEventForm() {
             const { data, error } = await supabase
                 .from('events')
                 .select('id, title, form_schema, event_date, location, short_description')
-                .eq('id', id)
+                .eq('slug', id)
                 .single();
 
             if (data) {
