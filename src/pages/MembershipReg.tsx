@@ -338,12 +338,13 @@ export default function MembershipRegister() {
                 />
               </div>
               <div>
-                <label className="block font-semibold text-gray-700 mb-1">Upload Emirates ID Copy *</label>
+                <label className="block font-semibold text-gray-700 mb-1">Upload Emirates ID Copy Photo *</label>
                 <input
                   type="file"
                   name="emirates_id_file"
                   onChange={handleChange}
                   required
+                  accept="image/*"
                   className="w-full"
                 />
               </div>
@@ -380,6 +381,7 @@ export default function MembershipRegister() {
                 type="file"
                 name="passport_photo"
                 onChange={handleChange}
+                accept="image/*"
                 required
                 className="w-full"
               />

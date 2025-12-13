@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import {
@@ -7,29 +7,84 @@ import {
     LogOut,
     Menu,
     X,
-    LayoutDashboard
+    LayoutDashboard,
+    Newspaper,
+    Trophy,
+    User,
+    FileText
 } from 'lucide-react';
 
 export default function AdminLayout() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [userEmail, setUserEmail] = useState<string | null>(null);
     const location = useLocation();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const getUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user?.email) {
+                setUserEmail(user.email);
+            } else {
+                navigate('/admin/login');
+            }
+        };
+        getUser();
+    }, [navigate]);
 
     const handleLogout = async () => {
         await supabase.auth.signOut();
         navigate('/admin/login');
     };
 
-    const navItems = [
+    const isMembershipAdmin = userEmail === 'membership@dubaituskers.com';
+
+    const allNavItems = [
         { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
         { name: 'Members', path: '/admin/members', icon: Users },
         { name: 'Events', path: '/admin/events', icon: Calendar },
-        { name: 'Fixtures', path: '/admin/fixtures', icon: Calendar },
-        { name: 'News', path: '/admin/news', icon: Calendar },
-        { name: 'Players', path: '/admin/players', icon: Users },
+        { name: 'Fixtures', path: '/admin/fixtures', icon: Trophy, restricted: false },
+        { name: 'News', path: '/admin/news', icon: Newspaper, restricted: false },
+        { name: 'Players', path: '/admin/players', icon: User, restricted: false },
+        { name: 'Medical', path: '/admin/medical', icon: FileText, restricted: false },
+        { name: 'Submissions', path: '/admin/submissions', icon: FileText, restricted: false },
     ];
 
-    const isActive = (path: string) => location.pathname === path;
+    const navItems = allNavItems.filter(item => {
+        if (!userEmail) return false;
+
+        if (isMembershipAdmin) {
+            // Membership admin sees ONLY Dashboard and Members
+            return item.name === 'Dashboard' || item.name === 'Members';
+        } else {
+            // Others see everything EXCEPT Members
+            return item.name !== 'Members';
+        }
+    });
+
+    // Route Protection / Redirect
+    useEffect(() => {
+        if (!userEmail) return;
+
+        const currentPath = location.pathname;
+        if (currentPath === '/admin/login') return;
+
+        if (isMembershipAdmin) {
+            const allowed = ['/admin/dashboard', '/admin/members'];
+            const isAllowed = allowed.some(path => currentPath.startsWith(path));
+            if (!isAllowed) {
+                navigate('/admin/members');
+            }
+        } else {
+            if (currentPath.startsWith('/admin/members')) {
+                navigate('/admin/dashboard');
+            }
+        }
+    }, [userEmail, location.pathname, isMembershipAdmin, navigate]);
+
+    const isActive = (path: string) => location.pathname.startsWith(path);
+
+    if (!userEmail) return null; // Loading state could be better
 
     return (
         <div className="min-h-screen bg-gray-50 flex font-rajdhani">
@@ -51,6 +106,11 @@ export default function AdminLayout() {
                     <button onClick={() => setSidebarOpen(false)} className="md:hidden text-gray-300 hover:text-white">
                         <X className="w-6 h-6" />
                     </button>
+                </div>
+
+                <div className="px-6 py-4 border-b border-[#2a2f5e] text-xs text-gray-400">
+                    Logged in as:<br />
+                    <span className="text-white font-medium truncate block" title={userEmail}>{userEmail}</span>
                 </div>
 
                 <nav className="flex-1 px-4 py-8 space-y-2">

@@ -37,6 +37,8 @@ import NewsList from './pages/admin/NewsList';
 import NewsEditor from './pages/admin/NewsEditor';
 import PlayersList from './pages/admin/PlayersList';
 import PlayerEditor from './pages/admin/PlayerEditor';
+import MedicalClearanceList from './pages/admin/MedicalClearanceList';
+import EventSubmissionsList from './pages/admin/EventSubmissionsList';
 import AdminRoute from './components/AdminRoute';
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
@@ -97,6 +99,8 @@ function App() {
                   <Route path="players" element={<PlayersList />} />
                   <Route path="players/new" element={<PlayerEditor />} />
                   <Route path="players/:id" element={<PlayerEditor />} />
+                  <Route path="medical" element={<MedicalClearanceList />} />
+                  <Route path="submissions" element={<EventSubmissionsList />} />
                 </Route>
               </Route>
 

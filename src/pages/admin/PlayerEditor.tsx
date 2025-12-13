@@ -18,6 +18,36 @@ export default function PlayerEditor() {
     const [team, setTeam] = useState('senior');
     const [bio, setBio] = useState('');
     const [photoUrl, setPhotoUrl] = useState('');
+    const [uploading, setUploading] = useState(false);
+
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        try {
+            setUploading(true);
+            const file = e.target.files?.[0];
+            if (!file) return;
+
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`;
+            const filePath = `players/${fileName}`;
+
+            const { error: uploadError } = await supabase.storage
+                .from('Players') // Bucket name is strictly "Players" as requested
+                .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+
+            const { data } = supabase.storage
+                .from('Players')
+                .getPublicUrl(filePath);
+
+            setPhotoUrl(data.publicUrl);
+
+        } catch (error: any) {
+            alert('Error uploading image: ' + error.message);
+        } finally {
+            setUploading(false);
+        }
+    };
 
     useEffect(() => {
         if (!isNew) {
@@ -146,18 +176,52 @@ export default function PlayerEditor() {
                         </div>
 
                         <div className="col-span-2">
-                            <label className="block text-sm font-semibold text-gray-700 mb-1">Photo URL</label>
-                            <div className="flex gap-2">
-                                <span className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-lg shrink-0">
-                                    <User className="w-5 h-5 text-gray-500" />
-                                </span>
-                                <input
-                                    type="url"
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623] outline-none"
-                                    value={photoUrl}
-                                    onChange={e => setPhotoUrl(e.target.value)}
-                                    placeholder="https://..."
-                                />
+                            <label className="block text-sm font-semibold text-gray-700 mb-1">Player Photo</label>
+
+                            <div className="flex items-start gap-4">
+                                <div className="w-32 h-32 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden relative group">
+                                    {photoUrl ? (
+                                        <>
+                                            <img src={photoUrl} alt="Preview" className="w-full h-full object-cover" />
+                                            <button
+                                                type="button"
+                                                onClick={() => setPhotoUrl('')}
+                                                className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white transition-opacity"
+                                            >
+                                                Remove
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <User className="w-12 h-12 text-gray-400" />
+                                    )}
+                                </div>
+
+                                <div className="flex-1 space-y-2">
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImageUpload}
+                                        className="block w-full text-sm text-gray-500
+                                            file:mr-4 file:py-2 file:px-4
+                                            file:rounded-full file:border-0
+                                            file:text-sm file:font-semibold
+                                            file:bg-[#1a1f4e] file:text-white
+                                            hover:file:bg-[#2a2f5e]
+                                            cursor-pointer"
+                                        disabled={uploading}
+                                    />
+                                    <p className="text-xs text-gray-500">
+                                        {uploading ? 'Uploading...' : 'Upload a player photo (JPG, PNG). Max 2MB.'}
+                                    </p>
+                                    {photoUrl && (
+                                        <input
+                                            type="text"
+                                            className="w-full px-3 py-1 bg-gray-50 border rounded text-xs text-gray-500"
+                                            value={photoUrl}
+                                            readOnly
+                                        />
+                                    )}
+                                </div>
                             </div>
                         </div>
 
