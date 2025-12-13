@@ -31,6 +31,12 @@ import MembersList from './pages/admin/MembersList';
 import EventsList from './pages/admin/EventsList';
 import EventEditor from './pages/admin/EventEditor';
 import MemberEditor from './pages/admin/MemberEditor';
+import FixturesList from './pages/admin/FixturesList';
+import FixtureEditor from './pages/admin/FixtureEditor';
+import NewsList from './pages/admin/NewsList';
+import NewsEditor from './pages/admin/NewsEditor';
+import PlayersList from './pages/admin/PlayersList';
+import PlayerEditor from './pages/admin/PlayerEditor';
 import AdminRoute from './components/AdminRoute';
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
@@ -82,6 +88,15 @@ function App() {
                   <Route path="events" element={<EventsList />} />
                   <Route path="events/new" element={<EventEditor />} />
                   <Route path="events/:id" element={<EventEditor />} />
+                  <Route path="fixtures" element={<FixturesList />} />
+                  <Route path="fixtures/new" element={<FixtureEditor />} />
+                  <Route path="fixtures/:id" element={<FixtureEditor />} />
+                  <Route path="news" element={<NewsList />} />
+                  <Route path="news/new" element={<NewsEditor />} />
+                  <Route path="news/:id" element={<NewsEditor />} />
+                  <Route path="players" element={<PlayersList />} />
+                  <Route path="players/new" element={<PlayerEditor />} />
+                  <Route path="players/:id" element={<PlayerEditor />} />
                 </Route>
               </Route>
 

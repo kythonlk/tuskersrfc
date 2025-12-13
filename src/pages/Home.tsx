@@ -21,7 +21,7 @@ export default function Home() {
         .from('fixtures')
         .select('*')
         .eq('status', 'completed')
-        .order('match_date', { ascending: true })
+        .order('match_date', { ascending: false })
         .limit(6);
 
       if (newsData) setLatestNews(newsData);

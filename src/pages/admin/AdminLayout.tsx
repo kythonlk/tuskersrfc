@@ -24,6 +24,9 @@ export default function AdminLayout() {
         { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
         { name: 'Members', path: '/admin/members', icon: Users },
         { name: 'Events', path: '/admin/events', icon: Calendar },
+        { name: 'Fixtures', path: '/admin/fixtures', icon: Calendar },
+        { name: 'News', path: '/admin/news', icon: Calendar },
+        { name: 'Players', path: '/admin/players', icon: Users },
     ];
 
     const isActive = (path: string) => location.pathname === path;
@@ -57,8 +60,8 @@ export default function AdminLayout() {
                             to={item.path}
                             onClick={() => setSidebarOpen(false)}
                             className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive(item.path)
-                                    ? 'bg-[#f5a623] text-[#1a1f4e] font-bold shadow-lg'
-                                    : 'text-gray-300 hover:bg-[#2a2f5e] hover:text-white'
+                                ? 'bg-[#f5a623] text-[#1a1f4e] font-bold shadow-lg'
+                                : 'text-gray-300 hover:bg-[#2a2f5e] hover:text-white'
                                 }`}
                         >
                             <item.icon className={`w-5 h-5 ${isActive(item.path) ? 'text-[#1a1f4e]' : 'text-[#f5a623]'}`} />
