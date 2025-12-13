@@ -145,9 +145,11 @@ export default function Policies() {
                 <p className="text-gray-600 mb-4">
                   Our commitment to safeguarding all members
                 </p>
-                <button className="text-[#1a1f4e] font-semibold hover:text-[#f5a623] transition-colors">
-                  Download PDF →
-                </button>
+                <a href="https://www.world.rugby/organisation/governance/safeguarding">
+                  <button className="text-gray-900 font-semibold hover:text-black transition-colors">
+                    View Policy →
+                  </button>
+                </a>
               </div>
             </div>
           </div>
