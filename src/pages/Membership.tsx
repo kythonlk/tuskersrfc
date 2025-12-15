@@ -1,7 +1,7 @@
 import { CheckCircle2, Users, Trophy, Heart, Calendar, ArrowRight } from 'lucide-react';
-import a from '../images/15s.webp';
-import b from '../images/touch.webp';
-import c from '../images/women.webp';
+import a from '../images/DT_15s.webp';
+import b from '../images/DT_touch.webp';
+import c from '../images/WR.webp';
 import { Link } from 'react-router-dom';
 
 export default function Membership() {
