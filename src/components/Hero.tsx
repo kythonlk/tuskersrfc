@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import a from '../images/b1.webp';
 // import b from '../images/b2.webp';
-import c from '../images/15s.webp';
-import f from '../images/10s.webp';
-import g from '../images/7s.webp';
-import d from '../images/touch.webp';
+import c from '../images/DT_15s.webp';
+import f from '../images/DT_10s.webp';
+import g from '../images/DT_7s.webp';
+import d from '../images/DT_touch.webp';
 import h from '../images/b4.webp';
 import { Link } from "react-router-dom";
 

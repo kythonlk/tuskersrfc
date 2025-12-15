@@ -41,10 +41,10 @@ export default function Footer() {
   const sp = [
     { name: 'Lion', logo_url: lion, website_url: 'https://lionbeer.com/', },
     { name: 'Diddeniya', logo_url: diddeniya, website_url: 'https://diddeniya.com/' },
-    { name: 'Spiderplus', logo_url: spiderpluse, website_url: 'https://spiderplus.com/' },
+    { name: 'Spiderplus', logo_url: spiderpluse, website_url: 'https://spiderplus.ae/' },
     { name: 'Thambapanni', logo_url: thambapanni, website_url: 'https://thambapanni.com/' },
     { name: 'Kibsons', logo_url: kibsons, website_url: 'https://kibsons.com/' },
-    { name: 'Slip Safe', logo_url: SlipSafe, website_url: 'https://slipsafe.com/' },
+    { name: 'Slip Safe', logo_url: SlipSafe, website_url: 'https://slipsafeme.com/' },
   ]
 
   useEffect(() => {
