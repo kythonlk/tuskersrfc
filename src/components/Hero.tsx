@@ -117,7 +117,7 @@ export default function HeroWithMembership() {
                 <img
                   src={card.img}
                   alt={card.title}
-                  className="w-full h-40 sm:h-52 md:h-64 object-cover"
+                  className="w-full h-40 sm:h-52 md:h-80 object-cover"
                 />
                 <div className="p-3 sm:p-4">
                   <h3 className="text-white text-sm sm:text-base md:text-lg font-semibold mb-2">
