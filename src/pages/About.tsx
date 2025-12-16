@@ -122,10 +122,25 @@ export default function TuskersHistory() {
             >
               <p className="text-white text-lg p-2">
                 Dubai Tuskers made history as the first Sri Lankan alumni side to compete at the
-                Emirates Dubai Rugby Sevens under the leadership of{' '}
-                <span style={{ color: '#f5a623' }}>Dayan</span> and{' '}
-                <span style={{ color: '#f5a623' }}>Arshad</span>.
+                Emirates Dubai Rugby Sevens.
               </p>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div
+                  className="border-2 rounded-xl p-6 bg-white/5"
+                  style={{ borderColor: '#f5a623' }}
+                >
+                  <p className="font-bold text-xl mb-2" style={{ color: '#f5a623' }}>Captain</p>
+                  <p className="text-white text-2xl font-semibold">Dayan Diddeniya</p>
+                </div>
+
+                <div
+                  className="border-2 rounded-xl p-6 bg-white/5"
+                  style={{ borderColor: '#f5a623' }}
+                >
+                  <p className="font-bold text-xl mb-2" style={{ color: '#f5a623' }}>Vice Captain</p>
+                  <p className="text-white text-2xl font-semibold">Arshad Jamaldeen</p>
+                </div>
+              </div>
 
               <img
                 src={tb2023}
@@ -157,6 +172,23 @@ export default function TuskersHistory() {
                 The Tuskers lifted their first-ever trophy: the{' '}
                 <span style={{ color: '#f5a623' }}>Gulf Men's Social Plate Final</span>.
               </p>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div
+                  className="border-2 rounded-xl p-6 bg-white/5"
+                  style={{ borderColor: '#f5a623' }}
+                >
+                  <p className="font-bold text-xl mb-2" style={{ color: '#f5a623' }}>Captain</p>
+                  <p className="text-white text-2xl font-semibold">Dayan Diddeniya</p>
+                </div>
+
+                <div
+                  className="border-2 rounded-xl p-6 bg-white/5"
+                  style={{ borderColor: '#f5a623' }}
+                >
+                  <p className="font-bold text-xl mb-2" style={{ color: '#f5a623' }}>Vice Captain</p>
+                  <p className="text-white text-2xl font-semibold">Arshad Jamaldeen</p>
+                </div>
+              </div>
 
               <img
                 src={tb2024}
