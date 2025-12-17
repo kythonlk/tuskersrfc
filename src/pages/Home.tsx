@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { supabase, type News, type Fixture } from '../lib/supabase';
 import Hero from '../components/Hero';
 import About from '../components/About';
+import SEO from '../components/SEO';
 import { Link } from 'react-router-dom';
 
 export default function Home() {
@@ -34,6 +35,11 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Home"
+        description="Join Dubai Tuskers RFC, the premier rugby club in Dubai. One Team. One Dream. One Family. Men's, Women's and Touch Rugby."
+        keywords="dubai rugby, join rugby club dubai, dubai tuskers, mens rugby dubai, womens rugby dubai, play rugby dubai"
+      />
       <Hero />
       <section className="bg-[#1a1f4e] p-4 sm:p-8 sm:pt-12">
         <div className="mx-auto text-white overflow-hidden">

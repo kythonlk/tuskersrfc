@@ -3,6 +3,7 @@ import a from '../images/DT_15s.webp';
 import b from '../images/DT_touch.webp';
 import c from '../images/WR.webp';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 export default function Membership() {
   const memberships = [
@@ -61,6 +62,11 @@ export default function Membership() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <SEO
+        title="Membership"
+        description="Join Dubai Tuskers RFC. Men's, Women's and Touch Rugby memberships available. Competitive pricing and great benefits."
+        keywords="rugby membership dubai, join rugby club, dubai tuskers fees, rugby club dubai prices"
+      />
       <section className="bg-gradient-to-br from-[#1a1f4e] to-[#2a2f5e] text-white py-20">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">

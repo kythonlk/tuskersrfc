@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { CheckCircle2 } from 'lucide-react';
+import SEO from '../components/SEO';
 
 export default function MembershipRegister() {
   const [searchParams] = useSearchParams();
@@ -134,8 +135,20 @@ export default function MembershipRegister() {
     }
   };
 
+  const getPageTitle = () => {
+    if (membershipType === 'men') return 'Player Registration - Men’s Rugby';
+    if (membershipType === 'touch') return 'Touch Rugby Registration';
+    if (membershipType === 'women') return 'Player Registration - Women’s Rugby';
+    return 'Membership Registration';
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-16">
+      <SEO
+        title={getPageTitle()}
+        description={`Register to join Dubai Tuskers RFC. ${getPageTitle()} - Become part of our family today.`}
+        keywords={`join dubai tuskers, ${membershipType} rugby registration, play rugby dubai, rugby club membership`}
+      />
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center mb-6 text-[#1a1f4e]">
           {membershipType === 'men' && 'Player Registration - Men’s Rugby'}

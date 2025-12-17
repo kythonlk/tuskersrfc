@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import EventSingle from './pages/EventSingle';
@@ -54,64 +55,67 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
 function App() {
 
   return (
-    <Router>
-      <Wrapper>
-        <div className="min-h-screen flex flex-col font-rajdhani">
-          <Header />
-          <main className="flex-grow pt-20">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/event/:id" element={<EventSingle />} />
-              <Route path="/event/:id/register" element={<EventForm />} />
-              <Route path="/teams" element={<Teams />} />
-              <Route path="/medical-clearance" element={<MedicalClearance />} />
-              <Route path="/teams/:type" element={<TeamPage />} />
-              <Route path="/players" element={<Players />} />
-              <Route path="/fixtures" element={<Fixtures />} />
-              <Route path="/news" element={<News />} />
-              <Route path="/events" element={<Events />} />
-              <Route path="/gallery" element={<Gallery />} />
-              <Route path="/membership" element={<Membership />} />
-              <Route path="/membership-reg" element={<MembershipRegister />} />
-              <Route path="/sponsorship" element={<Sponsorship />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/policies" element={<Policies />} />
-              <Route path="/match/:id" element={<SingleMatch />} />
-              <Route path="/news/:id" element={<SingleNews />} />
-              {/* Admin Routes */}
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin" element={<AdminRoute />}>
-                <Route element={<AdminLayout />}>
-                  <Route index element={<Navigate to="/admin/dashboard" replace />} />
-                  <Route path="dashboard" element={<Dashboard />} />
-                  <Route path="members" element={<MembersList />} />
-                  <Route path="members/:id" element={<MemberEditor />} />
-                  <Route path="events" element={<EventsList />} />
-                  <Route path="events/new" element={<EventEditor />} />
-                  <Route path="events/:id" element={<EventEditor />} />
-                  <Route path="fixtures" element={<FixturesList />} />
-                  <Route path="fixtures/new" element={<FixtureEditor />} />
-                  <Route path="fixtures/:id" element={<FixtureEditor />} />
-                  <Route path="news" element={<NewsList />} />
-                  <Route path="news/new" element={<NewsEditor />} />
-                  <Route path="news/:id" element={<NewsEditor />} />
-                  <Route path="players" element={<PlayersList />} />
-                  <Route path="players/new" element={<PlayerEditor />} />
-                  <Route path="players/:id" element={<PlayerEditor />} />
-                  <Route path="medical" element={<MedicalClearanceList />} />
-                  <Route path="submissions" element={<EventSubmissionsList />} />
+    <HelmetProvider>
+      <Router>
+        <Wrapper>
+          <div className="min-h-screen flex flex-col font-rajdhani">
+            <Header />
+            <main className="flex-grow pt-20">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/event/:id" element={<EventSingle />} />
+                <Route path="/event/:id/register" element={<EventForm />} />
+                <Route path="/teams" element={<Teams />} />
+                <Route path="/medical-clearance" element={<MedicalClearance />} />
+                <Route path="/teams/:type" element={<TeamPage />} />
+                <Route path="/players" element={<Players />} />
+                <Route path="/fixtures" element={<Fixtures />} />
+                <Route path="/news" element={<News />} />
+                <Route path="/events" element={<Events />} />
+                <Route path="/gallery" element={<Gallery />} />
+                <Route path="/membership" element={<Membership />} />
+                <Route path="/membership-reg" element={<MembershipRegister />} />
+                <Route path="/sponsorship" element={<Sponsorship />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/policies" element={<Policies />} />
+                <Route path="/match/:id" element={<SingleMatch />} />
+                <Route path="/news/:id" element={<SingleNews />} />
+                {/* Admin Routes */}
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/admin" element={<AdminRoute />}>
+                  <Route element={<AdminLayout />}>
+                    <Route index element={<Navigate to="/admin/dashboard" replace />} />
+                    <Route path="dashboard" element={<Dashboard />} />
+                    <Route path="members" element={<MembersList />} />
+                    <Route path="members/:id" element={<MemberEditor />} />
+                    <Route path="events" element={<EventsList />} />
+                    <Route path="events/new" element={<EventEditor />} />
+                    <Route path="events/:id" element={<EventEditor />} />
+                    <Route path="fixtures" element={<FixturesList />} />
+                    <Route path="fixtures/new" element={<FixtureEditor />} />
+                    <Route path="fixtures/:id" element={<FixtureEditor />} />
+                    <Route path="news" element={<NewsList />} />
+                    <Route path="news/new" element={<NewsEditor />} />
+                    <Route path="news/:id" element={<NewsEditor />} />
+                    <Route path="players" element={<PlayersList />} />
+                    <Route path="players/new" element={<PlayerEditor />} />
+                    <Route path="players/:id" element={<PlayerEditor />} />
+                    <Route path="medical" element={<MedicalClearanceList />} />
+                    <Route path="submissions" element={<EventSubmissionsList />} />
+                  </Route>
                 </Route>
-              </Route>
 
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-          </main>
-          <WhatsAppChat />
-          <Footer />
-        </div>
-      </Wrapper>
-    </Router>
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
+            </main>
+            <WhatsAppChat />
+            <Footer />
+          </div>
+        </Wrapper>
+      </Router>
+    </HelmetProvider>
+
   );
 }
 
