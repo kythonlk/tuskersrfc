@@ -81,7 +81,7 @@ export default function Footer() {
               >
                 <div ref={contentRef} className="flex gap-6">
                   {sponsors.map((s, i) => (
-                    <a key={i} className="bg-white w-80 h-40 flex items-center justify-center flex-shrink-0">
+                    <a key={i} href={sponsors[current].website_url || "#"} className="bg-white w-80 h-40 flex items-center justify-center flex-shrink-0">
                       <img src={s.logo_url} className="w-full h-full object-contain p-3" />
                     </a>
                   ))}
@@ -90,7 +90,7 @@ export default function Footer() {
                 <div style={{ width: '1.5rem' }} />
                 <div className="flex gap-6">
                   {sponsors.map((s, i) => (
-                    <a key={`clone-${i}`} className="bg-white w-80 h-40 flex items-center justify-center flex-shrink-0">
+                    <a key={`clone-${i}`} href={sponsors[current].website_url || "#"} className="bg-white w-80 h-40 flex items-center justify-center flex-shrink-0">
                       <img src={s.logo_url} className="w-full h-full object-contain p-3" />
                     </a>
                   ))}
