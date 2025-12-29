@@ -179,7 +179,7 @@ export default function Contact() {
 
             <div className="flex flex-wrap justify-center gap-4">
               <a
-                href="https://www.facebook.com/dubaituskers"
+                href="https://www.facebook.com/dubaituskersrfc"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#1877f2] text-white p-4 rounded-xl hover:bg-[#166fe5] transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center gap-3 min-w-[200px]"
@@ -189,7 +189,7 @@ export default function Contact() {
               </a>
 
               <a
-                href="https://www.instagram.com/dubaituskers"
+                href="https://www.instagram.com/dubaituskersrfc"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white p-4 rounded-xl hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center gap-3 min-w-[200px]"
@@ -199,7 +199,7 @@ export default function Contact() {
               </a>
 
               <a
-                href="https://www.linkedin.com/company/dubaituskers"
+                href="https://www.linkedin.com/company/dubaituskersrfc"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#0077b5] text-white p-4 rounded-xl hover:bg-[#006399] transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center gap-3 min-w-[200px]"
@@ -209,7 +209,7 @@ export default function Contact() {
               </a>
 
               <a
-                href="https://www.youtube.com/dubaituskers"
+                href="https://www.youtube.com/@DubaiTuskers"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#ff0000] text-white p-4 rounded-xl hover:bg-[#cc0000] transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center gap-3 min-w-[200px]"
