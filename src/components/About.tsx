@@ -47,16 +47,10 @@ export default function About({ upcomingFixtures }: any) {
       image: dayan
     },
     {
-      name: 'Chamara Dabare',
-      role: 'Chief Executive Officer',
-      bio: 'Leading the strategic vision of the club',
-      image: dabare
-    },
-    {
-      name: 'Jason Brown',
-      role: 'Chief Operating Officer & Coaching Director',
+      name: 'Bob Goodwin',
+      role: 'Coaching Director',
       bio: 'Overseeing operations and coaching development',
-      image: jb
+      image: 'https://qasvqrglwupcdqosogac.supabase.co/storage/v1/object/public/posts/bob-1.JPG'
     },
     {
       name: 'Arshad Jamaldeen',
