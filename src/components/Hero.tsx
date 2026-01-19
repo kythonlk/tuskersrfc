@@ -25,13 +25,6 @@ export default function HeroWithMembership() {
       link: "/about",
     },
     {
-      img: "https://qasvqrglwupcdqosogac.supabase.co/storage/v1/object/public/posts/banner_bowling.webp",
-      title: "2026 Open Bowling Tournament",
-      subtitle: "Dubai Tuskers RFC",
-      cta: "Register Now",
-      link: "/event/bowling-registration-2026",
-    },
-    {
       img: "https://qasvqrglwupcdqosogac.supabase.co/storage/v1/object/public/posts/2025-banner.png",
       title: "Gulf Mens Open Bowl Runner Up",
       subtitle: "2025 Dubai 7s Tournament",
