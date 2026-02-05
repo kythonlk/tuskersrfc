@@ -8,7 +8,7 @@ import spiderpluse from '../images/spiderplus.webp';
 import thambapanni from '../images/thambapanni.webp';
 import kibsons from '../images/kibsons.webp';
 import SlipSafe from '../images/slipsafe.webp';
-import Gulf from '../images/gulf.webp';
+import Gulf from '../images/gulf.jpeg';
 import Mcs from '../images/mcs.webp';
 
 export default function Footer() {
