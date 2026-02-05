@@ -38,6 +38,7 @@ export default function Membership() {
         "15% discount on Dubai Tuskers events",
         "Free family entry to all Dubai Tuskers social gatherings",
         "All playing kit, organized coaching, insurance included",
+        "25% discount for the member plus 3 persons on McG's by McGettigan's Barsha",
       ],
       whatWePlay: "UAE Divisions & Emirates Dubai 7s",
     },
@@ -55,8 +56,24 @@ export default function Membership() {
         "20% discount on all Dubai Tuskers merchandise",
         "Free entry to the Dubai 7s tournament",
         "Official Dubai Tuskers singlet",
+        "25% discount for the member plus 3 persons on McG's by McGettigan's Barsha",
       ],
       whatWePlay: "UAE Touch Rugby Tournaments",
+    },
+    {
+      label: "Supporter Membership",
+      age: "",
+      price: "AED 375",
+      image: b,
+      type: "supporter",
+      perks: [
+        "One-year club membership",
+        "25% discount for the member plus 3 persons on McG's by McGettigan's Barsha",
+        "10% discount on Dubai Tuskers events",
+        "Free family entry to all Dubai Tuskers social gatherings",
+        "10% discount on all Dubai Tuskers merchandise",
+        "Official Dubai Tuskers Polo Tshirt",
+      ],
     },
   ];
 
@@ -81,14 +98,14 @@ export default function Membership() {
 
       <section className="py-12 bg-white">
         <div className="px-4 md:mx-20 lg:mx-40">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 ms:mx-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 ms:mx-20">
             {memberships.map((m, index) => (
               <Link
                 key={index}
                 to={`/membership-reg?type=${m.type}`}
                 className="border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-300 bg-white hover:-translate-y-2"
               >
-                <div className="relative h-48 sm:h-56 md:h-60 overflow-hidden">
+                <div className="relative h-48 sm:h-56 md:h-80 overflow-hidden">
                   <img
                     src={m.image}
                     alt={m.label}
@@ -122,9 +139,11 @@ export default function Membership() {
                   </ul>
 
                   <div className="border-t pt-4">
-                    <p className="text-xs sm:text-sm text-gray-500 mb-1 font-semibold">
-                      What we play
-                    </p>
+                    {m.whatWePlay && (
+                      <p className="text-xs sm:text-sm text-gray-500 mb-1 font-semibold">
+                        What we play
+                      </p>
+                    )}
                     <p className="text-[#1a1f4e] font-bold text-sm sm:text-base">
                       {m.whatWePlay}
                     </p>

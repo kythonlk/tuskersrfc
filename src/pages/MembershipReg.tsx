@@ -139,6 +139,7 @@ export default function MembershipRegister() {
     if (membershipType === 'men') return 'Player Registration - Men’s Rugby';
     if (membershipType === 'touch') return 'Touch Rugby Registration';
     if (membershipType === 'women') return 'Player Registration - Women’s Rugby';
+    if (membershipType === 'supporter') return 'Supporter Membership Registration';
     return 'Membership Registration';
   };
 
@@ -154,6 +155,7 @@ export default function MembershipRegister() {
           {membershipType === 'men' && 'Player Registration - Men’s Rugby'}
           {membershipType === 'touch' && 'Touch Rugby Registration'}
           {membershipType === 'women' && 'Player Registration - Womens’s Rugby'}
+          {membershipType === 'supporter' && 'Supporter Membership Registration'}
         </h1>
         <div className="w-24 h-1 bg-[#f5a623] mx-auto mb-8"></div>
 
@@ -277,64 +279,70 @@ export default function MembershipRegister() {
                   className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
                 />
               </div>
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Preferred Playing Position</label>
-                <input
-                  type="text"
-                  name="playing_position"
-                  value={formData.playing_position}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
-                />
-              </div>
+              {membershipType !== 'supporter' && (
+                <div>
+                  <label className="block font-semibold text-gray-700 mb-1">Preferred Playing Position</label>
+                  <input
+                    type="text"
+                    name="playing_position"
+                    value={formData.playing_position}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
+                  />
+                </div>
+              )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Secondary Position</label>
-                <input
-                  type="text"
-                  name="secondary_position"
-                  value={formData.secondary_position}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
-                />
+            {membershipType !== 'supporter' && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-semibold text-gray-700 mb-1">Secondary Position</label>
+                  <input
+                    type="text"
+                    name="secondary_position"
+                    value={formData.secondary_position}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold text-gray-700 mb-1">Other Position</label>
+                  <input
+                    type="text"
+                    name="other_position"
+                    value={formData.other_position}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
+                  />
+                </div>
               </div>
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Other Position</label>
-                <input
-                  type="text"
-                  name="other_position"
-                  value={formData.other_position}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
-                />
-              </div>
-            </div>
+            )}
 
             {/* Height and Weight */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Height (cm)</label>
-                <input
-                  type="number"
-                  name="height"
-                  value={formData.height}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
-                />
+            {membershipType !== 'supporter' && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-semibold text-gray-700 mb-1">Height (cm)</label>
+                  <input
+                    type="number"
+                    name="height"
+                    value={formData.height}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold text-gray-700 mb-1">Weight (kg)</label>
+                  <input
+                    type="number"
+                    name="weight"
+                    value={formData.weight}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
+                  />
+                </div>
               </div>
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Weight (kg)</label>
-                <input
-                  type="number"
-                  name="weight"
-                  value={formData.weight}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
-                />
-              </div>
-            </div>
+            )}
 
             {/* Emirates ID */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -350,32 +358,36 @@ export default function MembershipRegister() {
                   placeholder="_ _ _ - _ _ _ _ - _ _ _ _ _ _ _ - _0"
                 />
               </div>
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Upload Emirates ID Copy Photo *</label>
-                <input
-                  type="file"
-                  name="emirates_id_file"
-                  onChange={handleChange}
-                  required
-                  accept="image/*"
-                  className="w-full"
-                />
-              </div>
+              {membershipType !== 'supporter' && (
+                <div>
+                  <label className="block font-semibold text-gray-700 mb-1">Upload Emirates ID Copy Photo *</label>
+                  <input
+                    type="file"
+                    name="emirates_id_file"
+                    onChange={handleChange}
+                    required={membershipType !== 'supporter'}
+                    accept="image/*"
+                    className="w-full"
+                  />
+                </div>
+              )}
             </div>
 
             {/* Passport */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Passport Number *</label>
-                <input
-                  type="text"
-                  name="passport_number"
-                  value={formData.passport_number}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
-                />
-              </div>
+              {membershipType !== 'supporter' && (
+                <div>
+                  <label className="block font-semibold text-gray-700 mb-1">Passport Number *</label>
+                  <input
+                    type="text"
+                    name="passport_number"
+                    value={formData.passport_number}
+                    onChange={handleChange}
+                    required={membershipType !== 'supporter'}
+                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
+                  />
+                </div>
+              )}
               <div>
                 <label className="block font-semibold text-gray-700 mb-1">Nationality *</label>
                 <input
@@ -388,17 +400,19 @@ export default function MembershipRegister() {
                 />
               </div>
             </div>
-            <div>
-              <label className="block font-semibold text-gray-700 mb-1">Upload Passport Size Photo *</label>
-              <input
-                type="file"
-                name="passport_photo"
-                onChange={handleChange}
-                accept="image/*"
-                required
-                className="w-full"
-              />
-            </div>
+            {membershipType !== 'supporter' && (
+              <div>
+                <label className="block font-semibold text-gray-700 mb-1">Upload Passport Size Photo *</label>
+                <input
+                  type="file"
+                  name="passport_photo"
+                  onChange={handleChange}
+                  accept="image/*"
+                  required={membershipType !== 'supporter'}
+                  className="w-full"
+                />
+              </div>
+            )}
 
             {/* Data protection */}
             <div className="mt-4">
@@ -406,7 +420,11 @@ export default function MembershipRegister() {
                 Data Protection and Sharing *
               </label>
               <p className='pb-4'>
-                Dubai Tuskers RFC strictly adheres to the Personal Data Protection Law of the United Arab Emirates. However, certain personal data must be shared with third parties, such as insurers who manage our secondary player accident policy. The data shared includes: Name, Date of Birth, Gender, and Nationality. All adult rugby players are required to be registered with the United Arab Emirates Rugby Federation (UAERF). To complete this registration, the following data must be shared: Name, Date of Birth, Gender, Nationality, Emirates ID Number, and Email Address. I consent for Dubai Tuskers Rugby Football Club to share only the necessary personal data required to register me with both the insurer and the United Arab Emirates Rugby Federation (UAERF).
+                {membershipType === 'supporter' ? (
+                  "Dubai Tuskers RFC strictly adheres to the Personal Data Protection Law of the United Arab Emirates. However, certain personal data must be shared with third parties, such as Sponsors. The data shared includes: Name, Date of Birth, Gender, and Nationality. I consent for Dubai Tuskers Rugby Football Club to share only the necessary personal data required to register me with Sponsors."
+                ) : (
+                  "Dubai Tuskers RFC strictly adheres to the Personal Data Protection Law of the United Arab Emirates. However, certain personal data must be shared with third parties, such as insurers who manage our secondary player accident policy. The data shared includes: Name, Date of Birth, Gender, and Nationality. All adult rugby players are required to be registered with the United Arab Emirates Rugby Federation (UAERF). To complete this registration, the following data must be shared: Name, Date of Birth, Gender, Nationality, Emirates ID Number, and Email Address. I consent for Dubai Tuskers Rugby Football Club to share only the necessary personal data required to register me with both the insurer and the United Arab Emirates Rugby Federation (UAERF)."
+                )}
               </p>
               <div className="flex flex-col gap-2">
                 <label>
