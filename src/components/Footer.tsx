@@ -8,6 +8,8 @@ import spiderpluse from '../images/spiderplus.webp';
 import thambapanni from '../images/thambapanni.webp';
 import kibsons from '../images/kibsons.webp';
 import SlipSafe from '../images/slipsafe.webp';
+import Gulf from '../images/gulf.webp';
+import Mcs from '../images/mcs.webp';
 
 export default function Footer() {
   const [sponsors, setSponsors] = useState<Sponsor[]>([]);
@@ -45,6 +47,8 @@ export default function Footer() {
     { name: 'Thambapanni', logo_url: thambapanni, website_url: 'https://thambapanni.com/' },
     { name: 'Kibsons', logo_url: kibsons, website_url: 'https://kibsons.com/' },
     { name: 'Slip Safe', logo_url: SlipSafe, website_url: 'https://slipsafeme.com/' },
+    { name: 'Gulf Sports', logo_url: Gulf, website_url: 'https://gulfsportz.com/' },
+    { name: 'McGettigan s', logo_url: Mcs, website_url: 'https://www.mcgettigans.com/' },
   ]
 
   useEffect(() => {

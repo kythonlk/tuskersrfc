@@ -67,7 +67,7 @@ export default function Membership() {
       image: b,
       type: "supporter",
       perks: [
-        "One-year club membership",
+        "One-year club supporter membership",
         "25% discount for the member plus 3 persons on McG's by McGettigan's Barsha",
         "10% discount on Dubai Tuskers events",
         "Free family entry to all Dubai Tuskers social gatherings",

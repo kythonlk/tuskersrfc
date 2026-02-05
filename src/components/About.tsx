@@ -1,5 +1,3 @@
-import dabare from '../images/dabare.webp';
-import jb from '../images/jb.webp';
 import arshad from '../images/jama-2025.webp';
 import dayan from '../images/dayan-2025.webp';
 import { Calendar, MapPin, Trophy } from 'lucide-react';

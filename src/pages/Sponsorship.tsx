@@ -39,6 +39,7 @@ export default function Sponsorship() {
         'Annual corporate rugby session for company staff',
         'Presentation opportunity at major club events',
         'Sponsorship plaque & Framed Jersey',
+        '15 Club Supporter Memberships (With partner discounts)',
       ],
     },
     {
@@ -53,6 +54,7 @@ export default function Sponsorship() {
         '7 Complimentary passes to all major events',
         'Annual corporate rugby session',
         'Recognition plaque & Framed Jersey',
+        '10 Club Supporter Memberships (With partner discounts)',
       ],
     },
     {
@@ -67,6 +69,7 @@ export default function Sponsorship() {
         '5 Complimentary passes to major tournaments',
         'Invitation to exclusive networking gatherings',
         'Recognition plaque & Framed Jersey',
+        '7 Club Supporter Memberships (With partner discounts)',
       ],
     },
     {
@@ -80,6 +83,7 @@ export default function Sponsorship() {
         '3 Complimentary passes to major tournaments',
         'Invitation to exclusive networking gatherings',
         'Recognition plaque & Framed Jersey',
+        '5 Club Supporter Memberships (With partner discounts)',
       ],
     },
     {
@@ -94,6 +98,7 @@ export default function Sponsorship() {
         '2 Complimentary passes',
         'Invitation to exclusive networking gatherings',
         'Recognition plaque & Framed Jersey',
+        '3 Club Supporter Memberships (With partner discounts)',
       ],
     },
     {
@@ -105,6 +110,7 @@ export default function Sponsorship() {
         'Branding in selected digital activities',
         'Participation at club-organized public events',
         'Community appreciation',
+        '2 Club Supporter Memberships (With partner discounts)',
       ],
     },
   ];
