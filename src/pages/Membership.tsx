@@ -2,6 +2,7 @@ import { CheckCircle2, Users, Trophy, Heart, Calendar, ArrowRight } from 'lucide
 import a from '../images/DT_15s.webp';
 import b from '../images/DT_touch.webp';
 import c from '../images/WR.webp';
+import sup from '../images/sup.webp';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 
@@ -64,7 +65,7 @@ export default function Membership() {
       label: "Supporter Membership",
       age: "",
       price: "AED 375",
-      image: b,
+      image: sup,
       type: "supporter",
       perks: [
         "One-year club supporter membership",

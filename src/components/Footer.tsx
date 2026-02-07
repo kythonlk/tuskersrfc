@@ -72,7 +72,7 @@ export default function Footer() {
         <div className="border-b border-gray-800 overflow-hidden">
           <div className="container mx-auto px-4 py-8">
             <h3 className="text-center text-3xl font-bold mb-6 text-[#f5a623]">
-              OUR SPONSORS
+              OUR SPONSORS & PARTNERS
             </h3>
             <div className="relative overflow-hidden hidden md:block">
               <div
