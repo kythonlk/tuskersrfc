@@ -2,6 +2,7 @@ import { CheckCircle2, Users, Trophy, Heart, Calendar, ArrowRight } from 'lucide
 import a from '../images/DT_15s.webp';
 import b from '../images/DT_touch.webp';
 import c from '../images/WR.webp';
+import stash from '../images/stash.jpeg'
 import sup from '../images/sup.webp';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
@@ -11,7 +12,7 @@ export default function Membership() {
     {
       label: "Men’s Rugby",
       age: "18 YEARS AND UP",
-      price: "AED 1,500",
+      price: "AED 1,800",
       image: a,
       type: "men",
       perks: [
@@ -28,7 +29,7 @@ export default function Membership() {
     {
       label: "Womens’s Rugby",
       age: "18 YEARS AND UP",
-      price: "AED 1,250",
+      price: "AED 1,450",
       image: c,
       type: "women",
       perks: [
@@ -86,7 +87,7 @@ export default function Membership() {
         keywords="rugby membership dubai, join rugby club, dubai tuskers fees, rugby club dubai prices"
       />
       <section className="bg-gradient-to-br from-[#1a1f4e] to-[#2a2f5e] text-white py-20">
-        <div className="container mx-auto px-4">
+        <div className="pb-10 container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">
             Membership
           </h1>
@@ -96,6 +97,7 @@ export default function Membership() {
           </p>
         </div>
       </section>
+      <img src={stash} className="mx-auto max-w-full md:max-w-6xl -mt-20" />
 
       <section className="py-12 bg-white">
         <div className="px-4 md:mx-20 lg:mx-40">
