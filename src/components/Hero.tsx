@@ -5,13 +5,13 @@ import c from '../images/DT_15s.webp';
 import f from '../images/DT_10s.webp';
 import g from '../images/DT_7s.webp';
 import d from '../images/DT_touch.webp';
-import h from '../images/b4.webp';
+import tb from '../images/banner-t.jpeg';
 import { Link } from "react-router-dom";
 
 export default function HeroWithMembership() {
   const slides = [
     {
-      img: h,
+      img: tb,
       title: "Join the Tuskers Rugby Family",
       subtitle: "Senior Men • Senior Women • Touch Rugby",
       cta: "Become a Member",
