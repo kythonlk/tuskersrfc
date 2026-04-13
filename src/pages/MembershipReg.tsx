@@ -136,9 +136,9 @@ export default function MembershipRegister() {
   };
 
   const getPageTitle = () => {
-    if (membershipType === 'men') return 'Player Registration - Men's Rugby';
+    if (membershipType === 'men') return 'Player Registration - Mens Rugby';
     if (membershipType === 'touch') return 'Touch Rugby Registration';
-    if (membershipType === 'women') return 'Player Registration - Women's Rugby';
+    if (membershipType === 'women') return 'Player Registration - Womens Rugby';
     if (membershipType === 'supporter') return 'Supporter Membership Registration';
     if (membershipType === 'academy') return 'Academy Registration';
     return 'Membership Registration';
@@ -156,9 +156,9 @@ export default function MembershipRegister() {
       />
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center mb-6 text-[#1a1f4e]">
-          {membershipType === 'men' && 'Player Registration - Men's Rugby'}
+          {membershipType === 'men' && 'Player Registration - Mens Rugby'}
           {membershipType === 'touch' && 'Touch Rugby Registration'}
-          {membershipType === 'women' && 'Player Registration - Women's Rugby'}
+          {membershipType === 'women' && 'Player Registration - Womens Rugby'}
           {membershipType === 'supporter' && 'Supporter Membership Registration'}
           {membershipType === 'academy' && 'Academy Registration'}
         </h1>
