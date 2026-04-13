@@ -23,6 +23,7 @@ import MedicalClearance from './pages/Medical';
 import TeamPage from './pages/TeamPages';
 import { useLayoutEffect } from 'react';
 import EventForm from './pages/EventForm';
+import Academy from './pages/Acedamy.tsx'
 
 // Admin Pages
 import AdminLogin from './pages/admin/AdminLogin';
@@ -74,6 +75,7 @@ function App() {
                 <Route path="/news" element={<News />} />
                 <Route path="/events" element={<Events />} />
                 <Route path="/gallery" element={<Gallery />} />
+                <Route path="/academy" element={<Academy />} />
                 <Route path="/membership" element={<Membership />} />
                 <Route path="/membership-reg" element={<MembershipRegister />} />
                 <Route path="/sponsorship" element={<Sponsorship />} />

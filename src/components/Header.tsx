@@ -17,6 +17,7 @@ export default function Header() {
     { label: 'Fixtures & Results', page: 'fixtures' },
     { label: 'Events', page: 'events' },
     { label: 'News', page: 'news' },
+    { label: 'Academy', page: 'academy' },
     { label: 'Gallery', page: 'gallery' },
     { label: 'Membership', page: 'membership' },
     { label: 'Sponsorship', page: 'sponsorship' },

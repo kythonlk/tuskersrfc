@@ -136,12 +136,16 @@ export default function MembershipRegister() {
   };
 
   const getPageTitle = () => {
-    if (membershipType === 'men') return 'Player Registration - Men’s Rugby';
+    if (membershipType === 'men') return 'Player Registration - Men's Rugby';
     if (membershipType === 'touch') return 'Touch Rugby Registration';
-    if (membershipType === 'women') return 'Player Registration - Women’s Rugby';
+    if (membershipType === 'women') return 'Player Registration - Women's Rugby';
     if (membershipType === 'supporter') return 'Supporter Membership Registration';
+    if (membershipType === 'academy') return 'Academy Registration';
     return 'Membership Registration';
   };
+
+  // Helper to check if player-specific fields should show
+  const isPlayerType = membershipType !== 'supporter';
 
   return (
     <div className="min-h-screen bg-gray-50 py-16">
@@ -152,10 +156,11 @@ export default function MembershipRegister() {
       />
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center mb-6 text-[#1a1f4e]">
-          {membershipType === 'men' && 'Player Registration - Men’s Rugby'}
+          {membershipType === 'men' && 'Player Registration - Men's Rugby'}
           {membershipType === 'touch' && 'Touch Rugby Registration'}
-          {membershipType === 'women' && 'Player Registration - Womens’s Rugby'}
+          {membershipType === 'women' && 'Player Registration - Women's Rugby'}
           {membershipType === 'supporter' && 'Supporter Membership Registration'}
+          {membershipType === 'academy' && 'Academy Registration'}
         </h1>
         <div className="w-24 h-1 bg-[#f5a623] mx-auto mb-8"></div>
 
@@ -279,7 +284,7 @@ export default function MembershipRegister() {
                   className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
                 />
               </div>
-              {membershipType !== 'supporter' || membershipType !== 'touch' && (
+              {isPlayerType && (
                 <div>
                   <label className="block font-semibold text-gray-700 mb-1">Preferred Playing Position</label>
                   <input
@@ -293,7 +298,7 @@ export default function MembershipRegister() {
               )}
             </div>
 
-              {membershipType !== 'supporter' || membershipType !== 'touch' && (
+            {isPlayerType && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block font-semibold text-gray-700 mb-1">Secondary Position</label>
@@ -319,7 +324,7 @@ export default function MembershipRegister() {
             )}
 
             {/* Height and Weight */}
-              {membershipType !== 'supporter' || membershipType !== 'touch' && (
+            {isPlayerType && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block font-semibold text-gray-700 mb-1">Height (cm)</label>
@@ -358,14 +363,14 @@ export default function MembershipRegister() {
                   placeholder="_ _ _ - _ _ _ _ - _ _ _ _ _ _ _ - _0"
                 />
               </div>
-              {membershipType !== 'supporter' && (
+              {isPlayerType && (
                 <div>
                   <label className="block font-semibold text-gray-700 mb-1">Upload Emirates ID Copy Photo *</label>
                   <input
                     type="file"
                     name="emirates_id_file"
                     onChange={handleChange}
-                    required={membershipType !== 'supporter'}
+                    required={isPlayerType}
                     accept="image/*"
                     className="w-full"
                   />
@@ -375,7 +380,7 @@ export default function MembershipRegister() {
 
             {/* Passport */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {membershipType !== 'supporter' && (
+              {isPlayerType && (
                 <div>
                   <label className="block font-semibold text-gray-700 mb-1">Passport Number *</label>
                   <input
@@ -383,7 +388,7 @@ export default function MembershipRegister() {
                     name="passport_number"
                     value={formData.passport_number}
                     onChange={handleChange}
-                    required={membershipType !== 'supporter'}
+                    required={isPlayerType}
                     className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
                   />
                 </div>
@@ -400,7 +405,7 @@ export default function MembershipRegister() {
                 />
               </div>
             </div>
-            {membershipType !== 'supporter' && (
+            {isPlayerType && (
               <div>
                 <label className="block font-semibold text-gray-700 mb-1">Upload Passport Size Photo *</label>
                 <input
@@ -408,7 +413,7 @@ export default function MembershipRegister() {
                   name="passport_photo"
                   onChange={handleChange}
                   accept="image/*"
-                  required={membershipType !== 'supporter'}
+                  required={isPlayerType}
                   className="w-full"
                 />
               </div>
@@ -422,6 +427,8 @@ export default function MembershipRegister() {
               <p className='pb-4'>
                 {membershipType === 'supporter' ? (
                   "Dubai Tuskers RFC strictly adheres to the Personal Data Protection Law of the United Arab Emirates. However, certain personal data must be shared with third parties, such as Sponsors. The data shared includes: Name, Date of Birth, Gender, and Nationality. I consent for Dubai Tuskers Rugby Football Club to share only the necessary personal data required to register me with Sponsors."
+                ) : membershipType === 'academy' ? (
+                  "Dubai Tuskers RFC strictly adheres to the Personal Data Protection Law of the United Arab Emirates. However, certain personal data must be shared with third parties for academy registration and insurance purposes. The data shared includes: Name, Date of Birth, Gender, and Nationality. I consent for Dubai Tuskers Rugby Football Club to share only the necessary personal data required to register me with the academy program and associated insurers."
                 ) : (
                   "Dubai Tuskers RFC strictly adheres to the Personal Data Protection Law of the United Arab Emirates. However, certain personal data must be shared with third parties, such as insurers who manage our secondary player accident policy. The data shared includes: Name, Date of Birth, Gender, and Nationality. All adult rugby players are required to be registered with the United Arab Emirates Rugby Federation (UAERF). To complete this registration, the following data must be shared: Name, Date of Birth, Gender, Nationality, Emirates ID Number, and Email Address. I consent for Dubai Tuskers Rugby Football Club to share only the necessary personal data required to register me with both the insurer and the United Arab Emirates Rugby Federation (UAERF)."
                 )}

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import a from '../images/b1.webp';
+import a from '../images/banner2.webp';
 // import b from '../images/b2.webp';
 import c from '../images/DT_15s.webp';
 import f from '../images/DT_10s.webp';
 import g from '../images/DT_7s.webp';
 import d from '../images/DT_touch.webp';
-import tb from '../images/banner-t.jpeg';
+import tb from '../images/banner-t.webp';
 import { Link } from "react-router-dom";
 
 export default function HeroWithMembership() {
