@@ -47,7 +47,7 @@ export default function Membership() {
     {
       label: "Social Touch Rugby",
       age: "16 YEARS AND UP",
-      price: "AED 500",
+      price: "AED 550",
       image: b,
       type: "touch",
       perks: [

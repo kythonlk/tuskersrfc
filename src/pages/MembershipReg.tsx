@@ -279,7 +279,7 @@ export default function MembershipRegister() {
                   className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623]"
                 />
               </div>
-              {membershipType !== 'supporter' && (
+              {membershipType !== 'supporter' || membershipType !== 'touch' && (
                 <div>
                   <label className="block font-semibold text-gray-700 mb-1">Preferred Playing Position</label>
                   <input
@@ -293,7 +293,7 @@ export default function MembershipRegister() {
               )}
             </div>
 
-            {membershipType !== 'supporter' && (
+              {membershipType !== 'supporter' || membershipType !== 'touch' && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block font-semibold text-gray-700 mb-1">Secondary Position</label>
@@ -319,7 +319,7 @@ export default function MembershipRegister() {
             )}
 
             {/* Height and Weight */}
-            {membershipType !== 'supporter' && (
+              {membershipType !== 'supporter' || membershipType !== 'touch' && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block font-semibold text-gray-700 mb-1">Height (cm)</label>
