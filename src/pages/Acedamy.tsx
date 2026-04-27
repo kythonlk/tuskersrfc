@@ -13,12 +13,12 @@ import dubai7sImage from '../images/Dubai7s.webp';
 
 export default function Academy() {
   const ageGroups = [
-    { group: 'U4 – U6', fee: 'AED 1,500' },
-    { group: 'U7 – U8', fee: 'AED 1,700' },
-    { group: 'U9 – U11', fee: 'AED 2,500' },
-    { group: 'U12 – U13', fee: 'AED 2,800' },
-    { group: 'U14 – U16', fee: 'AED 3,000' },
-    { group: 'U17 – U18', fee: 'AED 3,500' },
+    { group: 'U4 – U6', fee: 'AED 1,500', description: 'Fun Development' },
+    { group: 'U7 – U8', fee: 'AED 1,700', description: 'Intro to Rugby / Fun Development' },
+    { group: 'U9 – U11', fee: 'AED 2,500', description: 'Foundation Skills & Game Awareness' },
+    { group: 'U12 – U13', fee: 'AED 2,800', description: 'Advanced Skills & Competitive Rugby' },
+    { group: 'U14 – U16', fee: 'AED 3,000', description: 'High Performance Pathway' },
+    { group: 'U17 – U18', fee: 'AED 3,500', description: 'Beginner to Competitive Level' },
   ];
 
   const coreValues = ['Respect', 'Discipline', 'Teamwork', 'Integrity'];
@@ -30,9 +30,7 @@ export default function Academy() {
         description="Join Dubai Tuskers RFC Academy. Youth rugby programs from U4 to U18. Professional coaching, player development tracking, and pathways to elite rugby."
         keywords="rugby academy dubai, youth rugby dubai, kids rugby training, junior rugby uae"
       />
-
-      {/* Hero Section */}
-      <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img src={stashImage} alt="Dubai Tuskers Academy" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#1a1f4e] via-[#1a1f4e]/70 to-transparent" />
@@ -43,6 +41,9 @@ export default function Academy() {
           <p className="text-2xl md:text-3xl font-semibold text-[#f5a623] mb-4">Build Strength. Skill. Brotherhood.</p>
           <p className="text-lg text-gray-200 max-w-2xl mx-auto mb-8">
             Developing the next generation of rugby players in the UAE through skill development, fitness, discipline, and team culture.
+          </p>
+          <p className="text-lg text-gray-200 max-w-2xl mx-auto mb-8">
+            Whether you're a beginner or an experienced player, our academy provides a structured pathway to grow and compete.
           </p>
           <Link
             to="/membership-reg?type=academy"
@@ -96,6 +97,37 @@ export default function Academy() {
         </div>
       </section>
 
+      {/* Why Choose Us */}
+      <section className="pb-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto bg-[#1a1f4e] rounded-2xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#f5a623]/10 rounded-full -mr-32 -mt-32 blur-3xl" />
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-8">
+                <Award className="h-8 w-8 text-[#f5a623]" />
+                <h2 className="text-3xl font-bold">Why Choose Dubai Tuskers RFC Academy?</h2>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-12">
+                {[
+                  { title: "Player-first philosophy", icon: <Heart className="h-6 w-6 text-[#f5a623]" /> },
+                  { title: "Highest training exposure in Dubai", icon: <Activity className="h-6 w-6 text-[#f5a623]" /> },
+                  { title: "Professional coaching structure", icon: <Shield className="h-6 w-6 text-[#f5a623]" /> },
+                  { title: "Strong community and family culture", icon: <Users className="h-6 w-6 text-[#f5a623]" /> },
+                  { title: "Focus on long-term development, not short-term results", icon: <TrendingUp className="h-6 w-6 text-[#f5a623]" /> }
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-start gap-4">
+                    <div className="bg-white/10 p-2 rounded-lg">
+                      {item.icon}
+                    </div>
+                    <p className="font-bold text-lg leading-tight pt-1">{item.title}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Age Groups & Pricing */}
       <section className="py-16 bg-[#1a1f4e] text-white">
         <div className="container mx-auto px-4">
@@ -107,11 +139,14 @@ export default function Academy() {
                   <h2 className="text-3xl font-bold">Age Groups & Pricing</h2>
                 </div>
                 <div className="w-20 h-1 bg-[#f5a623] mb-6" />
-                
+
                 <div className="space-y-3">
                   {ageGroups.map((age) => (
                     <div key={age.group} className="flex items-center justify-between bg-white/10 backdrop-blur rounded-lg px-4 py-3">
-                      <span className="font-semibold">{age.group}</span>
+                      <div className="font-semibold ">
+                        <p className="text-">{age.group}</p>
+                        <p className="text-sm text-gray-300">{age.description}</p>
+                      </div>
                       <span className="bg-[#f5a623] text-[#1a1f4e] px-3 py-1 rounded-full font-bold text-sm">
                         {age.fee}
                       </span>
@@ -121,7 +156,6 @@ export default function Academy() {
 
                 <div className="mt-6 p-4 bg-[#f5a623]/20 rounded-lg border border-[#f5a623]/30">
                   <div className="flex items-start gap-3">
-                    <DollarSign className="h-5 w-5 text-[#f5a623] flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="font-semibold text-[#f5a623]">Flexible Payment</p>
                       <p className="text-sm text-gray-300">Fees can be paid in installments. Sibling discount: 20% off.</p>
@@ -129,9 +163,11 @@ export default function Academy() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="relative">
                 <img src={ageGroupsImage} alt="Age Groups" className="rounded-xl shadow-2xl w-full" />
+                <img src={heroImage} alt="Age Groups" className="rounded-xl shadow-2xl w-full mt-4" />
+
               </div>
             </div>
           </div>
@@ -277,7 +313,7 @@ export default function Academy() {
             <Trophy className="h-16 w-16 text-[#f5a623] mx-auto mb-6" />
             <h2 className="text-4xl font-bold mb-6">Elite Playing Opportunities</h2>
             <div className="w-24 h-1 bg-[#f5a623] mx-auto mb-8" />
-            
+
             <div className="grid md:grid-cols-2 gap-8 mb-8">
               <div className="bg-white/10 backdrop-blur rounded-xl p-6">
                 <h3 className="text-xl font-bold text-[#f5a623] mb-3">Emirates Dubai Rugby 7s</h3>
