@@ -169,8 +169,8 @@ export default function TuskersHistory() {
               style={{ backgroundColor: '#2a2f5e', borderColor: '#f5a623' }}
             >
               <p className="text-white text-lg p-2">
-                The Tuskers lifted their first-ever trophy: the{' '}
-                <span style={{ color: '#f5a623' }}>Gulf Men's Social Plate Final</span>.
+                The Tuskers lifted their first-ever trophy{' '}
+                <span style={{ color: '#f5a623' }}>Gulf Men’s Social Plate Winners</span>.
               </p>
               <div className="grid md:grid-cols-2 gap-4">
                 <div
@@ -223,9 +223,8 @@ export default function TuskersHistory() {
               style={{ backgroundColor: '#2a2f5e', borderColor: '#f5a623' }}
             >
               <p className="text-white text-lg">
-                The Tuskers step forward into new leagues and ambitions.
+                Gulf Men’s Open Bowl Finalist
               </p>
-
               <div className="grid md:grid-cols-2 gap-4">
                 <div
                   className="border-2 rounded-xl p-6 bg-white/5"
