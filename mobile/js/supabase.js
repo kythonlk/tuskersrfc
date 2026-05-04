@@ -1,0 +1,2 @@
+const { createClient } = supabase;
+const supabaseClient = createClient("https://qasvqrglwupcdqosogac.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhc3Zxcmdsd3VwY2Rxb3NvZ2FjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4ODI5NzUsImV4cCI6MjA3OTQ1ODk3NX0.Wu82NS3gPP_-TLiOJ6WMcw9jEKXBiuh_kS1YqihtK9w");

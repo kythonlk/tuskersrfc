@@ -1,0 +1,20 @@
+{
+  "name": "Dubai Tuskers RFC",
+  "short_name": "Tuskers",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#000033",
+  "icons": [
+    {
+      "src": "../public/logo.webp",
+      "sizes": "192x192",
+      "type": "image/webp"
+    },
+    {
+      "src": "../public/logo.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    }
+  ]
+}

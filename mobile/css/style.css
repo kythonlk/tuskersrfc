@@ -1,0 +1,959 @@
+:root {
+    --bg-dark: #0a0a0a;
+    --bg-card: #1a1a1a;
+    --bg-input: #2a2a2a;
+    --text-main: #ffffff;
+    --text-muted: #a0a0a0;
+    --accent-gold: #c5a022;
+    --accent-gold-light: #d4af37;
+    --accent-blue: #0056b3;
+    --accent-blue-deep: #000033;
+    --accent-error: #ff4d4d;
+    --header-gradient: linear-gradient(180deg, #000033 0%, #0a0a0a 100%);
+    --font-primary: 'Rajdhani', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-primary);
+    overflow-x: hidden;
+    line-height: 1.5;
+}
+
+.view {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Auth View */
+#view-auth {
+    justify-content: center;
+    padding: 2rem;
+    background: var(--header-gradient);
+}
+
+/* Avatar Styles */
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent-blue-deep);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border: 2px solid var(--accent-gold);
+}
+
+.avatar-circle.small {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+}
+
+.avatar-circle.large {
+    width: 80px;
+    height: 80px;
+    font-size: 2rem;
+}
+
+.avatar-square {
+    width: 100%;
+    height: 100%;
+    background: var(--accent-blue-deep);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-weight: 800;
+    font-size: 3rem;
+}
+
+.avatar-circle img,
+.avatar-square img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-initials {
+    text-transform: uppercase;
+}
+
+/* Avatar Upload */
+.avatar-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.avatar-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #2a2a2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+    border: 2px solid var(--accent-blue);
+}
+
+.avatar-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-preview i {
+    width: 40px;
+    height: 40px;
+    color: #555;
+}
+
+.avatar-label {
+    background: var(--accent-blue);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.avatar-label i {
+    width: 16px;
+    height: 16px;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.app-logo {
+    width: 200px;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 1rem;
+    background: var(--bg-input);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.input-group input:focus {
+    border-color: var(--accent-blue);
+    outline: none;
+}
+
+.password-group {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--accent-blue);
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+#signup-form {
+    padding: 10px;
+}
+
+.form-footer {
+    text-align: right;
+    margin-bottom: 2rem;
+}
+
+.forgot-password {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.btn {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    font-family: inherit;
+    letter-spacing: 1px;
+}
+
+.btn-primary {
+    background: #333333;
+    /* Matches SIGN IN button in image */
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.btn-secondary {
+    background: var(--accent-blue);
+    color: white;
+    margin-top: 1rem;
+}
+
+.btn-gold {
+    background: var(--accent-gold);
+    color: white;
+}
+
+/* Main View Header */
+.app-header {
+    background: #000033;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.header-right {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.icon-badge {
+    position: relative;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+.icon-badge i {
+    width: 24px;
+    height: 24px;
+}
+
+.badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background: var(--accent-gold);
+    color: white;
+    font-size: 0.7rem;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* News/Post Cards */
+.news-carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding: 1rem 0;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+
+.news-card {
+    min-width: 85%;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    scroll-snap-align: center;
+    color: #333;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.news-header {
+    padding: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.news-header-logo {
+    width: 30px;
+    height: 30px;
+}
+
+.news-header-info h4 {
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+.news-header-info span {
+    font-size: 0.7rem;
+    color: #888;
+}
+
+.news-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.news-content {
+    padding: 0.8rem;
+}
+
+.news-content p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Featured Offers */
+.featured-offers {
+    margin: 2rem 0;
+}
+
+.offers-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    scrollbar-width: none;
+}
+
+.offer-card {
+    min-width: 160px;
+    background: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #333;
+}
+
+.offer-image {
+    width: 100%;
+    height: 120px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.offer-image img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.discount-badge {
+    position: absolute;
+    top: 100px;
+    left: 10px;
+    background: var(--accent-gold);
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.offer-details {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.offer-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.heart-icon {
+    color: var(--accent-blue);
+    font-size: 1.2rem;
+}
+
+/* Content Area */
+#view-content {
+    flex-grow: 1;
+    padding: 1.5rem;
+    padding-bottom: 6rem;
+    /* Space for bottom nav */
+}
+
+h2 {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333366;
+    /* Matching the header text style */
+    text-transform: uppercase;
+}
+
+h3 {
+    font-size: 1rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+}
+
+/* Shop Page */
+.shop-header {
+    margin-bottom: 2rem;
+}
+
+.shop-filters {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
+}
+
+.filter-btn {
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    border: 1px solid #333;
+    background: #1a1a1a;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.filter-btn.active {
+    background: var(--accent-gold);
+    color: white;
+    border-color: var(--accent-gold);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.product-card {
+    background: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #2a2a2a;
+}
+
+.product-image {
+    width: 100%;
+    height: 140px;
+    background: white;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.product-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.product-tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--accent-blue);
+    color: white;
+    font-size: 0.6rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.product-info {
+    padding: 1rem;
+    position: relative;
+}
+
+.product-info h4 {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-price {
+    font-size: 0.8rem;
+    color: var(--accent-gold);
+    font-weight: 700;
+}
+
+.btn-add-cart {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--accent-blue);
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-add-cart i {
+    width: 18px;
+    height: 18px;
+}
+
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+
+.carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.fixture-card {
+    min-width: 280px;
+    background: #001a4d;
+    border-radius: 0px;
+    /* Matching the flat design in image */
+    padding: 1.5rem;
+    scroll-snap-align: center;
+    text-align: center;
+}
+
+.teams {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.team {
+    flex: 1;
+}
+
+.team-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.vs {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--accent-gold);
+}
+
+.score {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 1rem 0;
+}
+
+.match-info {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.match-info p {
+    margin: 0.2rem 0;
+}
+
+/* Sponsors */
+.sponsors-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.sponsor-card {
+    background: white;
+    padding: 1rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sponsor-card img {
+    max-width: 100%;
+    max-height: 80px;
+}
+
+/* Digital Membership Card (Image 7) */
+.digital-card-container {
+    padding: 1rem 0;
+    perspective: 1000px;
+}
+
+.digital-card {
+    background: #000033;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+.card-main {
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    position: relative;
+    min-height: 180px;
+}
+
+.card-photo {
+    width: 120px;
+    height: 140px;
+    background: white;
+    padding: 2px;
+    border-radius: 4px;
+}
+
+.card-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-info {
+    flex: 1;
+}
+
+.card-label {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--accent-gold);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+}
+
+.card-user-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.card-field {
+    margin-bottom: 0.5rem;
+}
+
+.card-field label {
+    display: block;
+    font-size: 0.6rem;
+    color: #ccc;
+}
+
+.card-field span {
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.card-logo {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    width: 80px;
+}
+
+.card-logo img {
+    width: 100%;
+}
+
+.card-footer-banner {
+    background: linear-gradient(135deg, #cc0000 0%, #cc0000 60%, #ffcc00 60%, #ffcc00 100%);
+    padding: 0.6rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: white;
+}
+
+.footer-club {
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* QR Code */
+.qr-container {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem auto;
+    width: fit-content;
+}
+
+#qrcode img {
+    width: 180px;
+    height: 180px;
+}
+
+.card-actions {
+    margin-top: 1rem;
+}
+
+/* Membership Card */
+.profile-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.profile-header {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #333;
+}
+
+.membership-status-bar {
+    background: var(--accent-blue);
+    color: white;
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.membership-details {
+    padding: 1.5rem;
+}
+
+.detail-item {
+    margin-bottom: 1rem;
+}
+
+.detail-item label {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.value-copy {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    color: var(--accent-gold);
+}
+
+.copy-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+}
+
+.status-active {
+    color: var(--accent-gold);
+    font-weight: bold;
+}
+
+.website-link {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+}
+
+/* Menu List */
+.menu-list {
+    list-style: none;
+}
+
+.menu-list li {
+    padding: 1.2rem;
+    border-bottom: 1px solid #2a2a2a;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.menu-icon {
+    color: var(--accent-blue);
+}
+
+/* Bottom Nav */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #000033;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding: 0.5rem 0;
+    border-top: 1px solid #111;
+}
+
+.nav-item {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.7rem;
+    font-family: inherit;
+    cursor: pointer;
+    flex: 1;
+}
+
+.nav-item.active {
+    color: var(--accent-blue);
+}
+
+.nav-icon {
+    font-size: 1.8rem;
+}
+
+.nav-logo-container {
+    background: white;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+    border: 3px solid var(--accent-blue-deep);
+}
+
+.nav-logo-container img {
+    width: 45px;
+}
+
+/* Sub-header */
+.sub-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+}
+
+/* Form Styles */
+.has-verified {
+    position: relative;
+}
+
+.verified-icon {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    color: var(--accent-gold);
+}
+
+.password-strength {
+    margin-bottom: 2rem;
+}
+
+.password-strength span {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.strength-bar {
+    height: 4px;
+    background: #333;
+    margin-top: 0.5rem;
+    border-radius: 2px;
+}
+
+.strength-bar .bar {
+    width: 30%;
+    height: 100%;
+    background: var(--accent-gold);
+}

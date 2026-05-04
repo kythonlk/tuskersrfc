@@ -46,7 +46,7 @@ export default function Academy() {
             Whether you're a beginner or an experienced player, our academy provides a structured pathway to grow and compete.
           </p>
           <Link
-            to="/membership-reg?type=academy"
+            to="/academy-reg"
             className="inline-flex items-center gap-2 bg-[#f5a623] hover:bg-[#e09513] text-[#1a1f4e] px-8 py-4 font-bold text-lg transition-all hover:scale-105"
           >
             Join the Tuskers Family <ArrowRight className="h-5 w-5" />
@@ -330,7 +330,7 @@ export default function Academy() {
             </div>
 
             <Link
-              to="/membership-reg?type=academy"
+              to="/academy-reg"
               className="inline-flex items-center gap-2 bg-[#f5a623] hover:bg-[#e09513] text-[#1a1f4e] px-8 py-4 font-bold text-lg transition-all hover:scale-105"
             >
               Start Your Journey <ArrowRight className="h-5 w-5" />

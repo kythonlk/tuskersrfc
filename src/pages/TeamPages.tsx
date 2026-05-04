@@ -188,15 +188,10 @@ export default function TeamPage() {
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden">
                     <div className="overflow-x-auto border border-[#1a1f4e]">
                         <table className="w-full">
-                            <thead className="bg-gradient-to-r from-[#1a1f4e] to-[#2a2f5e] text-white">
-                                <tr>
-                                    <th className="px-6 py-4 text-left font-bold">Day</th>
-                                    <th className="px-6 py-4 text-left font-bold">Time</th>
-                                    <th className="px-6 py-4 text-left font-bold">Activity</th>
-                                    <th className="px-6 py-4 text-left font-bold">Location</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-200">
+                            {/* <thead className="bg-gradient-to-r from-[#1a1f4e] to-[#2a2f5e] text-white"> */}
+                            <p className="text-center text-lg py-2">To get Training Schedule kindly contact us</p>
+                            {/* </thead> */}
+                            {/* <tbody className="divide-y divide-gray-200">
                                 {t.schedule.map((session, index) => (
                                     <tr
                                         key={index}
@@ -224,7 +219,7 @@ export default function TeamPage() {
                                         </td>
                                     </tr>
                                 ))}
-                            </tbody>
+                            </tbody> */}
                         </table>
                     </div>
                 </div>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dubai Tuskers RFC</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="icon" href="../public/logo.webp">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- QR Code JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- Auth View -->
+        <section id="view-auth" class="view hidden">
+            <div class="auth-container">
+                <div class="logo-container">
+                    <img src="../src/images/logo-full.webp" alt="Dubai Tuskers RFC" class="app-logo">
+                </div>
+                <form id="login-form">
+                    <div class="input-group">
+                        <input type="email" id="login-email" placeholder="E-mail" required>
+                    </div>
+                    <div class="input-group password-group">
+                        <input type="password" id="login-password" placeholder="Password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('login-password')">
+                            <span class="eye-icon">👁️</span>
+                        </button>
+                    </div>
+                    <div class="form-footer">
+                        <a href="#" class="forgot-password">Forgot password</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary">SIGN IN</button>
+                </form>
+                <div class="auth-actions">
+                    <button class="btn btn-secondary" onclick="app.showAuth('signup')">BECOME A TUSKER</button>
+                    <button class="btn btn-secondary" onclick="app.showHome()">OPEN AS GUEST</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sign Up View -->
+        <section id="view-signup" class="view hidden">
+            <div class="auth-container">
+                <div class="logo-container">
+                    <img src="../src/images/logo-full.webp" alt="Dubai Tuskers RFC" class="app-logo">
+                </div>
+                <form id="signup-form">
+
+                    <div class="input-group">
+                        <input type="text" id="signup-name" placeholder="Full Name" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="signup-email" placeholder="E-mail" required>
+                    </div>
+                    <div class="input-group password-group">
+                        <input type="password" id="signup-password" placeholder="Password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('signup-password')">
+                            <span class="eye-icon">👁️</span>
+                        </button>
+                    </div>
+                    <div class="input-group">
+                        <input type="tel" id="signup-phone" placeholder="Mobile Number" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">CREATE ACCOUNT</button>
+                </form>
+                <div class="auth-actions">
+                    <button class="btn btn-secondary" onclick="app.showAuth('login')">ALREADY A TUSKER? SIGN IN</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content View (Header + Bottom Nav) -->
+        <section id="view-main" class="view hidden">
+            <header class="app-header">
+                <div class="header-left" onclick="app.showSubView('membership')">
+                    <div class="avatar-circle small" id="header-avatar">
+                        <img src="../src/images/logo.webp" alt="User">
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="icon-badge">
+                        <i data-lucide="shopping-cart"></i>
+                        <span class="badge" id="cart-count">0</span>
+                    </div>
+                    <div class="icon-badge">
+                        <i data-lucide="bell"></i>
+                        <span class="badge" id="notif-count">2</span>
+                    </div>
+                </div>
+            </header>
+
+            <main id="view-content">
+                <!-- Home Content -->
+                <div id="content-home" class="sub-view">
+                    <!-- News/Social Carousel -->
+                    <div class="news-carousel" id="news-carousel">
+                        <div class="loading">Loading feed...</div>
+                    </div>
+
+                    <!-- Featured Offers Section -->
+                    <section class="featured-offers">
+                        <h2>FEATURED OFFERS</h2>
+                        <div class="offers-grid">
+                            <div class="offer-card">
+                                <div class="offer-image">
+                                    <img src="../src/images/lion.webp">
+                                </div>
+                                <span class="discount-badge">15% DISCOUNT</span>
+                                <div class="offer-details">
+                                    <span class="offer-title">Gold Apple</span>
+                                    <span class="heart-icon">❤️</span>
+                                </div>
+                            </div>
+                            <div class="offer-card">
+                                <div class="offer-image">
+                                    <img src="../src/images/diddeniya.webp">
+                                </div>
+                                <span class="discount-badge">20% DISCOUNT</span>
+                                <div class="offer-details">
+                                    <span class="offer-title">Aster Pharmacy</span>
+                                    <span class="heart-icon">❤️</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="sponsors-section">
+                        <h2>OUR SPONSORS & PARTNERS</h2>
+                        <div class="sponsors-grid" id="sponsors-grid">
+                            <!-- Dynamic Content -->
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Fixtures Content -->
+                <div id="content-fixtures" class="sub-view hidden">
+                    <div class="fixtures-header">
+                        <h2>FIXTURES & RESULTS</h2>
+                    </div>
+                    <section class="fixtures-section">
+                        <h3>UPCOMING FIXTURES</h3>
+                        <div class="carousel" id="upcoming-carousel">
+                            <div class="loading">Loading fixtures...</div>
+                        </div>
+                    </section>
+
+                    <section class="fixtures-section">
+                        <h3>PAST RESULTS</h3>
+                        <div class="carousel" id="past-carousel">
+                            <div class="loading">Loading results...</div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Shop Content -->
+                <div id="content-shop" class="sub-view hidden">
+                    <div class="shop-header">
+                        <h2>TUSKERS STORE</h2>
+                        <div class="shop-filters">
+                            <button class="filter-btn active">ALL</button>
+                            <button class="filter-btn">KITS</button>
+                            <button class="filter-btn">TRAINING</button>
+                        </div>
+                    </div>
+                    <div class="product-grid" id="product-grid">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="../src/images/MembershipRegister.webp" alt="Home Kit">
+                                <span class="product-tag">NEW</span>
+                            </div>
+                            <div class="product-info">
+                                <h4>2026 Home Jersey</h4>
+                                <p class="product-price">AED 250.00</p>
+                                <button class="btn-add-cart"><i data-lucide="plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="../src/images/7s.webp" alt="7s Kit">
+                            </div>
+                            <div class="product-info">
+                                <h4>7s Tournament Kit</h4>
+                                <p class="product-price">AED 180.00</p>
+                                <button class="btn-add-cart"><i data-lucide="plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Membership Card View (New) -->
+                <div id="content-membership-card" class="sub-view hidden">
+                    <div class="digital-card-container">
+                        <div class="digital-card">
+                            <div class="card-main">
+                                <div class="card-photo">
+                                    <div class="avatar-square" id="card-avatar">
+                                        <img src="../src/images/dayan-2025.webp" alt="Profile">
+                                    </div>
+                                </div>
+                                <div class="card-info">
+                                    <h1 class="card-label">MEMBERSHIP CARD</h1>
+                                    <h2 class="card-user-name" id="card-name">DAYAN DIDDENIYA</h2>
+                                    <div class="card-field">
+                                        <label>MEMBERSHIP NUMBER</label>
+                                        <span id="card-number">TUSKER-0001</span>
+                                    </div>
+                                    <div class="card-field">
+                                        <label>VALID UNTIL</label>
+                                        <span id="card-expiry">LIFE MEMBER</span>
+                                    </div>
+                                </div>
+                                <div class="card-logo">
+                                    <img src="../src/images/logo.webp" alt="Logo">
+                                </div>
+                            </div>
+                            <div class="card-footer-banner">
+                                <span class="footer-text">ONE TEAM - ONE DREAM - ONE FAMILY</span>
+                                <span class="footer-club">DUBAI TUSKERS RFC</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qr-container">
+                        <div id="qrcode"></div>
+                    </div>
+
+                    <section class="sponsors-section">
+                        <h2>OUR SPONSORS & PARTNERS</h2>
+                        <div class="sponsors-grid" id="card-sponsors-grid">
+                            <!-- Dynamic Content -->
+                        </div>
+                    </section>
+
+                    <div class="card-actions">
+                        <button class="btn btn-secondary" onclick="app.showSubView('membership')">PROFILE
+                            SETTINGS</button>
+                    </div>
+                </div>
+
+                <!-- Membership Content (Original Settings View) -->
+                <div id="content-membership" class="sub-view hidden">
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="avatar-circle large" id="profile-avatar">
+                                <img src="../src/images/dayan-2025.webp" alt="Profile">
+                            </div>
+                            <div class="profile-info">
+                                <h3 id="profile-name">Dayan Darshana...</h3>
+                            </div>
+                        </div>
+                        <div class="membership-status-bar">
+                            <span>Membership expiry date: 31-12-2026</span>
+                        </div>
+                        <div class="membership-details">
+                            <div class="detail-item">
+                                <label>Member ID</label>
+                                <div class="value-copy">
+                                    <span id="member-id">112139116</span>
+                                    <button class="copy-btn">📋</button>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Status</label>
+                                <span class="status-active">ACTIVE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://www.dubaituskers.com" class="btn btn-gold website-link">www.dubaituskers.com</a>
+
+                    <ul class="menu-list">
+                        <li onclick="app.showSubView('profile-edit')">
+                            <i data-lucide="user-cog" class="menu-icon"></i>
+                            Update your profile information
+                        </li>
+                        <li onclick="app.showSubView('change-password')">
+                            <i data-lucide="key-round" class="menu-icon"></i>
+                            Change Your Login Password
+                        </li>
+                        <li onclick="auth.signOut()">
+                            <i data-lucide="log-out" class="menu-icon"></i>
+                            Sign out
+                        </li>
+                    </ul>
+                    <button class="btn btn-secondary" style="margin-top: 1rem;"
+                        onclick="app.showSubView('membership-card')">BACK TO CARD</button>
+                </div>
+
+                <!-- Profile Edit Content -->
+                <div id="content-profile-edit" class="sub-view hidden">
+                    <div class="sub-header">
+                        <button class="back-btn" onclick="app.showSubView('membership')">←</button>
+                        <h2>Update Profile</h2>
+                    </div>
+                    <form id="profile-form">
+                        <div class="avatar-upload-container">
+                            <div class="avatar-preview" id="edit-avatar-preview">
+                                <img src="../src/images/dayan-2025.webp" alt="Preview">
+                            </div>
+                            <label for="edit-avatar" class="avatar-label">
+                                <i data-lucide="camera"></i> Change Photo
+                            </label>
+                            <input type="file" id="edit-avatar" accept="image/*" hidden>
+                        </div>
+                        <div class="input-group">
+                            <label>Full name</label>
+                            <input type="text" id="edit-name" placeholder="Full name">
+                        </div>
+                        <div class="input-group">
+                            <label>E-mail address</label>
+                            <input type="email" id="edit-email" placeholder="E-mail">
+                        </div>
+                        <div class="input-group has-verified">
+                            <label>Mobile phone number</label>
+                            <input type="tel" id="edit-phone1" placeholder="+971 ...">
+                            <span class="verified-icon">✅</span>
+                        </div>
+                        <div class="input-group has-verified">
+                            <label>Mobile phone number</label>
+                            <input type="tel" id="edit-phone2" placeholder="+971 ...">
+                            <span class="verified-icon">✅</span>
+                        </div>
+                        <button type="submit" class="btn btn-gold">SAVE</button>
+                    </form>
+                </div>
+
+                <!-- Change Password Content -->
+                <div id="content-change-password" class="sub-view hidden">
+                    <div class="sub-header">
+                        <button class="back-btn" onclick="app.showSubView('membership')">←</button>
+                        <h2>Change Password</h2>
+                    </div>
+                    <form id="password-form">
+                        <div class="input-group password-group">
+                            <input type="password" id="current-password" placeholder="Enter Current Password">
+                            <button type="button" class="toggle-password"
+                                onclick="togglePassword('current-password')">👁️</button>
+                        </div>
+                        <div class="input-group password-group">
+                            <input type="password" id="new-password" placeholder="Enter New Password">
+                            <button type="button" class="toggle-password"
+                                onclick="togglePassword('new-password')">👁️</button>
+                        </div>
+                        <div class="input-group password-group">
+                            <input type="password" id="confirm-password" placeholder="Confirm New Password">
+                            <button type="button" class="toggle-password"
+                                onclick="togglePassword('confirm-password')">👁️</button>
+                        </div>
+                        <div class="password-strength">
+                            <span>Password strength ℹ️</span>
+                            <div class="strength-bar">
+                                <div class="bar"></div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">CHANGE PASSWORD</button>
+                    </form>
+                </div>
+            </main>
+
+            <nav class="bottom-nav">
+                <button class="nav-item active" onclick="app.showSubView('home')">
+                    <i data-lucide="home"></i>
+                    <span class="nav-label">HOME</span>
+                </button>
+                <button class="nav-item" onclick="app.showSubView('membership-card')">
+                    <i data-lucide="credit-card"></i>
+                    <span class="nav-label">MEMBERSHIP</span>
+                </button>
+                <button class="nav-item" onclick="app.showHome()">
+                    <div class="nav-logo-container">
+                        <img src="../src/images/logo-full.webp" alt="Tuskers">
+                    </div>
+                </button>
+                <button class="nav-item" onclick="app.showSubView('fixtures')">
+                    <i data-lucide="trophy"></i>
+                    <span class="nav-label">FIXTURES</span>
+                </button>
+                <button class="nav-item" onclick="app.showSubView('shop')">
+                    <i data-lucide="shopping-bag"></i>
+                    <span class="nav-label">SHOP</span>
+                </button>
+            </nav>
+        </section>
+    </div>
+
+    <!-- App Scripts -->
+    <script src="js/supabase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Inline helpers
+        function togglePassword(id) {
+            const el = document.getElementById(id);
+            el.type = el.type === 'password' ? 'text' : 'password';
+        }
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('SW Registered', reg))
+                    .catch(err => console.log('SW Error', err));
+            });
+        }
+    </script>
+</body>
+
+</html>

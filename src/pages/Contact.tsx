@@ -125,7 +125,7 @@ export default function Contact() {
                     Founder & Director of Rugby
                   </p>
                   <p className="text-sm text-gray-600">
-                    Former Sri Lanka Rugby player and coach
+                    Overall Manage the Dubai Tuskers RFC
                   </p>
                 </div>
 
@@ -143,13 +143,13 @@ export default function Contact() {
 
                 <div className="bg-white rounded-xl shadow-lg p-6">
                   <h3 className="text-lg font-bold text-[#1a1f4e] mb-1">
-                    Jason Brown
+                    Bob Goodwin
                   </h3>
                   <p className="text-[#f5a623] font-semibold mb-2">
-                    COO & Coaching Director
+                    Coaching Director
                   </p>
                   <p className="text-sm text-gray-600">
-                    Operations and coaching development
+                    coaching development
                   </p>
                 </div>
 
