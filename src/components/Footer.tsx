@@ -2,15 +2,14 @@ import { Facebook, Instagram, Linkedin, Youtube, Mail, Phone, MapPin } from 'luc
 import { useEffect, useRef, useState } from 'react';
 import { supabase, type Sponsor } from '../lib/supabase';
 import logo from '../images/logo.webp';
-import lion from '../images/lion.webp';
 import diddeniya from '../images/diddeniya.webp';
 import spiderpluse from '../images/spiderplus.webp';
 import thambapanni from '../images/thambapanni.webp';
 import kibsons from '../images/kibsons.webp';
-import SlipSafe from '../images/slipsafe.webp';
 import Gulf from '../images/gulf.jpeg';
 import Mcs from '../images/mcs.webp';
 import fazza from '../images/fazaa.webp'
+import rehab from '../images/rehab.jpeg';
 
 export default function Footer() {
   const [sponsors, setSponsors] = useState<Sponsor[]>([]);
@@ -42,12 +41,12 @@ export default function Footer() {
 
 
   const sp = [
-    { name: 'Lion', logo_url: lion, website_url: 'https://www.lionbeer.com/', },
+    { name: 'ReHabME', logo_url: rehab, website_url: 'https://www.instagram.com/rehabme.uae/', },
     { name: 'Diddeniya', logo_url: diddeniya, website_url: 'https://diddeniya.com/' },
     { name: 'Spiderplus', logo_url: spiderpluse, website_url: 'https://spiderplus.ae/' },
     { name: 'Thambapanni', logo_url: thambapanni, website_url: 'https://thambapanni.com/' },
     { name: 'Kibsons', logo_url: kibsons, website_url: 'https://kibsons.com/' },
-    { name:  'Fazaa', logo_url: fazza, website_url: 'https://Fazaa.ae/' },
+    { name: 'Fazaa', logo_url: fazza, website_url: 'https://Fazaa.ae/' },
     { name: 'Gulf Sports', logo_url: Gulf, website_url: 'https://gulfsportz.com/' },
     { name: 'McGettigan s', logo_url: Mcs, website_url: 'https://www.mcgettigans.com/' },
   ]

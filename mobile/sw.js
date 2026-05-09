@@ -5,7 +5,7 @@ const ASSETS = [
     'js/supabase.js',
     'js/auth.js',
     'js/app.js',
-    '../public/logo.webp'
+    'assets/logo.webp'
 ];
 
 self.addEventListener('install', event => {

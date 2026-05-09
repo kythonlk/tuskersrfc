@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0a0a0a">
-    <link rel="icon" href="../public/logo.webp">
+    <link rel="icon" href="assets/logo.webp">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Supabase JS -->
@@ -25,7 +25,7 @@
         <section id="view-auth" class="view hidden">
             <div class="auth-container">
                 <div class="logo-container">
-                    <img src="../src/images/logo-full.webp" alt="Dubai Tuskers RFC" class="app-logo">
+                    <img src="assets/logo-full.webp" alt="Dubai Tuskers RFC" class="app-logo">
                 </div>
                 <form id="login-form">
                     <div class="input-group">
@@ -53,7 +53,7 @@
         <section id="view-signup" class="view hidden">
             <div class="auth-container">
                 <div class="logo-container">
-                    <img src="../src/images/logo-full.webp" alt="Dubai Tuskers RFC" class="app-logo">
+                    <img src="assets/logo-full.webp" alt="Dubai Tuskers RFC" class="app-logo">
                 </div>
                 <form id="signup-form">
 
@@ -85,15 +85,15 @@
             <header class="app-header">
                 <div class="header-left" onclick="app.showSubView('membership')">
                     <div class="avatar-circle small" id="header-avatar">
-                        <img src="../src/images/logo.webp" alt="User">
+                        <img src="assets/logo.webp" alt="User">
                     </div>
                 </div>
                 <div class="header-right">
-                    <div class="icon-badge">
+                    <div class="icon-badge" onclick="app.showSubView('cart')" style="cursor: pointer;">
                         <i data-lucide="shopping-cart"></i>
                         <span class="badge" id="cart-count">0</span>
                     </div>
-                    <div class="icon-badge">
+                    <div class="icon-badge" onclick="app.showSubView('notifications')" style="cursor: pointer;">
                         <i data-lucide="bell"></i>
                         <span class="badge" id="notif-count">2</span>
                     </div>
@@ -114,7 +114,7 @@
                         <div class="offers-grid">
                             <div class="offer-card">
                                 <div class="offer-image">
-                                    <img src="../src/images/lion.webp">
+                                    <img src="assets/lion.webp">
                                 </div>
                                 <span class="discount-badge">15% DISCOUNT</span>
                                 <div class="offer-details">
@@ -124,7 +124,7 @@
                             </div>
                             <div class="offer-card">
                                 <div class="offer-image">
-                                    <img src="../src/images/diddeniya.webp">
+                                    <img src="assets/diddeniya.webp">
                                 </div>
                                 <span class="discount-badge">20% DISCOUNT</span>
                                 <div class="offer-details">
@@ -174,27 +174,7 @@
                         </div>
                     </div>
                     <div class="product-grid" id="product-grid">
-                        <div class="product-card">
-                            <div class="product-image">
-                                <img src="../src/images/MembershipRegister.webp" alt="Home Kit">
-                                <span class="product-tag">NEW</span>
-                            </div>
-                            <div class="product-info">
-                                <h4>2026 Home Jersey</h4>
-                                <p class="product-price">AED 250.00</p>
-                                <button class="btn-add-cart"><i data-lucide="plus"></i></button>
-                            </div>
-                        </div>
-                        <div class="product-card">
-                            <div class="product-image">
-                                <img src="../src/images/7s.webp" alt="7s Kit">
-                            </div>
-                            <div class="product-info">
-                                <h4>7s Tournament Kit</h4>
-                                <p class="product-price">AED 180.00</p>
-                                <button class="btn-add-cart"><i data-lucide="plus"></i></button>
-                            </div>
-                        </div>
+                        <div class="loading">Loading products...</div>
                     </div>
                 </div>
 
@@ -205,7 +185,7 @@
                             <div class="card-main">
                                 <div class="card-photo">
                                     <div class="avatar-square" id="card-avatar">
-                                        <img src="../src/images/dayan-2025.webp" alt="Profile">
+                                        <img src="assets/dayan-2025.webp" alt="Profile">
                                     </div>
                                 </div>
                                 <div class="card-info">
@@ -221,7 +201,7 @@
                                     </div>
                                 </div>
                                 <div class="card-logo">
-                                    <img src="../src/images/logo.webp" alt="Logo">
+                                    <img src="assets/logo.webp" alt="Logo">
                                 </div>
                             </div>
                             <div class="card-footer-banner">
@@ -253,7 +233,7 @@
                     <div class="profile-card">
                         <div class="profile-header">
                             <div class="avatar-circle large" id="profile-avatar">
-                                <img src="../src/images/dayan-2025.webp" alt="Profile">
+                                <img src="assets/dayan-2025.webp" alt="Profile">
                             </div>
                             <div class="profile-info">
                                 <h3 id="profile-name">Dayan Darshana...</h3>
@@ -306,7 +286,7 @@
                     <form id="profile-form">
                         <div class="avatar-upload-container">
                             <div class="avatar-preview" id="edit-avatar-preview">
-                                <img src="../src/images/dayan-2025.webp" alt="Preview">
+                                <img src="assets/dayan-2025.webp" alt="Preview">
                             </div>
                             <label for="edit-avatar" class="avatar-label">
                                 <i data-lucide="camera"></i> Change Photo
@@ -366,6 +346,32 @@
                         <button type="submit" class="btn btn-primary">CHANGE PASSWORD</button>
                     </form>
                 </div>
+                <!-- Notifications Content -->
+                <div id="content-notifications" class="sub-view hidden">
+                    <div class="notifications-header">
+                        <h2>NOTIFICATIONS</h2>
+                    </div>
+                    <div class="notifications-list">
+                        <div class="loading">Loading notifications...</div>
+                    </div>
+                </div>
+                <!-- Cart Content -->
+                <div id="content-cart" class="sub-view hidden">
+                    <div class="cart-header">
+                        <h2>YOUR CART</h2>
+                    </div>
+                    <div id="cart-items" class="cart-items-list">
+                        <!-- Dynamic Cart Items -->
+                    </div>
+                    <div class="cart-footer" id="cart-summary">
+                        <div class="cart-total">
+                            <span>TOTAL</span>
+                            <span id="cart-total-amount">AED 0.00</span>
+                        </div>
+                        <button class="btn btn-gold checkout-btn">CHECKOUT NOW</button>
+                        <button class="btn btn-secondary" onclick="app.showSubView('shop')">CONTINUE SHOPPING</button>
+                    </div>
+                </div>
             </main>
 
             <nav class="bottom-nav">
@@ -379,7 +385,7 @@
                 </button>
                 <button class="nav-item" onclick="app.showHome()">
                     <div class="nav-logo-container">
-                        <img src="../src/images/logo-full.webp" alt="Tuskers">
+                        <img src="assets/logo-full.webp" alt="Tuskers">
                     </div>
                 </button>
                 <button class="nav-item" onclick="app.showSubView('fixtures')">

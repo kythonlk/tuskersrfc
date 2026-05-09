@@ -1,6 +1,8 @@
 const app = {
     user: null,
     profile: null,
+    cart: [],
+    products: [],
 
     async init() {
         this.user = await auth.getCurrentUser();
@@ -8,6 +10,8 @@ const app = {
             await this.loadProfile();
             this.showHome();
         } else {
+            this.profile = null;
+            this.updateProfileUI(); // Clear UI for guest
             this.showAuth();
         }
 
@@ -15,7 +19,9 @@ const app = {
         this.loadIGPosts();
         this.loadFixtures();
         this.loadSponsors();
-        
+        this.loadNotifications();
+        this.loadProducts();
+
         // Initialize Lucide
         lucide.createIcons();
     },
@@ -40,7 +46,7 @@ const app = {
             // Sign Up Form
             const signupForm = document.getElementById('signup-form');
             const signupAvatarInput = document.getElementById('signup-avatar');
-            
+
             if (signupAvatarInput) {
                 signupAvatarInput.addEventListener('change', (e) => {
                     const file = e.target.files[0];
@@ -62,7 +68,7 @@ const app = {
                     const password = document.getElementById('signup-password').value;
                     const phone = document.getElementById('signup-phone').value;
                     const avatarFile = signupAvatarInput?.files[0];
-                    
+
                     try {
                         await auth.signUp(email, password, name, phone, avatarFile);
                         alert('Registration successful! Please check your email for verification.');
@@ -99,9 +105,9 @@ const app = {
                         mobile_primary: document.getElementById('edit-phone1').value,
                         mobile_secondary: document.getElementById('edit-phone2').value,
                     };
-                    
+
                     const avatarFile = editAvatarInput?.files[0];
-                    
+
                     try {
                         if (avatarFile) {
                             updates.avatar_url = await auth.uploadAvatar(this.user.id, avatarFile);
@@ -133,44 +139,46 @@ const app = {
     },
 
     updateProfileUI() {
-        if (!this.profile) return;
-        
         // 1. Update Profile Settings View
-        document.getElementById('profile-name').textContent = this.profile.full_name;
-        document.getElementById('member-id').textContent = this.profile.member_id || 'N/A';
-        
-        // 2. Update Digital Card View (Image 7)
-        document.getElementById('card-name').textContent = this.profile.full_name.toUpperCase();
-        document.getElementById('card-number').textContent = `TUSKER-${this.profile.member_id?.slice(-4) || '0001'}`;
-        document.getElementById('card-expiry').textContent = this.profile.expiry_date ? 
-            new Date(this.profile.expiry_date).toLocaleDateString() : 'LIFE MEMBER';
+        document.getElementById('profile-name').textContent = this.profile?.full_name || 'GUEST USER';
+        document.getElementById('member-id').textContent = this.profile?.member_id || '--------';
+
+        // 2. Update Digital Card View
+        document.getElementById('card-name').textContent = (this.profile?.full_name || 'GUEST USER').toUpperCase();
+        document.getElementById('card-number').textContent = this.profile ? `TUSKER-${this.profile.member_id?.slice(-4) || '0000'}` : 'TUSKER-0000';
+        document.getElementById('card-expiry').textContent = this.profile?.expiry_date ?
+            new Date(this.profile.expiry_date).toLocaleDateString() : (this.profile ? 'LIFE MEMBER' : 'N/A');
 
         // Update Avatars
-        this.renderAvatar('header-avatar', this.profile.avatar_url, this.profile.full_name);
-        this.renderAvatar('profile-avatar', this.profile.avatar_url, this.profile.full_name);
-        this.renderAvatar('card-avatar', this.profile.avatar_url, this.profile.full_name);
-        
-        // 3. Generate QR Code
+        this.renderAvatar('header-avatar', this.profile?.avatar_url, this.profile?.full_name || 'G');
+        this.renderAvatar('profile-avatar', this.profile?.avatar_url, this.profile?.full_name || 'G');
+        this.renderAvatar('card-avatar', this.profile?.avatar_url, this.profile?.full_name || 'G');
+
+        // 3. Generate QR Code (only for members)
         const qrContainer = document.getElementById("qrcode");
-        qrContainer.innerHTML = ""; // Clear previous
-        new QRCode(qrContainer, {
-            text: `https://dubaituskers.com/verify/${this.profile.member_id}`,
-            width: 180,
-            height: 180,
-            colorDark : "#000033",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
-        });
-        
+        qrContainer.innerHTML = "";
+        if (this.profile) {
+            new QRCode(qrContainer, {
+                text: `https://dubaituskers.com/verify/${this.profile.member_id}`,
+                width: 180,
+                height: 180,
+                colorDark: "#000033",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        } else {
+            qrContainer.innerHTML = '<div class="no-qr">Sign in to view QR</div>';
+        }
+
         // Fill edit form
-        document.getElementById('edit-name').value = this.profile.full_name;
-        document.getElementById('edit-email').value = this.profile.email;
-        document.getElementById('edit-phone1').value = this.profile.mobile_primary || '';
-        document.getElementById('edit-phone2').value = this.profile.mobile_secondary || '';
-        if (this.profile.avatar_url) {
+        document.getElementById('edit-name').value = this.profile?.full_name || '';
+        document.getElementById('edit-email').value = this.profile?.email || '';
+        document.getElementById('edit-phone1').value = this.profile?.mobile_primary || '';
+        document.getElementById('edit-phone2').value = this.profile?.mobile_secondary || '';
+        if (this.profile?.avatar_url) {
             document.getElementById('edit-avatar-preview').innerHTML = `<img src="${this.profile.avatar_url}">`;
         } else {
-            this.renderAvatar('edit-avatar-preview', null, this.profile.full_name);
+            this.renderAvatar('edit-avatar-preview', null, this.profile?.full_name || 'G');
         }
     },
 
@@ -178,25 +186,25 @@ const app = {
         try {
             const response = await fetch('ig/posts_data.json');
             const posts = await response.json();
-            
+
             const container = document.getElementById('news-carousel');
             if (!container) return;
-            
+
             if (!posts || posts.length === 0) {
                 container.innerHTML = '<div class="loading">No posts available</div>';
                 return;
             }
-            
+
             container.innerHTML = posts.map(post => `
                 <div class="news-card">
                     <div class="news-header">
-                        <img src="../src/images/logo.webp" class="news-header-logo">
+                        <img src="assets/logo.webp" class="news-header-logo">
                         <div class="news-header-info">
                             <h4>Dubai Tuskers RFC</h4>
                             <span>Recent Post</span>
                         </div>
                     </div>
-                    <img src="ig/${post.local_file}" class="news-image" onerror="this.src='../src/images/logo-full.webp'">
+                    <img src="ig/${post.local_file}" class="news-image" onerror="this.src='assets/logo-full.webp'">
                     <div class="news-content">
                         <p>${post.caption}</p>
                     </div>
@@ -223,15 +231,15 @@ const app = {
 
     async loadFixtures() {
         const { data: upcoming } = await supabaseClient
-            .from('mob_fixtures')
+            .from('fixtures')
             .select('*')
-            .eq('is_past', false)
+            .neq('status', 'completed')
             .order('match_date', { ascending: true });
 
         const { data: past } = await supabaseClient
-            .from('mob_fixtures')
+            .from('fixtures')
             .select('*')
-            .eq('is_past', true)
+            .eq('status', 'completed')
             .order('match_date', { ascending: false });
 
         this.renderFixtures('upcoming-carousel', upcoming);
@@ -250,20 +258,20 @@ const app = {
             <div class="fixture-card">
                 <div class="teams">
                     <div class="team">
-                        <img src="${f.logo_a || '../src/images/logo.webp'}" class="team-logo">
-                        <p>${f.team_a}</p>
+                        <img src="${f.home_team_logo || 'assets/logo.webp'}" class="team-logo">
+                        <p>${f.home_team}</p>
                     </div>
                     <div class="vs">VS</div>
                     <div class="team">
-                        <img src="${f.logo_b || '../src/images/logo.webp'}" class="team-logo">
-                        <p>${f.team_b}</p>
+                        <img src="${f.away_team_logo || 'assets/logo.webp'}" class="team-logo">
+                        <p>${f.away_team}</p>
                     </div>
                 </div>
-                <div class="score">${f.is_past ? `${f.score_a} - ${f.score_b}` : 'VS'}</div>
+                <div class="score">${f.status === 'completed' ? `${f.home_score} - ${f.away_score}` : 'VS'}</div>
                 <div class="match-info">
                     <p>📅 ${new Date(f.match_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                     <p>📍 ${f.venue}</p>
-                    <p>${f.match_type}</p>
+                    <p>${f.competition}</p>
                 </div>
             </div>
         `).join('');
@@ -271,19 +279,32 @@ const app = {
 
     async loadSponsors() {
         const { data } = await supabaseClient
-            .from('mob_sponsors')
+            .from('sponsors')
             .select('*')
-            .order('order_index', { ascending: true });
+            .order('display_order', { ascending: true });
 
         const container = document.getElementById('sponsors-grid');
         const cardContainer = document.getElementById('card-sponsors-grid');
-        
+
         if (!container && !cardContainer) return;
 
-        const html = (!data || data.length === 0) ? `
-            <div class="sponsor-card"><img src="../src/images/lion.webp"></div>
-            <div class="sponsor-card"><img src="../src/images/diddeniya.webp"></div>
-        ` : data.map(s => `
+        // Hardcoded list matching website's Footer.tsx
+        const hardcodedSponsors = [
+            { name: 'ReHabME', logo_url: 'assets/rehab.jpeg' },
+            { name: 'Diddeniya', logo_url: 'assets/diddeniya.webp' },
+            { name: 'Spiderplus', logo_url: 'assets/spiderplus.webp' },
+            { name: 'Thambapanni', logo_url: 'assets/thambapanni.webp' },
+            { name: 'Kibsons', logo_url: 'assets/kibsons.webp' },
+            { name: 'Fazaa', logo_url: 'assets/fazaa.webp' },
+            { name: 'Gulf Sports', logo_url: 'assets/gulf.jpeg' },
+            { name: 'McGettigan\'s', logo_url: 'assets/mcs.webp' },
+            { name: 'SlipSafe', logo_url: 'assets/slipsafe.webp' },
+        ];
+
+        // Use database data if available, otherwise use hardcoded list
+        const displayData = (data && data.length > 0) ? data : hardcodedSponsors;
+
+        const html = displayData.map(s => `
             <div class="sponsor-card">
                 <img src="${s.logo_url}" alt="${s.name}">
             </div>
@@ -291,6 +312,154 @@ const app = {
 
         if (container) container.innerHTML = html;
         if (cardContainer) cardContainer.innerHTML = html;
+    },
+
+    async loadNotifications() {
+        const { data, error } = await supabaseClient
+            .from('notifications')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        const container = document.querySelector('.notifications-list');
+        if (!container) return;
+
+        if (error || !data || data.length === 0) {
+            // Mock data if table doesn't exist yet
+            const mockNotifs = [
+                { id: 1, title: 'Match Update', content: 'Fixture confirmed for Nov 30th.', time: '2h ago', icon: 'trophy', unread: true },
+                { id: 2, title: 'New Kit', content: '2026 Home Jersey in stock!', time: '5h ago', icon: 'shopping-bag', unread: true }
+            ];
+            this.renderNotifications(container, mockNotifs);
+            document.getElementById('notif-count').textContent = '2';
+        } else {
+            this.renderNotifications(container, data);
+            document.getElementById('notif-count').textContent = data.filter(n => !n.is_read).length.toString();
+        }
+    },
+
+    renderNotifications(container, notifications) {
+        container.innerHTML = notifications.map(n => `
+            <div class="notification-item ${n.unread || !n.is_read ? 'unread' : ''}">
+                <div class="notification-icon">
+                    <i data-lucide="${n.icon || 'bell'}"></i>
+                </div>
+                <div class="notification-content">
+                    <h4>${n.title}</h4>
+                    <p>${n.content}</p>
+                    <span class="notification-time">${n.time || this.formatTime(n.created_at)}</span>
+                </div>
+            </div>
+        `).join('');
+        lucide.createIcons();
+    },
+
+    async loadProducts() {
+        const { data, error } = await supabaseClient
+            .from('products')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        const container = document.getElementById('product-grid');
+        if (!container) return;
+
+        if (error || !data || data.length === 0) {
+            // Mock products if table doesn't exist
+            this.products = [
+                { id: 'p1', name: '2026 Home Jersey', price: 250, image_url: 'assets/15s.webp', tag: 'NEW' },
+                { id: 'p2', name: '7s Tournament Kit', price: 180, image_url: 'assets/7s.webp' }
+            ];
+        } else {
+            this.products = data;
+        }
+
+        container.innerHTML = this.products.map(p => `
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="${p.image_url}" alt="${p.name}">
+                    ${p.tag ? `<span class="product-tag">${p.tag}</span>` : ''}
+                </div>
+                <div class="product-info">
+                    <h4>${p.name}</h4>
+                    <p class="product-price">AED ${Number(p.price).toFixed(2)}</p>
+                    <button class="btn-add-cart" onclick="app.addToCart('${p.id}')">
+                        <i data-lucide="plus"></i>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+        lucide.createIcons();
+    },
+
+    addToCart(productId) {
+        const product = this.products.find(p => p.id === productId);
+        if (product) {
+            this.cart.push({ ...product, cartId: Date.now() });
+            this.updateCartUI();
+            
+            // Simple toast/alert
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = `${product.name} added to cart!`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        }
+    },
+
+    removeFromCart(cartId) {
+        this.cart = this.cart.filter(item => item.cartId !== cartId);
+        this.updateCartUI();
+    },
+
+    updateCartUI() {
+        const count = this.cart.length;
+        const badge = document.getElementById('cart-count');
+        badge.textContent = count;
+        badge.style.display = count > 0 ? 'flex' : 'none';
+        
+        this.renderCart();
+    },
+
+    renderCart() {
+        const container = document.getElementById('cart-items');
+        const summary = document.getElementById('cart-summary');
+        if (!container) return;
+
+        if (this.cart.length === 0) {
+            container.innerHTML = '<div class="no-data">Your cart is empty</div>';
+            if (summary) summary.style.display = 'none';
+            return;
+        }
+
+        if (summary) summary.style.display = 'block';
+
+        let total = 0;
+        container.innerHTML = this.cart.map(item => {
+            total += Number(item.price);
+            return `
+                <div class="cart-item">
+                    <img src="${item.image_url}" class="cart-item-img">
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <p>AED ${Number(item.price).toFixed(2)}</p>
+                    </div>
+                    <button class="remove-btn" onclick="app.removeFromCart(${item.cartId})">
+                        <i data-lucide="trash-2"></i>
+                    </button>
+                </div>
+            `;
+        }).join('');
+
+        document.getElementById('cart-total-amount').textContent = `AED ${total.toFixed(2)}`;
+        lucide.createIcons();
+    },
+
+    formatTime(dateString) {
+        const date = new Date(dateString);
+        const now = new Date();
+        const diff = Math.floor((now - date) / 1000 / 60); // minutes
+        if (diff < 60) return `${diff}m ago`;
+        if (diff < 1440) return `${Math.floor(diff / 60)}h ago`;
+        return date.toLocaleDateString();
     },
 
     showAuth(mode = 'login') {

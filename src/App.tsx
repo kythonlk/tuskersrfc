@@ -25,6 +25,7 @@ import { useLayoutEffect } from 'react';
 import EventForm from './pages/EventForm';
 import Academy from './pages/Acedamy';
 import AcademyReg from './pages/AcademyReg';
+import VerifyMember from './pages/VerifyMember';
 
 // Admin Pages
 import AdminLogin from './pages/admin/AdminLogin';
@@ -85,6 +86,7 @@ function App() {
                 <Route path="/policies" element={<Policies />} />
                 <Route path="/match/:id" element={<SingleMatch />} />
                 <Route path="/news/:id" element={<SingleNews />} />
+                <Route path="/verify/:id" element={<VerifyMember />} />
                 {/* Admin Routes */}
                 <Route path="/admin/login" element={<AdminLogin />} />
                 <Route path="/admin" element={<AdminRoute />}>
