@@ -294,11 +294,9 @@ const app = {
             { name: 'Diddeniya', logo_url: 'assets/diddeniya.webp' },
             { name: 'Spiderplus', logo_url: 'assets/spiderplus.webp' },
             { name: 'Thambapanni', logo_url: 'assets/thambapanni.webp' },
-            { name: 'Kibsons', logo_url: 'assets/kibsons.webp' },
             { name: 'Fazaa', logo_url: 'assets/fazaa.webp' },
             { name: 'Gulf Sports', logo_url: 'assets/gulf.jpeg' },
             { name: 'McGettigan\'s', logo_url: 'assets/mcs.webp' },
-            { name: 'SlipSafe', logo_url: 'assets/slipsafe.webp' },
         ];
 
         // Use database data if available, otherwise use hardcoded list
@@ -395,7 +393,7 @@ const app = {
         if (product) {
             this.cart.push({ ...product, cartId: Date.now() });
             this.updateCartUI();
-            
+
             // Simple toast/alert
             const toast = document.createElement('div');
             toast.className = 'toast';
@@ -415,7 +413,7 @@ const app = {
         const badge = document.getElementById('cart-count');
         badge.textContent = count;
         badge.style.display = count > 0 ? 'flex' : 'none';
-        
+
         this.renderCart();
     },
 

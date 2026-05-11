@@ -25,7 +25,7 @@
         <section id="view-auth" class="view hidden">
             <div class="auth-container">
                 <div class="logo-container">
-                    <img src="assets/logo-full.webp" alt="Dubai Tuskers RFC" class="app-logo">
+                    <img src="assets/logo.webp" alt="Dubai Tuskers RFC" class="app-logo">
                 </div>
                 <form id="login-form">
                     <div class="input-group">
@@ -43,7 +43,8 @@
                     <button type="submit" class="btn btn-primary">SIGN IN</button>
                 </form>
                 <div class="auth-actions">
-                    <button class="btn btn-secondary" onclick="app.showAuth('signup')">BECOME A TUSKER</button>
+                    <a class="btn btn-secondary" href="https://www.dubaituskers.com/membership" target="_blank">BECOME A
+                        TUSKER</a>
                     <button class="btn btn-secondary" onclick="app.showHome()">OPEN AS GUEST</button>
                 </div>
             </div>
@@ -53,7 +54,7 @@
         <section id="view-signup" class="view hidden">
             <div class="auth-container">
                 <div class="logo-container">
-                    <img src="assets/logo-full.webp" alt="Dubai Tuskers RFC" class="app-logo">
+                    <img src="assets/logo.webp" alt="Dubai Tuskers RFC" class="app-logo">
                 </div>
                 <form id="signup-form">
 
@@ -114,11 +115,11 @@
                         <div class="offers-grid">
                             <div class="offer-card">
                                 <div class="offer-image">
-                                    <img src="assets/lion.webp">
+                                    <img src="assets/mcs.webp">
                                 </div>
-                                <span class="discount-badge">15% DISCOUNT</span>
+                                <span class="discount-badge">30% DISCOUNT</span>
                                 <div class="offer-details">
-                                    <span class="offer-title">Gold Apple</span>
+                                    <span class="offer-title">McGs Al Barsha</span>
                                     <span class="heart-icon">❤️</span>
                                 </div>
                             </div>
@@ -128,7 +129,7 @@
                                 </div>
                                 <span class="discount-badge">20% DISCOUNT</span>
                                 <div class="offer-details">
-                                    <span class="offer-title">Aster Pharmacy</span>
+                                    <span class="offer-title">Diddeniya Sportswear</span>
                                     <span class="heart-icon">❤️</span>
                                 </div>
                             </div>
@@ -268,6 +269,10 @@
                             <i data-lucide="key-round" class="menu-icon"></i>
                             Change Your Login Password
                         </li>
+                        <li onclick="checkForUpdatesManual()">
+                            <i data-lucide="refresh-cw" class="menu-icon"></i>
+                            Check for App Updates
+                        </li>
                         <li onclick="auth.signOut()">
                             <i data-lucide="log-out" class="menu-icon"></i>
                             Sign out
@@ -385,7 +390,7 @@
                 </button>
                 <button class="nav-item" onclick="app.showHome()">
                     <div class="nav-logo-container">
-                        <img src="assets/logo-full.webp" alt="Tuskers">
+                        <img src="assets/logo.webp" alt="Tuskers">
                     </div>
                 </button>
                 <button class="nav-item" onclick="app.showSubView('fixtures')">
@@ -398,6 +403,14 @@
                 </button>
             </nav>
         </section>
+        <!-- Update Banner (Hidden by default) -->
+        <div id="update-banner" class="update-banner hidden">
+            <div class="update-banner-content">
+                <i data-lucide="download-cloud"></i>
+                <p>New version available!</p>
+            </div>
+            <button class="btn-update" id="btn-update">Update Now</button>
+        </div>
     </div>
 
     <!-- App Scripts -->
@@ -411,12 +424,67 @@
             el.type = el.type === 'password' ? 'text' : 'password';
         }
 
-        // Register Service Worker
+        // Register Service Worker with update handling
         if ('serviceWorker' in navigator) {
+            let newWorker;
+            let registration;
+
+            function showUpdateBanner() {
+                const banner = document.getElementById('update-banner');
+                banner.classList.remove('hidden');
+                lucide.createIcons();
+            }
+
+            // Manual check function
+            window.checkForUpdatesManual = async function () {
+                console.log('Checking for updates manually...');
+                if (registration) {
+                    try {
+                        await registration.update();
+                        // registration.update() triggers 'updatefound' if there's a new one.
+                        // We can also check if there's already a waiting worker
+                        if (!registration.installing && !registration.waiting) {
+                            alert('App is already up to date!');
+                        }
+                    } catch (e) {
+                        console.error('Update check failed', e);
+                    }
+                }
+            };
+
+            document.getElementById('btn-update').addEventListener('click', () => {
+                if (newWorker) {
+                    newWorker.postMessage('skipWaiting');
+                }
+            });
+
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('SW Registered', reg))
-                    .catch(err => console.log('SW Error', err));
+                navigator.serviceWorker.register('sw.js').then(reg => {
+                    console.log('SW Registered');
+                    registration = reg;
+
+                    // Check for waiting worker on load
+                    if (reg.waiting) {
+                        newWorker = reg.waiting;
+                        showUpdateBanner();
+                    }
+
+                    reg.addEventListener('updatefound', () => {
+                        newWorker = reg.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                showUpdateBanner();
+                            }
+                        });
+                    });
+                }).catch(err => console.log('SW Error', err));
+
+                let refreshing;
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    if (refreshing) return;
+                    window.location.reload();
+                    refreshing = true;
+                });
             });
         }
     </script>
