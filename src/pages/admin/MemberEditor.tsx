@@ -121,9 +121,16 @@ export default function MemberEditor() {
         e.preventDefault();
         setSubmitting(true);
 
+        // Convert empty string dates to null so Postgres doesn't throw type validation errors
+        const submitData = {
+            ...formData,
+            expiry_date: formData.expiry_date || null,
+            dob: formData.dob || null
+        };
+
         const { error } = await supabase
             .from('memberships')
-            .update(formData)
+            .update(submitData)
             .eq('id', id);
 
         setSubmitting(false);
