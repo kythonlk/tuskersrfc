@@ -1,4 +1,3 @@
-
 const auth = {
     async signIn(email, password) {
         const { data, error } = await supabaseClient.auth.signInWithPassword({
@@ -27,19 +26,24 @@ const auth = {
             avatarUrl = await this.uploadAvatar(data.user.id, avatarFile);
         }
 
-        // Create entry in mob_members
+        // Create entry in memberships as pending approval (admin only creates members after approval)
         if (data.user) {
+            const nameParts = fullName.trim().split(/\s+/);
+            const firstName = nameParts[0] || '';
+            const lastName = nameParts.slice(1).join(' ') || '';
+
             const { error: profileError } = await supabaseClient
-                .from('mob_members')
+                .from('memberships')
                 .insert({
-                    id: data.user.id,
-                    full_name: fullName,
+                    first_name: firstName,
+                    last_name: lastName,
                     email: email,
-                    mobile_primary: phone,
+                    phone: phone,
                     avatar_url: avatarUrl,
-                    member_id: Math.floor(100000000 + Math.random() * 900000000).toString()
+                    status: 'pending',
+                    membership_type: 'supporter' // default scheme for new mobile applicants
                 });
-            if (profileError) console.error('Profile creation error:', profileError);
+            if (profileError) console.error('Pending membership registration error:', profileError);
         }
         
         return data;
@@ -78,12 +82,43 @@ const auth = {
         const user = await this.getCurrentUser();
         if (!user) throw new Error('No user logged in');
 
-        const { data, error } = await supabaseClient
-            .from('mob_members')
-            .update(updates)
-            .eq('id', user.id);
+        const nameParts = (updates.full_name || '').trim().split(/\s+/);
+        const firstName = nameParts[0] || '';
+        const lastName = nameParts.slice(1).join(' ') || '';
 
-        if (error) throw error;
+        const membershipsUpdates = {
+            first_name: firstName,
+            last_name: lastName,
+            email: updates.email,
+            phone: updates.mobile_primary,
+            whatsapp: updates.mobile_secondary,
+        };
+
+        if (updates.avatar_url) {
+            membershipsUpdates.avatar_url = updates.avatar_url;
+        }
+
+        // Try updating in memberships table
+        const { data, error } = await supabaseClient
+            .from('memberships')
+            .update(membershipsUpdates)
+            .eq('email', user.email);
+
+        if (error) {
+            // Check if user is in mob_members as fallback
+            const { data: fbData, error: fbError } = await supabaseClient
+                .from('mob_members')
+                .update({
+                    full_name: updates.full_name,
+                    email: updates.email,
+                    mobile_primary: updates.mobile_primary,
+                    mobile_secondary: updates.mobile_secondary,
+                    avatar_url: updates.avatar_url
+                })
+                .eq('id', user.id);
+            if (fbError) throw fbError;
+            return fbData;
+        }
         return data;
     },
 

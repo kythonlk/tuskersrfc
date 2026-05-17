@@ -126,38 +126,75 @@ const app = {
 
     async loadProfile() {
         if (!this.user) return;
+        
+        // Fetch from memberships (the unified single table for all)
         const { data, error } = await supabaseClient
-            .from('mob_members')
+            .from('memberships')
             .select('*')
-            .eq('id', this.user.id)
+            .eq('email', this.user.email)
             .single();
 
         if (data) {
-            this.profile = data;
+            this.profile = {
+                ...data,
+                full_name: `${data.first_name || ''} ${data.last_name || ''}`.trim(),
+                mobile_primary: data.phone || '',
+                mobile_secondary: data.whatsapp || '',
+                avatar_url: data.avatar_url || (data.passport_photo ? (data.passport_photo.startsWith('data:') ? data.passport_photo : `data:image/jpeg;base64,${data.passport_photo}`) : null)
+            };
             this.updateProfileUI();
+        } else {
+            // Fallback to mob_members
+            const { data: fbData } = await supabaseClient
+                .from('mob_members')
+                .select('*')
+                .eq('id', this.user.id)
+                .single();
+
+            if (fbData) {
+                this.profile = fbData;
+                this.updateProfileUI();
+            }
         }
     },
 
     updateProfileUI() {
+        const isActive = this.profile && (this.profile.status === 'active' || this.profile.status === 'ACTIVE');
+
         // 1. Update Profile Settings View
         document.getElementById('profile-name').textContent = this.profile?.full_name || 'GUEST USER';
         document.getElementById('member-id').textContent = this.profile?.member_id || '--------';
 
+        // Update status in the profile settings
+        const statusEl = document.querySelector('.status-active');
+        if (statusEl) {
+            if (isActive) {
+                statusEl.textContent = 'ACTIVE';
+                statusEl.className = 'status-active';
+            } else if (this.profile) {
+                statusEl.textContent = (this.profile.status || 'PENDING').toUpperCase();
+                statusEl.className = 'status-active text-yellow-500 bg-yellow-500/10 border border-yellow-500/20 px-2 py-0.5 rounded font-bold';
+            } else {
+                statusEl.textContent = 'INACTIVE';
+                statusEl.className = 'status-active text-gray-500';
+            }
+        }
+
         // 2. Update Digital Card View
         document.getElementById('card-name').textContent = (this.profile?.full_name || 'GUEST USER').toUpperCase();
-        document.getElementById('card-number').textContent = this.profile ? `TUSKER-${this.profile.member_id?.slice(-4) || '0000'}` : 'TUSKER-0000';
+        document.getElementById('card-number').textContent = this.profile?.member_id ? `TUSKER-${this.profile.member_id}` : 'PENDING';
         document.getElementById('card-expiry').textContent = this.profile?.expiry_date ?
-            new Date(this.profile.expiry_date).toLocaleDateString() : (this.profile ? 'LIFE MEMBER' : 'N/A');
+            new Date(this.profile.expiry_date).toLocaleDateString() : (isActive ? 'LIFE MEMBER' : 'PENDING APPROVAL');
 
         // Update Avatars
         this.renderAvatar('header-avatar', this.profile?.avatar_url, this.profile?.full_name || 'G');
         this.renderAvatar('profile-avatar', this.profile?.avatar_url, this.profile?.full_name || 'G');
         this.renderAvatar('card-avatar', this.profile?.avatar_url, this.profile?.full_name || 'G');
 
-        // 3. Generate QR Code (only for members)
+        // 3. Generate QR Code (only for active members with valid member_id)
         const qrContainer = document.getElementById("qrcode");
         qrContainer.innerHTML = "";
-        if (this.profile) {
+        if (isActive && this.profile?.member_id) {
             new QRCode(qrContainer, {
                 text: `https://dubaituskers.com/verify/${this.profile.member_id}`,
                 width: 180,
@@ -166,6 +203,13 @@ const app = {
                 colorLight: "#ffffff",
                 correctLevel: QRCode.CorrectLevel.H
             });
+        } else if (this.profile) {
+            qrContainer.innerHTML = `
+                <div class="no-qr text-center p-4 bg-yellow-500/10 rounded-xl border border-yellow-500/20" style="max-width: 250px; margin: 0.5rem auto;">
+                    <p style="color: #f5a623; font-weight: bold; margin-bottom: 0.25rem; font-size: 14px; font-family: 'Rajdhani', sans-serif;">MEMBERSHIP PENDING APPROVAL</p>
+                    <span style="color: #888; font-size: 11px; font-family: 'Rajdhani', sans-serif; display: block; line-height: 1.3;">Your registration is currently pending admin approval. Your digital QR card will activate once approved.</span>
+                </div>
+            `;
         } else {
             qrContainer.innerHTML = '<div class="no-qr">Sign in to view QR</div>';
         }

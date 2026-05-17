@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { Helmet } from 'react-helmet-async';
-import { CheckCircle, XCircle, ShieldCheck, User, Calendar, CreditCard } from 'lucide-react';
+import { CheckCircle, XCircle, ShieldCheck, User, Calendar, CreditCard, AlertTriangle } from 'lucide-react';
 
 export default function VerifyMember() {
   const { id } = useParams();
@@ -13,14 +13,30 @@ export default function VerifyMember() {
   useEffect(() => {
     async function verify() {
       try {
+        // Try memberships first
         const { data, error } = await supabase
-          .from('mob_members')
+          .from('memberships')
           .select('*')
           .eq('member_id', id)
           .single();
 
-        if (error) throw error;
-        setMember(data);
+        if (error) {
+          // Try mob_members as fallback
+          const { data: fbData, error: fbError } = await supabase
+            .from('mob_members')
+            .select('*')
+            .eq('member_id', id)
+            .single();
+
+          if (fbError) throw fbError;
+          setMember(fbData);
+        } else if (data) {
+          const formattedMember = {
+            ...data,
+            full_name: `${data.first_name || ''} ${data.last_name || ''}`.trim(),
+          };
+          setMember(formattedMember);
+        }
       } catch (err: any) {
         console.error('Verification error:', err);
         setError('Member not found or invalid QR code');
@@ -31,6 +47,9 @@ export default function VerifyMember() {
 
     if (id) verify();
   }, [id]);
+
+  const isActive = member && (member.status === 'active' || member.status === 'ACTIVE');
+  const isExpired = member && (member.status === 'expired' || member.status === 'EXPIRED');
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center p-4 bg-gray-50 font-rajdhani">
@@ -61,7 +80,45 @@ export default function VerifyMember() {
               <h2 className="text-2xl font-bold text-gray-800 mb-2">VERIFICATION FAILED</h2>
               <p className="text-red-600 font-medium mb-6">{error}</p>
               <div className="p-4 bg-red-50 rounded-xl border border-red-100 text-sm text-red-700">
-                This QR code is either invalid, expired, or doesn't belong to a registered member.
+                This QR code is either invalid or doesn't belong to any registered member.
+              </div>
+            </div>
+          ) : member && !isActive ? (
+            <div className="text-center py-8">
+              <div className="bg-yellow-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <AlertTriangle className="text-yellow-500" size={48} />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">ACCESS RESTRICTED</h2>
+              <p className="text-yellow-600 font-bold uppercase tracking-widest text-xs mt-1 mb-6">
+                {isExpired ? 'Membership Expired' : 'Pending Approval'}
+              </p>
+
+              <div className="space-y-4 text-left">
+                <div className="flex items-center p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                  <div className="bg-white p-3 rounded-xl shadow-sm mr-4">
+                    <User className="text-[#000033]" size={20} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Full Name</p>
+                    <p className="text-gray-800 font-bold text-lg leading-tight">{member.full_name}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                  <div className="bg-white p-3 rounded-xl shadow-sm mr-4">
+                    <CreditCard className="text-[#000033]" size={20} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Member ID</p>
+                    <p className="text-gray-800 font-bold text-lg leading-tight">TUSKER-{member.member_id}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4 bg-yellow-50 rounded-xl border border-yellow-100 text-sm text-yellow-700 mt-6">
+                {isExpired 
+                  ? 'This membership has expired and is no longer valid. Please ask the member to renew.'
+                  : 'This registration is pending approval and cannot be used for entry/discounts.'}
               </div>
             </div>
           ) : (

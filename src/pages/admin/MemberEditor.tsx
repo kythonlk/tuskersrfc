@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { Save, ArrowLeft, Loader2, Image, FileText } from 'lucide-react';
+import { Save, ArrowLeft, Loader2, Image, FileText, Settings } from 'lucide-react';
 
 export default function MemberEditor() {
     const { id } = useParams();
@@ -9,7 +9,7 @@ export default function MemberEditor() {
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
 
-    // Form State (mirroring MembershipReg.tsx structure)
+    // Form State (mirroring MembershipReg.tsx structure + admin fields)
     const [formData, setFormData] = useState({
         first_name: '',
         last_name: '',
@@ -30,6 +30,10 @@ export default function MemberEditor() {
         // Files (stored as base64 string in DB)
         emirates_id_file: '',
         passport_photo: '',
+        // Administrative fields
+        member_id: '',
+        status: 'pending',
+        expiry_date: '',
     });
 
     // Helper for file upload
@@ -60,7 +64,14 @@ export default function MemberEditor() {
             alert('Error fetching member');
             navigate('/admin/members');
         } else if (data) {
-            setFormData(data);
+            setFormData({
+                ...formData,
+                ...data,
+                // Ensure null/undefined values are handled gracefully
+                member_id: data.member_id || '',
+                status: data.status || 'pending',
+                expiry_date: data.expiry_date || '',
+            });
         }
         setLoading(false);
     };
@@ -96,7 +107,7 @@ export default function MemberEditor() {
 
         if (error) {
             console.error(error);
-            alert('Failed to update member');
+            alert('Failed to update member: ' + error.message);
         } else {
             alert('Member updated successfully');
             navigate('/admin/members');
@@ -104,11 +115,9 @@ export default function MemberEditor() {
     };
 
     // Helper to render image (assuming jpeg/png)
-    // Providing a fallback prefix if it's missing, though we know the DB likely has it stripped.
     const renderImage = (base64String: string | null) => {
         if (!base64String) return <div className="text-gray-400 text-sm">No image uploaded</div>;
 
-        // Check if it already has a prefix (unlikely given the saving logic, but safe to check)
         const src = base64String.startsWith('data:')
             ? base64String
             : `data:image/jpeg;base64,${base64String}`;
@@ -146,6 +155,61 @@ export default function MemberEditor() {
             </div>
 
             <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
+                {/* Administrative / Membership Settings */}
+                <div className="bg-[#fcf8f2] p-6 rounded-2xl border border-[#faebcc] space-y-4">
+                    <h3 className="text-lg font-bold text-[#1a1f4e] flex items-center gap-2">
+                        <Settings className="w-5 h-5 text-[#f5a623]" /> Administrative & Membership Status
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1">Membership ID (Numeric)</label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="text"
+                                    name="member_id"
+                                    value={formData.member_id}
+                                    onChange={handleChange}
+                                    placeholder="e.g. 100293021"
+                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623] outline-none bg-white font-mono"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        const randomId = Math.floor(100000000 + Math.random() * 900000000).toString();
+                                        setFormData(prev => ({ ...prev, member_id: randomId }));
+                                    }}
+                                    className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-lg text-xs transition-colors whitespace-nowrap"
+                                >
+                                    Generate
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1">Membership Status</label>
+                            <select
+                                name="status"
+                                value={formData.status}
+                                onChange={handleChange}
+                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623] outline-none bg-white font-semibold"
+                            >
+                                <option value="pending">Pending Approval</option>
+                                <option value="active">Active</option>
+                                <option value="expired">Expired</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1">Expiry Date</label>
+                            <input
+                                type="date"
+                                name="expiry_date"
+                                value={formData.expiry_date ? new Date(formData.expiry_date).toISOString().split('T')[0] : ''}
+                                onChange={handleChange}
+                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623] outline-none bg-white"
+                            />
+                        </div>
+                    </div>
+                </div>
+
                 {/* Personal Info */}
                 <div className="border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold text-gray-800 mb-4">Personal Information</h3>
@@ -201,7 +265,7 @@ export default function MemberEditor() {
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-1">Membership Type</label>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1">Membership Type (Scheme)</label>
                             <select
                                 name="membership_type"
                                 value={formData.membership_type}
@@ -211,6 +275,8 @@ export default function MemberEditor() {
                                 <option value="men">Men's Rugby</option>
                                 <option value="women">Women's Rugby</option>
                                 <option value="touch">Touch Rugby</option>
+                                <option value="supporter">Supporter</option>
+                                <option value="academy">Academy Program</option>
                             </select>
                         </div>
                     </div>
