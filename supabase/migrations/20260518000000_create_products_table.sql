@@ -36,3 +36,21 @@ CREATE POLICY "Allow authenticated users to delete products"
     FOR DELETE
     TO authenticated
     USING (true);
+
+-- Insert sample products if table is empty
+INSERT INTO public.products (name, price, image_url, tag)
+SELECT '2026 Home Jersey', 250.00, 'assets/15s.webp', 'NEW'
+WHERE NOT EXISTS (SELECT 1 FROM public.products WHERE name = '2026 Home Jersey');
+
+INSERT INTO public.products (name, price, image_url, tag)
+SELECT '7s Tournament Kit', 180.00, 'assets/7s.webp', 'HOT'
+WHERE NOT EXISTS (SELECT 1 FROM public.products WHERE name = '7s Tournament Kit');
+
+INSERT INTO public.products (name, price, image_url, tag)
+SELECT 'Tuskers Training Singlet', 120.00, 'assets/stash.jpeg', 'LIMITED'
+WHERE NOT EXISTS (SELECT 1 FROM public.products WHERE name = 'Tuskers Training Singlet');
+
+INSERT INTO public.products (name, price, image_url, tag)
+SELECT 'Official Club Hoodie', 290.00, 'assets/logo-full.webp', 'SALE'
+WHERE NOT EXISTS (SELECT 1 FROM public.products WHERE name = 'Official Club Hoodie');
+
