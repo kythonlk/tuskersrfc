@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tuskers-v1.0.3';
+const CACHE_NAME = 'tuskers-v1.0.6';
 const ASSETS = [
     'index.html',
     'css/style.css',

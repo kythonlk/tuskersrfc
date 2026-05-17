@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { Save, ArrowLeft, Loader2, Image, FileText, Settings } from 'lucide-react';
+import { Save, ArrowLeft, Loader2, Image, FileText, Settings, Key } from 'lucide-react';
 
 export default function MemberEditor() {
     const { id } = useParams();
@@ -74,6 +74,29 @@ export default function MemberEditor() {
             });
         }
         setLoading(false);
+    };
+
+    const handleSendResetPassword = async () => {
+        if (!formData.email) {
+            alert('This member does not have a registered email address.');
+            return;
+        }
+
+        const confirmReset = window.confirm(
+            `Send a password reset link to ${formData.first_name} ${formData.last_name} (${formData.email})?\n\nThis will send an email inviting them to choose a new password.`
+        );
+        if (!confirmReset) return;
+
+        const { error } = await supabase.auth.resetPasswordForEmail(formData.email, {
+            redirectTo: `${window.location.origin}/reset-password`,
+        });
+
+        if (error) {
+            console.error('Reset error:', error);
+            alert('Failed to send password reset: ' + error.message);
+        } else {
+            alert(`Password reset link sent successfully to ${formData.email}!`);
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -202,11 +225,41 @@ export default function MemberEditor() {
                             <input
                                 type="date"
                                 name="expiry_date"
+                                disabled={!formData.expiry_date}
                                 value={formData.expiry_date ? new Date(formData.expiry_date).toISOString().split('T')[0] : ''}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623] outline-none bg-white"
+                                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623] outline-none ${!formData.expiry_date ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white'}`}
                             />
+                            <div className="flex items-center gap-2 mt-2">
+                                <input
+                                    type="checkbox"
+                                    id="is-lifetime"
+                                    checked={!formData.expiry_date}
+                                    onChange={(e) => {
+                                        if (e.target.checked) {
+                                            setFormData(prev => ({ ...prev, expiry_date: '' }));
+                                        } else {
+                                            const nextYear = new Date();
+                                            nextYear.setFullYear(nextYear.getFullYear() + 1);
+                                            setFormData(prev => ({ ...prev, expiry_date: nextYear.toISOString().split('T')[0] }));
+                                        }
+                                    }}
+                                    className="rounded text-[#f5a623] focus:ring-[#f5a623] h-4 w-4 cursor-pointer"
+                                />
+                                <label htmlFor="is-lifetime" className="text-xs font-semibold text-gray-600 cursor-pointer select-none">
+                                    Lifetime Member (No Expiration)
+                                </label>
+                            </div>
                         </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2 pt-4 border-t border-[#faebcc] mt-2">
+                        <button
+                            type="button"
+                            onClick={handleSendResetPassword}
+                            className="px-4 py-2 bg-[#1a1f4e] hover:bg-[#2a2f5e] text-white font-bold rounded-lg text-xs transition-colors flex items-center gap-1.5 shadow"
+                        >
+                            <Key className="w-4 h-4 text-[#f5a623]" /> Send Password Reset Link
+                        </button>
                     </div>
                 </div>
 

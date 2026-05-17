@@ -11,7 +11,8 @@ import {
   Newspaper,
   Trophy,
   User,
-  FileText
+  FileText,
+  ShoppingBag
 } from 'lucide-react';
 
 export default function AdminLayout() {
@@ -56,6 +57,7 @@ export default function AdminLayout() {
     { name: "Players", path: "/admin/players", icon: User },
     { name: "Medical", path: "/admin/medical", icon: FileText },
     { name: "Submissions", path: "/admin/submissions", icon: FileText },
+    { name: "Shop", path: "/admin/products", icon: ShoppingBag },
   ];
 
   /* -------------------- SIDEBAR VISIBILITY -------------------- */
