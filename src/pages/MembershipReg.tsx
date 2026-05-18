@@ -94,13 +94,20 @@ export default function MembershipRegister() {
       if (submitError) throw submitError;
       console.log(formToSubmit);
 
-      const { error: rapidError } = await supabase.functions.invoke("rapid-handler", {
-        body: formToSubmit
-      });
-
-      if (rapidError) throw rapidError;
+      // Safe invocation of rapid-handler so it doesn't break a successful DB registration
+      try {
+        const { error: rapidError } = await supabase.functions.invoke("rapid-handler", {
+          body: formToSubmit
+        });
+        if (rapidError) {
+          console.warn("rapid-handler execution warning:", rapidError);
+        }
+      } catch (funcErr) {
+        console.warn("rapid-handler invocation warning:", funcErr);
+      }
 
       setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       setFormData({
         first_name: '',
         last_name: '',
@@ -130,6 +137,7 @@ export default function MembershipRegister() {
     } catch (err) {
       console.error(err);
       setError('Failed to submit. Please try again.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } finally {
       setSubmitting(false);
     }
