@@ -341,6 +341,7 @@ const app = {
             { name: 'Fazaa', logo_url: 'assets/fazaa.webp' },
             { name: 'Gulf Sports', logo_url: 'assets/gulf.jpeg' },
             { name: 'McGettigan\'s', logo_url: 'assets/mcs.webp' },
+            { name: 'noon', logo_url: 'assets/noon.webp' },
         ];
 
         // Use database data if available, otherwise use hardcoded list

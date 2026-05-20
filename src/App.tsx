@@ -26,6 +26,7 @@ import EventForm from './pages/EventForm';
 import Academy from './pages/Acedamy';
 import AcademyReg from './pages/AcademyReg';
 import VerifyMember from './pages/VerifyMember';
+import ResetPassword from './pages/ResetPassword';
 
 // Admin Pages
 import AdminLogin from './pages/admin/AdminLogin';
@@ -89,6 +90,7 @@ function App() {
                 <Route path="/match/:id" element={<SingleMatch />} />
                 <Route path="/news/:id" element={<SingleNews />} />
                 <Route path="/verify/:id" element={<VerifyMember />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
                 {/* Admin Routes */}
                 <Route path="/admin/login" element={<AdminLogin />} />
                 <Route path="/admin" element={<AdminRoute />}>

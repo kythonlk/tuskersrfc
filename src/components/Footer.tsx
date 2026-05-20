@@ -10,6 +10,7 @@ import Gulf from '../images/gulf.jpeg';
 import Mcs from '../images/mcs.webp';
 import fazza from '../images/fazaa.webp'
 import rehab from '../images/rehab.jpeg';
+import noonLogo from '../images/noon.webp';
 
 export default function Footer() {
   const [sponsors, setSponsors] = useState<Sponsor[]>([]);
@@ -49,6 +50,7 @@ export default function Footer() {
     { name: 'Fazaa', logo_url: fazza, website_url: 'https://Fazaa.ae/' },
     { name: 'Gulf Sports', logo_url: Gulf, website_url: 'https://gulfsportz.com/' },
     { name: 'McGettigan s', logo_url: Mcs, website_url: 'https://www.mcgettigans.com/' },
+    { name: 'noon', logo_url: noonLogo, website_url: 'https://www.noon.com/' },
   ]
 
   useEffect(() => {
