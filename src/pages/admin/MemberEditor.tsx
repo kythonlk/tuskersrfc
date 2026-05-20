@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { createClient } from '@supabase/supabase-js';
 import { supabase } from '../../lib/supabase';
-import { Save, ArrowLeft, Loader2, Image, FileText, Settings, Key } from 'lucide-react';
+import { Save, ArrowLeft, Loader2, Image, FileText, Settings, UserPlus } from 'lucide-react';
 
 export default function MemberEditor() {
     const { id } = useParams();
@@ -76,26 +77,49 @@ export default function MemberEditor() {
         setLoading(false);
     };
 
-    const handleSendResetPassword = async () => {
+    const handleSendSignUp = async () => {
         if (!formData.email) {
             alert('This member does not have a registered email address.');
             return;
         }
 
-        const confirmReset = window.confirm(
-            `Send a password reset link to ${formData.first_name} ${formData.last_name} (${formData.email})?\n\nThis will send an email inviting them to choose a new password.`
+        const confirmSignUp = window.confirm(
+            `Send a sign-up invitation to ${formData.first_name} ${formData.last_name} (${formData.email})?\n\nThis will send a confirmation email to register their account.`
         );
-        if (!confirmReset) return;
+        if (!confirmSignUp) return;
 
-        const { error } = await supabase.auth.resetPasswordForEmail(formData.email, {
-            redirectTo: `${window.location.origin}/reset-password`,
+        // Create a temporary client to avoid modifying the admin's logged-in session
+        const tempSupabase = createClient(
+            import.meta.env.VITE_SUPABASE_URL,
+            import.meta.env.VITE_SUPABASE_ANON_KEY,
+            {
+                auth: {
+                    persistSession: false,
+                    autoRefreshToken: false,
+                    detectSessionInUrl: false
+                }
+            }
+        );
+
+        // Generate a random temporary password
+        const tempPassword = Math.random().toString(36).slice(-10) + Math.random().toString(36).slice(-10) + 'A1!';
+
+        const { error } = await tempSupabase.auth.signUp({
+            email: formData.email,
+            password: tempPassword,
+            options: {
+                data: {
+                    full_name: `${formData.first_name} ${formData.last_name}`.trim(),
+                    mobile_primary: formData.phone
+                }
+            }
         });
 
         if (error) {
-            console.error('Reset error:', error);
-            alert('Failed to send password reset: ' + error.message);
+            console.error('Sign up error:', error);
+            alert('Failed to send sign-up invitation: ' + error.message);
         } else {
-            alert(`Password reset link sent successfully to ${formData.email}!`);
+            alert(`Sign-up invitation sent successfully to ${formData.email}!`);
         }
     };
 
@@ -262,10 +286,10 @@ export default function MemberEditor() {
                     <div className="flex flex-wrap gap-2 pt-4 border-t border-[#faebcc] mt-2">
                         <button
                             type="button"
-                            onClick={handleSendResetPassword}
+                            onClick={handleSendSignUp}
                             className="px-4 py-2 bg-[#1a1f4e] hover:bg-[#2a2f5e] text-white font-bold rounded-lg text-xs transition-colors flex items-center gap-1.5 shadow"
                         >
-                            <Key className="w-4 h-4 text-[#f5a623]" /> Send Password Reset Link
+                            <UserPlus className="w-4 h-4 text-[#f5a623]" /> Send Sign Up Link
                         </button>
                     </div>
                 </div>
