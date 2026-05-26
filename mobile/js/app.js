@@ -369,8 +369,6 @@ const app = {
         if (error || !data || data.length === 0) {
             // Mock data if table doesn't exist yet
             const mockNotifs = [
-                { id: 1, title: 'Match Update', content: 'Fixture confirmed for Nov 30th.', time: '2h ago', icon: 'trophy', unread: true },
-                { id: 2, title: 'New Kit', content: '2026 Home Jersey in stock!', time: '5h ago', icon: 'shopping-bag', unread: true }
             ];
             this.renderNotifications(container, mockNotifs);
             document.getElementById('notif-count').textContent = '2';
