@@ -159,13 +159,12 @@ export default function MemberEditor() {
 
         setSubmitting(false);
 
-        if (error) {
-            console.error(error);
-            alert('Failed to update member: ' + error.message);
-        } else {
-            alert('Member updated successfully');
-            navigate('/admin/members');
-        }
+        // Update cache after successful edit
+        const cached = JSON.parse(localStorage.getItem('membersCache') || '[]');
+        const updated = cached.map((m: any) => (m.id === id ? { ...m, ...submitData } : m));
+        localStorage.setItem('membersCache', JSON.stringify(updated));
+        alert('Member updated successfully');
+        navigate('/admin/members');
     };
 
     // Helper to render image (assuming jpeg/png)

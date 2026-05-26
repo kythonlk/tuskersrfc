@@ -9,19 +9,31 @@ export default function MembersList() {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterType, setFilterType] = useState('all');
 
+    // Load from cache on mount
     useEffect(() => {
-        fetchMembers();
+        const cached = localStorage.getItem('membersCache');
+        if (cached) {
+            try {
+                setMembers(JSON.parse(cached));
+                setLoading(false);
+            } catch (_) {}
+        }
+        // Always fetch fresh data in background
+        fetchMembers(true);
     }, []);
 
-    const fetchMembers = async () => {
-        setLoading(true);
+    const fetchMembers = async (updateCache = false) => {
         const { data, error } = await supabase
             .from('memberships')
             .select('*')
             .order('created_at', { ascending: false });
-
         if (error) console.error('Error fetching members:', error);
-        else setMembers(data || []);
+        else {
+            setMembers(data || []);
+            if (updateCache) {
+                localStorage.setItem('membersCache', JSON.stringify(data || []));
+            }
+        }
         setLoading(false);
     };
 
@@ -38,7 +50,7 @@ export default function MembersList() {
             alert('Failed to delete member: ' + error.message);
         } else {
             alert('Member deleted successfully');
-            fetchMembers();
+            fetchMembers(true);
         }
     };
 

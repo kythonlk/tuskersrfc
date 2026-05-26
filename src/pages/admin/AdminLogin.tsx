@@ -16,12 +16,22 @@ export default function AdminLogin() {
         setError('');
 
         try {
-            const { error } = await supabase.auth.signInWithPassword({
+            const { error, data } = await supabase.auth.signInWithPassword({
                 email,
                 password,
             });
 
             if (error) throw error;
+
+            // Verify email against allowed list
+            const allowed = ['admin@dubaituskers.com', 'membership@dubaituskers.com'];
+            if (!allowed.includes(data?.user?.email ?? '')) {
+                // Sign out immediately
+                await supabase.auth.signOut();
+                setError('Access denied. Unauthorized email address.');
+                return;
+            }
+
             navigate('/admin/dashboard');
         } catch (err: any) {
             console.error(err);

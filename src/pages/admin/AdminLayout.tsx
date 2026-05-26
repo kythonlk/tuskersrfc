@@ -28,7 +28,12 @@ export default function AdminLayout() {
       } = await supabase.auth.getUser();
 
       if (user?.email) {
-        setUserEmail(user.email);
+        if (user.email === "admin@dubaituskers.com" || user.email === "membership@dubaituskers.com") {
+          setUserEmail(user.email);
+        } else {
+          await supabase.auth.signOut();
+          navigate("/admin/login", { replace: true });
+        }
       } else {
         navigate("/admin/login", { replace: true });
       }
@@ -46,6 +51,8 @@ export default function AdminLayout() {
   /* -------------------- ROLE -------------------- */
   const isMembershipAdmin =
     userEmail === "membership@dubaituskers.com";
+  const isAdmin =
+    userEmail === "admin@dubaituskers.com";
 
   /* -------------------- NAV ITEMS -------------------- */
   const allNavItems = [
@@ -69,8 +76,13 @@ export default function AdminLayout() {
       return item.name === "Members";
     }
 
-    // Other users → EVERYTHING
-    return true;
+    // Admin → EVERYTHING
+    if (isAdmin) {
+      return true;
+    }
+
+    // Other users → NOTHING
+    return false;
   });
 
   /* -------------------- ROUTE GUARD -------------------- */
@@ -85,9 +97,15 @@ export default function AdminLayout() {
       if (!currentPath.startsWith("/admin/members")) {
         navigate("/admin/members", { replace: true });
       }
+    } else if (!isAdmin) {
+      // If not membership admin and not admin, sign out
+      const handleUnauthorized = async () => {
+        await supabase.auth.signOut();
+        navigate("/admin/login", { replace: true });
+      };
+      handleUnauthorized();
     }
-    // Other users: no restrictions
-  }, [userEmail, location.pathname, isMembershipAdmin, navigate]);
+  }, [userEmail, location.pathname, isMembershipAdmin, isAdmin, navigate]);
 
   /* -------------------- HELPERS -------------------- */
   const isActive = (path: string) =>
