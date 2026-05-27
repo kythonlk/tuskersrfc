@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Link } from 'react-router-dom';
 import { Search, Mail, Phone, MapPin, User, Download, Trash2, Edit } from 'lucide-react';
+import { getMembersCache, setMembersCache } from '../../lib/membersCache';
 
 export default function MembersList() {
     const [members, setMembers] = useState<any[]>([]);
@@ -9,30 +10,28 @@ export default function MembersList() {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterType, setFilterType] = useState('all');
 
-    // Load from cache on mount
+    // Load from in-memory cache on mount, then refresh in background
     useEffect(() => {
-        const cached = localStorage.getItem('membersCache');
-        if (cached) {
-            try {
-                setMembers(JSON.parse(cached));
-                setLoading(false);
-            } catch (_) {}
+        const cached = getMembersCache();
+        if (cached !== null) {
+            setMembers(cached);
+            setLoading(false);
         }
         // Always fetch fresh data in background
-        fetchMembers(true);
+        fetchMembers();
     }, []);
 
-    const fetchMembers = async (updateCache = false) => {
+    const fetchMembers = async () => {
         const { data, error } = await supabase
             .from('memberships')
             .select('*')
             .order('created_at', { ascending: false });
-        if (error) console.error('Error fetching members:', error);
-        else {
-            setMembers(data || []);
-            if (updateCache) {
-                localStorage.setItem('membersCache', JSON.stringify(data || []));
-            }
+        if (error) {
+            console.error('Error fetching members:', error);
+        } else {
+            const fresh = data || [];
+            setMembersCache(fresh);
+            setMembers(fresh);
         }
         setLoading(false);
     };
@@ -50,7 +49,7 @@ export default function MembersList() {
             alert('Failed to delete member: ' + error.message);
         } else {
             alert('Member deleted successfully');
-            fetchMembers(true);
+            fetchMembers();
         }
     };
 

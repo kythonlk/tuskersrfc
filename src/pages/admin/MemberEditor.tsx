@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js';
 import { supabase } from '../../lib/supabase';
 import { Save, ArrowLeft, Loader2, Image, FileText, Settings, UserPlus } from 'lucide-react';
+import { updateMemberInCache } from '../../lib/membersCache';
 
 export default function MemberEditor() {
     const { id } = useParams();
@@ -159,10 +160,8 @@ export default function MemberEditor() {
 
         setSubmitting(false);
 
-        // Update cache after successful edit
-        const cached = JSON.parse(localStorage.getItem('membersCache') || '[]');
-        const updated = cached.map((m: any) => (m.id === id ? { ...m, ...submitData } : m));
-        localStorage.setItem('membersCache', JSON.stringify(updated));
+        // Update in-memory cache after successful edit (no localStorage, no size limit)
+        updateMemberInCache(id!, submitData);
         alert('Member updated successfully');
         navigate('/admin/members');
     };
