@@ -88,3 +88,16 @@ export type Membership = {
   status: 'pending' | 'active' | 'expired';
   created_at: string;
 };
+
+export type SponsorRegistration = {
+  id: string;
+  company_name: string;
+  contact_name: string;
+  email: string;
+  phone: string;
+  tier: string;
+  message?: string;
+  status: 'pending' | 'active' | 'declined';
+  created_at: string;
+};
+

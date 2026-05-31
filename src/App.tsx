@@ -27,6 +27,8 @@ import Academy from './pages/Acedamy';
 import AcademyReg from './pages/AcademyReg';
 import VerifyMember from './pages/VerifyMember';
 import ResetPassword from './pages/ResetPassword';
+import SponsorReg from './pages/SponsorReg';
+
 
 // Admin Pages
 import AdminLogin from './pages/admin/AdminLogin';
@@ -85,6 +87,7 @@ function App() {
                 <Route path="/membership" element={<Membership />} />
                 <Route path="/membership-reg" element={<MembershipRegister />} />
                 <Route path="/sponsorship" element={<Sponsorship />} />
+                <Route path="/sponsor-reg" element={<SponsorReg />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/policies" element={<Policies />} />
                 <Route path="/match/:id" element={<SingleMatch />} />

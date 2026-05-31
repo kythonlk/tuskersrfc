@@ -1,4 +1,6 @@
-import { Trophy, Users, Eye, Target, Mail, Phone } from 'lucide-react';
+import { Trophy, Users, Eye, Target, Mail, Phone, Building } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
 
 export default function Sponsorship() {
   const benefits = [
@@ -263,16 +265,23 @@ export default function Sponsorship() {
               and our club.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="/sponsor-reg"
+                className="inline-flex items-center justify-center gap-2 bg-[#1a1f4e] text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#2a2f5e] transition-colors shadow-lg"
+              >
+                <Building className="h-5 w-5" />
+                Register Online
+              </Link>
               <a
                 href="mailto:info@dubaituskers.com"
-                className="inline-flex items-center gap-2 bg-[#1a1f4e] text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#2a2f5e] transition-colors shadow-lg"
+                className="inline-flex items-center justify-center gap-2 bg-white text-[#1a1f4e] px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors shadow-lg"
               >
                 <Mail className="h-5 w-5" />
                 Email Us
               </a>
               <a
                 href="tel:+971521329719"
-                className="inline-flex items-center gap-2 bg-white text-[#1a1f4e] px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors shadow-lg"
+                className="inline-flex items-center justify-center gap-2 bg-transparent text-[#1a1f4e] border-2 border-[#1a1f4e] px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#1a1f4e]/10 transition-colors shadow-md"
               >
                 <Phone className="h-5 w-5" />
                 Call Us
