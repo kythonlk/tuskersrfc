@@ -9,6 +9,7 @@ export default function MembersList() {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterType, setFilterType] = useState('all');
+    const [error, setError] = useState<string | null>(null);
 
     // Load from in-memory cache on mount, then refresh in background
     useEffect(() => {
@@ -22,12 +23,14 @@ export default function MembersList() {
     }, []);
 
     const fetchMembers = async () => {
+        setError(null);
         const { data, error } = await supabase
             .from('memberships')
             .select('*')
             .order('created_at', { ascending: false });
         if (error) {
             console.error('Error fetching members:', error);
+            setError(error.message);
         } else {
             const fresh = data || [];
             setMembersCache(fresh);
@@ -54,11 +57,15 @@ export default function MembersList() {
     };
 
     const filteredMembers = members.filter(member => {
+        const firstName = member.first_name || '';
+        const lastName = member.last_name || '';
+        const fullName = `${firstName} ${lastName}`.trim().toLowerCase();
+
         const matchesSearch =
-            (member.first_name + ' ' + member.last_name).toLowerCase().includes(searchTerm.toLowerCase()) ||
-            member.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            member.emirates_id?.includes(searchTerm) ||
-            member.member_id?.includes(searchTerm);
+            fullName.includes(searchTerm.toLowerCase()) ||
+            (member.email || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (member.emirates_id || '').includes(searchTerm) ||
+            (member.member_id || '').includes(searchTerm);
 
         const matchesFilter = filterType === 'all' || member.membership_type === filterType;
 
@@ -139,6 +146,25 @@ export default function MembersList() {
                     <option value="academy">Academy</option>
                 </select>
             </div>
+
+            {error && (
+                <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl flex items-center justify-between gap-3 shadow-sm border border-red-100">
+                    <div className="flex items-center gap-3">
+                        <span className="text-red-600 font-bold text-sm">Error Loading Members:</span>
+                        <span className="text-sm text-red-700 font-medium">{error}</span>
+                    </div>
+                    <button
+                        onClick={() => {
+                            setLoading(true);
+                            setError(null);
+                            fetchMembers();
+                        }}
+                        className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold transition-all shadow-sm"
+                    >
+                        Retry
+                    </button>
+                </div>
+            )}
 
             {/* Desktop Table View */}
             <div className="hidden md:block bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">

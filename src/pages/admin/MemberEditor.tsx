@@ -10,6 +10,7 @@ export default function MemberEditor() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
+    const [userPassword, setUserPassword] = useState('');
 
     // Form State (mirroring MembershipReg.tsx structure + admin fields)
     const [formData, setFormData] = useState({
@@ -74,53 +75,83 @@ export default function MemberEditor() {
                 status: data.status || 'pending',
                 expiry_date: data.expiry_date || '',
             });
+            // Prefill password with name + birth year + //
+            const birthYear = data.dob ? data.dob.split('-')[0] : '';
+            const prefilledPassword = `${(data.first_name || '').toLowerCase().replace(/\s+/g, '')}${birthYear}//`;
+            setUserPassword(prefilledPassword);
         }
         setLoading(false);
     };
 
-    const handleSendSignUp = async () => {
+    const handleCreateAndResetPassword = async () => {
         if (!formData.email) {
             alert('This member does not have a registered email address.');
             return;
         }
+        if (!userPassword) {
+            alert('Please enter a password for the user.');
+            return;
+        }
 
-        const confirmSignUp = window.confirm(
-            `Send a sign-up invitation to ${formData.first_name} ${formData.last_name} (${formData.email})?\n\nThis will send a confirmation email to register their account.`
+        const confirmAction = window.confirm(
+            `Create a Supabase Auth user for ${formData.first_name} ${formData.last_name} (${formData.email}) with password "${userPassword}" (if not exists) and send them a password reset link?`
         );
-        if (!confirmSignUp) return;
+        if (!confirmAction) return;
 
-        // Create a temporary client to avoid modifying the admin's logged-in session
-        const tempSupabase = createClient(
-            import.meta.env.VITE_SUPABASE_URL,
-            import.meta.env.VITE_SUPABASE_ANON_KEY,
-            {
-                auth: {
-                    persistSession: false,
-                    autoRefreshToken: false,
-                    detectSessionInUrl: false
+        setSubmitting(true);
+        try {
+            // Create a temporary client to avoid modifying the admin's logged-in session
+            const tempSupabase = createClient(
+                import.meta.env.VITE_SUPABASE_URL,
+                import.meta.env.VITE_SUPABASE_ANON_KEY,
+                {
+                    auth: {
+                        persistSession: false,
+                        autoRefreshToken: false,
+                        detectSessionInUrl: false
+                    }
                 }
-            }
-        );
+            );
 
-        // Generate a random temporary password
-        const tempPassword = Math.random().toString(36).slice(-10) + Math.random().toString(36).slice(-10) + 'A1!';
-
-        const { error } = await tempSupabase.auth.signUp({
-            email: formData.email,
-            password: tempPassword,
-            options: {
-                data: {
-                    full_name: `${formData.first_name} ${formData.last_name}`.trim(),
-                    mobile_primary: formData.phone
+            console.log('Creating user with specified password...');
+            const { error: signUpError } = await tempSupabase.auth.signUp({
+                email: formData.email,
+                password: userPassword,
+                options: {
+                    data: {
+                        full_name: `${formData.first_name} ${formData.last_name}`.trim(),
+                        mobile_primary: formData.phone
+                    }
                 }
-            }
-        });
+            });
 
-        if (error) {
-            console.error('Sign up error:', error);
-            alert('Failed to send sign-up invitation: ' + error.message);
-        } else {
-            alert(`Sign-up invitation sent successfully to ${formData.email}!`);
+            if (signUpError) {
+                // If user already exists, Supabase auth.signUp returns an error.
+                // We proceed to reset password if user already exists.
+                if (signUpError.message.toLowerCase().includes('already') || signUpError.status === 422) {
+                    console.log('User already exists. Proceeding to send reset password email.');
+                } else {
+                    throw signUpError;
+                }
+            } else {
+                console.log('User account created successfully.');
+            }
+
+            console.log('Sending reset password email...');
+            const { error: resetError } = await supabase.auth.resetPasswordForEmail(formData.email, {
+                redirectTo: `${window.location.origin}/reset-password`,
+            });
+
+            if (resetError) {
+                throw resetError;
+            }
+
+            alert(`Successfully processed:\n1. Created/Verified user account for ${formData.email}.\n2. Sent password reset email.`);
+        } catch (err: any) {
+            console.error('Create and reset password error:', err);
+            alert('Failed to complete action: ' + err.message);
+        } finally {
+            setSubmitting(false);
         }
     };
 
@@ -159,6 +190,12 @@ export default function MemberEditor() {
             .eq('id', id);
 
         setSubmitting(false);
+
+        if (error) {
+            console.error('Error updating member:', error);
+            alert('Failed to update member: ' + error.message);
+            return;
+        }
 
         // Update in-memory cache after successful edit (no localStorage, no size limit)
         updateMemberInCache(id!, submitData);
@@ -281,14 +318,45 @@ export default function MemberEditor() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-wrap gap-2 pt-4 border-t border-[#faebcc] mt-2">
-                        <button
-                            type="button"
-                            onClick={handleSendSignUp}
-                            className="px-4 py-2 bg-[#1a1f4e] hover:bg-[#2a2f5e] text-white font-bold rounded-lg text-xs transition-colors flex items-center gap-1.5 shadow"
-                        >
-                            <UserPlus className="w-4 h-4 text-[#f5a623]" /> Send Sign Up Link
-                        </button>
+                    <div className="pt-4 border-t border-[#faebcc] mt-2 space-y-4">
+                        <div className="max-w-md">
+                            <label className="block text-sm font-semibold text-gray-700 mb-1">
+                                User Account Password (Prefilled)
+                            </label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="text"
+                                    value={userPassword}
+                                    onChange={(e) => setUserPassword(e.target.value)}
+                                    placeholder="Password for user"
+                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#f5a623] outline-none bg-white font-mono text-sm"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        const birthYear = formData.dob ? formData.dob.split('-')[0] : '';
+                                        const generated = `${(formData.first_name || '').toLowerCase().replace(/\s+/g, '')}${birthYear}//`;
+                                        setUserPassword(generated);
+                                    }}
+                                    className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-lg text-xs transition-colors whitespace-nowrap"
+                                >
+                                    Reset to Default
+                                </button>
+                            </div>
+                            <p className="text-xs text-gray-500 mt-1">
+                                Default format: name + birth year + // (e.g. name is "John", DOB year is "1995" becomes john1995//)
+                            </p>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                            <button
+                                type="button"
+                                onClick={handleCreateAndResetPassword}
+                                disabled={submitting}
+                                className="px-4 py-2 bg-[#1a1f4e] hover:bg-[#2a2f5e] text-white font-bold rounded-lg text-xs transition-colors flex items-center gap-1.5 shadow disabled:opacity-50"
+                            >
+                                <UserPlus className="w-4 h-4 text-[#f5a623]" /> Create User & Send Reset Password
+                            </button>
+                        </div>
                     </div>
                 </div>
 
