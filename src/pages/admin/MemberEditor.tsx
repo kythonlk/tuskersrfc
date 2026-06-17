@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js';
 import { supabase } from '../../lib/supabase';
-import { Save, ArrowLeft, Loader2, Image, FileText, Settings, UserPlus } from 'lucide-react';
+import { Save, ArrowLeft, Loader2, Image, FileText, Settings, UserPlus, Key } from 'lucide-react';
 import { updateMemberInCache } from '../../lib/membersCache';
 
 export default function MemberEditor() {
@@ -129,7 +129,17 @@ export default function MemberEditor() {
                 // If user already exists, Supabase auth.signUp returns an error.
                 // We proceed to reset password if user already exists.
                 if (signUpError.message.toLowerCase().includes('already') || signUpError.status === 422) {
-                    console.log('User already exists. Proceeding to send reset password email.');
+                    const sendReset = window.confirm(
+                        `User already exists in Supabase Auth.\n\nWould you like to send a password reset email to ${formData.email} instead?`
+                    );
+                    if (sendReset) {
+                        const { error: resetError } = await supabase.auth.resetPasswordForEmail(formData.email, {
+                            redirectTo: `${window.location.origin}/reset-password`,
+                        });
+                        if (resetError) throw resetError;
+                        alert(`Password reset email sent to ${formData.email}!`);
+                    }
+                    return;
                 } else {
                     throw signUpError;
                 }
@@ -150,6 +160,34 @@ export default function MemberEditor() {
         } catch (err: any) {
             console.error('Create and reset password error:', err);
             alert('Failed to complete action: ' + err.message);
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    const handleSendResetPassword = async () => {
+        if (!formData.email) {
+            alert('This member does not have a registered email address.');
+            return;
+        }
+
+        const confirmAction = window.confirm(
+            `Send a password reset email to ${formData.first_name} ${formData.last_name} (${formData.email})?`
+        );
+        if (!confirmAction) return;
+
+        setSubmitting(true);
+        try {
+            const { error } = await supabase.auth.resetPasswordForEmail(formData.email, {
+                redirectTo: `${window.location.origin}/reset-password`,
+            });
+
+            if (error) throw error;
+
+            alert(`Password reset link sent successfully to ${formData.email}!`);
+        } catch (err: any) {
+            console.error('Reset password error:', err);
+            alert('Failed to send reset password link: ' + err.message);
         } finally {
             setSubmitting(false);
         }
@@ -355,6 +393,14 @@ export default function MemberEditor() {
                                 className="px-4 py-2 bg-[#1a1f4e] hover:bg-[#2a2f5e] text-white font-bold rounded-lg text-xs transition-colors flex items-center gap-1.5 shadow disabled:opacity-50"
                             >
                                 <UserPlus className="w-4 h-4 text-[#f5a623]" /> Create User & Send Reset Password
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleSendResetPassword}
+                                disabled={submitting}
+                                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-lg text-xs transition-colors flex items-center gap-1.5 shadow disabled:opacity-50"
+                            >
+                                <Key className="w-4 h-4 text-gray-600" /> Send Password Reset Link
                             </button>
                         </div>
                     </div>
