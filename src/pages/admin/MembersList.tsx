@@ -26,7 +26,7 @@ export default function MembersList() {
         setError(null);
         const { data, error } = await supabase
             .from('memberships')
-            .select('*')
+            .select('id, first_name, last_name, email, phone, membership_type, dob, emirates_id, playing_position, status, member_id, created_at, address')
             .order('created_at', { ascending: false });
         if (error) {
             console.error('Error fetching members:', error);
